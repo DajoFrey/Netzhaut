@@ -1,0 +1,42 @@
+  NETZHAUT-INSTALLER USAGE
+
+(BUILD)
+
+  OPTIONS:
+    -l [LIBRARIES...] Build LIBRARIES. If no LIBRARIES are specified, build all.
+    -b [BINARIES...]  Build BINARIES. If no BINARIES are specified, build all.
+    -i [FLAGS...]     Install FLAGS.
+    -n [FLAGS...]     Suppress building and installing of FLAGS.
+
+  FLAGS: 
+    LIBRARIES: netzhaut  Module that applications link to.
+               core      Core module that implements a broad array of functionality.
+               network   Network module for communication with other devices.
+               tty       Terminal module for command-line based interaction.
+               io        IO module implementing WSI and Input Device handling.
+               installer Installer module with auto-update capability.
+               webidl    TODO
+
+    BINARIES: webbrowser   TODO
+              windowsystem TODO
+
+  e.g. 
+    -li            Build and install all libraries.
+    -ib            Build and install all binaries.
+    -lbi           Build and install all libraries and binaries.
+    -im -et        Build all modules, examples and tools. Install modules.
+    -ei webbrowser Build and install the 'webbrowser' example.
+    -me core       Build the 'core' module and all examples.
+
+(DEVELOPMENT)
+
+  --flow    Activate flow logging capabilities. Only recommended for debugging purposes.
+  --vulkan  Compile Vulkan shaders.
+  --docs    Generate documentation. Requires doxygen (www.doxygen.nl)
+  --offline Do not download any resources over network.
+
+(OTHER)
+
+  --quiet   Suppress all output to the standard output channel.
+  --version Print installer version and other info.
+  --help    Print this text.

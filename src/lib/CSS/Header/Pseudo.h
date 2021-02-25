@@ -1,0 +1,151 @@
+#ifndef NH_CSS_PSEUDO_H
+#define NH_CSS_PSEUDO_H
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+/**
+ * Netzhaut - Web Browser Engine
+ * Copyright (C) 2020  Dajo Frey
+ * Published under LGPLv3
+ */
+
+#include <stddef.h>
+
+#include "../../NhCore/Netzhaut.h"
+#include "../../HTML/Main/Header/Tree.h"
+#include "../../NhCore/LinkedList.h"
+
+#endif
+
+/** @addtogroup CSSData Data
+ *  \ingroup CSS
+ *  @{
+ */
+
+    extern const char *NH_CSS_PSEUDO_CLASSES_PP[];
+    extern const char *NH_CSS_PSEUDO_ELEMENTS_PP[];
+
+    extern size_t NH_CSS_PSEUDO_CLASSES_PP_COUNT;
+    extern size_t NH_CSS_PSEUDO_ELEMENTS_PP_COUNT;
+
+/** @} */
+
+/** @addtogroup CSSEnums Enums
+ *  \ingroup CSS
+ *  @{
+ */
+
+    typedef enum NH_CSS_PSEUDO_CLASS {
+        NH_CSS_PSEUDO_CLASS_ACTIVE,
+        NH_CSS_PSEUDO_CLASS_ANY_LINK,
+        NH_CSS_PSEUDO_CLASS_BLANK, 
+        NH_CSS_PSEUDO_CLASS_CHECKED,
+        NH_CSS_PSEUDO_CLASS_CURRENT, 
+        NH_CSS_PSEUDO_CLASS_DEFAULT,
+        NH_CSS_PSEUDO_CLASS_DEFINED,
+        NH_CSS_PSEUDO_CLASS_DIR, 
+        NH_CSS_PSEUDO_CLASS_DISABLED,
+        NH_CSS_PSEUDO_CLASS_DROP, 
+        NH_CSS_PSEUDO_CLASS_EMPTY,
+        NH_CSS_PSEUDO_CLASS_ENABLED,
+        NH_CSS_PSEUDO_CLASS_FIRST,
+        NH_CSS_PSEUDO_CLASS_FIRST_CHILD,
+        NH_CSS_PSEUDO_CLASS_FIRST_OF_TYPE,
+        NH_CSS_PSEUDO_CLASS_FULLSCREEN, 
+        NH_CSS_PSEUDO_CLASS_FUTURE, 
+        NH_CSS_PSEUDO_CLASS_FOCUS,
+        NH_CSS_PSEUDO_CLASS_FOCUS_VISIBLE,
+        NH_CSS_PSEUDO_CLASS_FOCUS_WITHIN,
+        NH_CSS_PSEUDO_CLASS_HAS, 
+        NH_CSS_PSEUDO_CLASS_HOST,
+        NH_CSS_PSEUDO_CLASS_HOST_,
+        NH_CSS_PSEUDO_CLASS_HOST_CONTEXT,
+        NH_CSS_PSEUDO_CLASS_HOVER,
+        NH_CSS_PSEUDO_CLASS_INDETERMINATE,
+        NH_CSS_PSEUDO_CLASS_IN_RANGE,
+        NH_CSS_PSEUDO_CLASS_INVALID,
+        NH_CSS_PSEUDO_CLASS_IS,
+        NH_CSS_PSEUDO_CLASS_LANG,
+        NH_CSS_PSEUDO_CLASS_LAST_CHILD,
+        NH_CSS_PSEUDO_CLASS_LAST_OF_TYPE,
+        NH_CSS_PSEUDO_CLASS_LEFT,
+        NH_CSS_PSEUDO_CLASS_LINK,
+        NH_CSS_PSEUDO_CLASS_LOCAL_LINK, 
+        NH_CSS_PSEUDO_CLASS_NOT,
+        NH_CSS_PSEUDO_CLASS_NTH_CHILD,
+        NH_CSS_PSEUDO_CLASS_NTH_COL, 
+        NH_CSS_PSEUDO_CLASS_NTH_LAST_CHILD,
+        NH_CSS_PSEUDO_CLASS_NTH_LAST_COL, 
+        NH_CSS_PSEUDO_CLASS_NTH_LAST_OF_TYPE,
+        NH_CSS_PSEUDO_CLASS_NTH_OF_TYPE,
+        NH_CSS_PSEUDO_CLASS_ONLY_CHILD,
+        NH_CSS_PSEUDO_CLASS_ONLY_OF_TYPE,
+        NH_CSS_PSEUDO_CLASS_OPTIONAL,
+        NH_CSS_PSEUDO_CLASS_OUT_OF_RANGE,
+        NH_CSS_PSEUDO_CLASS_PAST, 
+        NH_CSS_PSEUDO_CLASS_PLACEHOLDER_SHOWN,
+        NH_CSS_PSEUDO_CLASS_READ_ONLY,
+        NH_CSS_PSEUDO_CLASS_READ_WRITE,
+        NH_CSS_PSEUDO_CLASS_REQUIRED,
+        NH_CSS_PSEUDO_CLASS_RIGHT,
+        NH_CSS_PSEUDO_CLASS_ROOT,
+        NH_CSS_PSEUDO_CLASS_SCOPE,
+        NH_CSS_PSEUDO_CLASS_TARGET,
+        NH_CSS_PSEUDO_CLASS_TARGET_WITHIN, 
+        NH_CSS_PSEUDO_CLASS_USER_INVALID,
+        NH_CSS_PSEUDO_CLASS_VALID,
+        NH_CSS_PSEUDO_CLASS_VISITED,
+        NH_CSS_PSEUDO_CLASS_WHERE, 
+        _NH_CSS_PSEUDO_CLASS_COUNT,
+    } NH_CSS_PSEUDO_CLASS;
+
+    typedef enum NH_CSS_PSEUDO_ELEMENT {
+        NH_CSS_PSEUDO_ELEMENT_AFTER,
+        NH_CSS_PSEUDO_ELEMENT_BACKDROP,
+        NH_CSS_PSEUDO_ELEMENT_BEFORE,
+        NH_CSS_PSEUDO_ELEMENT_CUE,
+        NH_CSS_PSEUDO_ELEMENT_CUE_REGION,
+        NH_CSS_PSEUDO_ELEMENT_FIRST_LETTER,
+        NH_CSS_PSEUDO_ELEMENT_FIRST_LINE,
+        NH_CSS_PSEUDO_ELEMENT_GRAMMAR_ERROR,
+        NH_CSS_PSEUDO_ELEMENT_MARKER,
+        NH_CSS_PSEUDO_ELEMENT_PART,
+        NH_CSS_PSEUDO_ELEMENT_PLACEHOLDER,
+        NH_CSS_PSEUDO_ELEMENT_SELECTION,
+        NH_CSS_PSEUDO_ELEMENT_SLOTTED,
+        NH_CSS_PSEUDO_ELEMENT_SPELLING_ERROR,
+        _NH_CSS_PSEUDO_ELEMENT_COUNT,
+    } NH_CSS_PSEUDO_ELEMENT;
+
+/** @} */
+
+/** @addtogroup CSSEnums Enums
+ *  \ingroup CSS
+ *  @{
+ */
+
+    typedef struct Nh_CSS_Pseudo {
+        NH_BOOL classes_p[_NH_CSS_PSEUDO_CLASS_COUNT];
+        NH_BOOL elements_p[_NH_CSS_PSEUDO_ELEMENT_COUNT];
+        Nh_LinkedList Classes;
+        Nh_LinkedList Elements;
+    } Nh_CSS_Pseudo;
+
+/** @} */
+
+/** @addtogroup CSSFunctions Functions
+ *  \ingroup CSS
+ *  @{
+ */
+
+    NH_RESULT Nh_CSS_initPseudo(
+        Nh_CSS_Pseudo *Pseudo_p
+    );
+
+    void Nh_CSS_updateInputUnrelatedPseudos(
+        Nh_HTML_Tree *Tree_p
+    );
+
+/** @} */
+
+#endif 

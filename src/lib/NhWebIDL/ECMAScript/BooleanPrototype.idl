@@ -1,0 +1,5 @@
+interface BooleanPrototype {
+  attribute Boolean constructor;
+  any toString();
+  any valueOf();
+};

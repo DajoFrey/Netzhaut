@@ -1,0 +1,9 @@
+interface FunctionPrototype {
+  attribute int length;
+  attribute DOMString name;
+  attribute Function constructor;
+  any apply();
+  any bind();
+  any call();
+  any toString();
+};

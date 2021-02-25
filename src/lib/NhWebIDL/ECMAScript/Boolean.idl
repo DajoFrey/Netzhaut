@@ -1,0 +1,4 @@
+interface Boolean {
+  constructor(optional any value);
+  readonly attribute BooleanPrototype prototype;
+};

@@ -1,0 +1,5 @@
+interface Function {
+  constructor(optional any value, any newTarget);
+  readonly attribute FunctionPrototype prototype;
+  attribute int length;
+};

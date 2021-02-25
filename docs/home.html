@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Netzhaut Home Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  
+  <body>
+
+    <div style="position:absolute;top:0;width:100%;height:150px;background-color:#202020;border-bottom-style:solid;border-bottom-width:3px;">
+      <div style="font-size:40px;" id="topleft">NETZHAUT</div>
+      <div style="font-size:40px;"id="topright">WEB BROWSER ENGINE</div>
+      <div id="banner"><img id="logo" src="LogoBig.png"></div>
+    </div>
+
+    <div id="body">
+
+      <div id="left">
+        <div id="leftcenter">
+          <p class="title" style="font-size:40px;text-align:center;"><b>BUILD</b></p>
+          <p style="font-size:20px;">
+            For external dependencies please scroll down.
+          </p>
+          <p style="font-size:20px;">
+            <b><u>Automatic Method</u></b>
+            <br><br>
+            Netzhaut uses a "bootstrap" library to resolve internal dependencies at runtime. This means that you only need to link to a tiny fraction of Netzhaut at compile time. You also dont have to necessarily compile anything yourself.
+            <br><br>
+            At runtime, Netzhaut will load internal libraries as needed. If a library is not present, Netzhaut can try to install it automatically by building it fresh from source. This behavior can be enabled and modified using [Nh_init] arguments. 
+            <br><br>
+            <b>TLDR for linux</b> 1.Download header 2.Download libNetzhaut.so 3. Include Header 4. Pass automatic-method enabling arguments to [Nh_init] 5. Compile/Link to libNetzhaut.so 6. Execute.
+          </p>
+          <p style="font-size:20px;">
+            <b><u>Manual Method</u></b>
+            <br><br>
+            Netzhaut uses an internal installer to build internal dependencies. The installer can be used to manually install all internal libraries and binaries. 
+          </p>
+          <p class="title" style="font-size:30px;text-align:center;"><b>INSTALLER USAGE</b></p>
+          <pre style="overflow-x:auto;">
+<!--NETZHAUT_INSTALLER_INSERT_BEGIN-->
+  NETZHAUT-INSTALLER USAGE
+
+(BUILD)
+
+  OPTIONS:
+    -l [LIBRARIES...] Build LIBRARIES. If no LIBRARIES are specified, build all.
+    -b [BINARIES...]  Build BINARIES. If no BINARIES are specified, build all.
+    -i [FLAGS...]     Install FLAGS.
+    -n [FLAGS...]     Suppress building and installing of FLAGS.
+
+  FLAGS: 
+    LIBRARIES: netzhaut  Module that applications link to.
+               core      Core module that implements a broad array of functionality.
+               network   Network module for communication with other devices.
+               tty       Terminal module for command-line based interaction.
+               io        IO module implementing WSI and Input Device handling.
+               installer Installer module with auto-update capability.
+               webidl    TODO
+
+    BINARIES: webbrowser   TODO
+              windowsystem TODO
+
+  e.g. 
+    -li            Build and install all libraries.
+    -ib            Build and install all binaries.
+    -lbi           Build and install all libraries and binaries.
+    -im -et        Build all modules, examples and tools. Install modules.
+    -ei webbrowser Build and install the 'webbrowser' example.
+    -me core       Build the 'core' module and all examples.
+
+(DEVELOPMENT)
+
+  --flow    Activate flow logging capabilities. Only recommended for debugging purposes.
+  --vulkan  Compile Vulkan shaders.
+  --docs    Generate documentation. Requires doxygen (www.doxygen.nl)
+  --offline Do not download any resources over network.
+
+(OTHER)
+
+  --quiet   Suppress all output to the standard output channel.
+  --version Print installer version and other info.
+  --help    Print this text.
+
+<!--NETZHAUT_INSTALLER_INSERT_END-->
+          </pre>
+          <p class="title" style="font-size:30px;text-align:center;"><b>DEPS</b></p>
+          <p style="font-size:20px;">
+            <b>Linux:</b><br> 
+            <table>
+              <tr>
+                <td>Compiler</td>
+                <td>: GCC</td>
+              </tr>
+              <tr>
+                <td>Display Server</td>
+                <td>: X11</td>
+              </tr>
+              <tr>
+                <td>SSL</td>
+                <td>: OpenSSL</td>
+              </tr>
+              <tr>
+                <td>Font Engine</td>
+                <td>: FreeType</td>
+              </tr>
+            </table>
+          </p>
+           <p style="font-size:20px;">
+            <b>Windows:</b><br> 
+            <table>
+            </table>
+        </div>
+      </div>
+
+      <div id="mid">
+        <div id="midcenter">
+          <p class="title" style="font-size:40px;text-align:center;"><b>ABOUT</b></p>
+          <p style="font-size:20px;">
+            Netzhaut runs web-technologies on the client-machine. You can use the library to write your own web-browser 
+            or anything else which makes use of web-technologies like HTML, CSS or JS.
+          </p>
+          <p style="font-size:20px;">
+            Why use Netzhaut?
+          </p>
+          <ul style="font-size:20px;">
+            <li>Fast HTML + CSS (W3C compliant) and JS (ECMA-262 + W3C compliant) execution</li>
+            <li>Fully fledged internal Window System</li>
+            <li>Easy to integrate and customize</li>
+            <li>Adaptive Threading based Architecture</li>
+            <li>Robust Network handling</li>
+            <li>Flexible Rendering using Vulkan, DirectX or Software Rendering</li>
+            <li>VR support</li>
+            <li>Extensive Logging capabilities</li>
+            <li>Automatic Updates</li>
+            <li>Few dependencies</li>
+            <li>Cross Platform</li>
+            <li>Written in C99</li>
+          </ul>
+          <p style="font-size:20px;">
+            The right hand side of this page contains links to all important things concerning Netzhaut. Consider the downloads in conjunction with the 
+            build instructions on the left hand side. The links to the documentation should be self-explanatory. Please use the Submit Issue link if 
+            you want to report bugs or have suggestions/questions.
+          </p>
+        </div>
+      </div>
+
+      <div id="right">
+        <div id="rightcenter">
+          <p class="title" style="font-size:40px;text-align:center;"><b>DOWNLOADS</b></p>
+          <a href="https://github.com/DajoFrey/Netzhaut">
+            <div class="linkwrap">
+              <p class="link">
+                <b>Repository</b>
+              </p>
+            </div>
+          </a>
+          <a href="https://github.com/DajoFrey/Netzhaut/raw/master/bin/netzhaut_installer_linux.exe">
+            <div class="linkwrap">
+              <p class="link">
+                <b>Headers</b>
+              </p>
+            </div>
+          </a>
+          <a href="">
+            <div class="linkwrap">
+              <p class="link">
+                <b>libNetzhaut.so</b>
+              </p>
+            </div>
+          </a>
+          <p class="title" style="font-size:40px;text-align:center;"><b>OTHER</b></p>
+          <a href="https://github.com/DajoFrey/Netzhaut/issues/new">
+            <div class="linkwrap">
+              <p class="link">
+                <b>Submit Issue</b>
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="foot"> 
+      <div style="display:flex;justify-content:center;width:100%;">
+        <b style="width:40%;text-align:center;"><a id="footlink" style="color:#2b7e83;" href="Development/HTML/Main.html">OPEN DEV DOCS</a></b>
+        <b style="color:red;width:20%;text-align:center;">DRAFT DOCUMENT</b>
+        <b style="width:40%;text-align:center;"><a id="footlink" style="color:#2b7e83;" href="API/HTML/index.html">OPEN API DOCS</a></b>
+      </div>
+    </div>
+
+  </body>
+  
+  <style>
+
+    body {margin: 0px; background-color: #202020; font-family: sans-serif; color: #2b7e83; margin-top:130px;}
+
+    #topleft {position: absolute; width: 50%; text-align: center; top: 60px; color: #2b7e83;}
+    #topright {position: absolute; left: 50%; width: 50%; text-align: center; top: 60px; color: #2b7e83;}
+
+    #banner {margin-top: 50px; background-color: #202020; height: 40px; padding-top: 5px; padding-bottom: 5px;}
+    #logo {position: relative; top: -55px; width: 150px; height: 150px; margin-right: auto; margin-left: auto; display: block;}
+
+    #body {margin: 15px;}
+    #foot {width: 100%; left:0; bottom: 0; position: fixed;padding-top: 15px; padding-bottom: 15px; justify-content: space-between; background: #202020; border-top: 3px solid #2b7e83; }
+    #footlink:hover {text-decoration: underline;}
+
+    #left {height: 100%; width:	25%; float: left;}
+    #leftcenter {margin: 10px;}
+
+    #mid {height: 100%; width: 50%; float: left;}
+    #midcenter {margin: 10px;}
+
+    #right {height: 100%; width: 25%; float: left;}
+    #rightcenter {margin: 10px;}
+
+    .linkwrap {width: 100%; display: table; height: 50px; overflow: hidden; margin: 10px;}
+    .link {color: #2b7e83; display: table-cell; text-align: center; font-size: 30px; border-style: solid; border-color: #2b7e83; vertical-align: middle;}
+    .link:hover {color: #202020; background-color: #2b7e83; border-color: #202020;}
+
+    .title {background-color: #2b7e83; color: #202020;}
+
+    a:link {text-decoration: none; color: white;}
+    a:visited {text-decoration: none; color: white;}
+    a:hover {text-decoration: none; color: #2b7e83;}
+    a:active {text-decoration: none; color: #9eff07;}
+
+  </style>
+  
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

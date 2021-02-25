@@ -1,0 +1,1586 @@
+/* Light background: #3 5 3 6 2 9; */
+/* New light dark background #3 2 3 6 3 d */
+/* Dark background: #d f e 5 f 2; */
+
+/* TOP MENU */
+.sm-dox {
+	background: #dfe5f2 !important;
+}
+
+.sm-dox a {
+	background: none;
+}
+
+.highlighted {
+	background: none !important;
+}
+
+a.highlighted {
+	background: none !important;
+}
+
+/*********************************************/
+/**              Top main menu              **/
+/*********************************************/
+
+#main-nav {
+	/* display: none; */
+	border-bottom: 1px solid #2b7e83;
+}
+
+#main-nav .sm-dox {
+	background: transparent !important;
+}
+
+.sm-dox a {
+	text-shadow: none !important;
+	background: transparent !important;
+}
+
+.sm-dox a:hover {
+	background: #282923 !important;
+}
+
+.sm-dox {
+	text-shadow: none !important;
+	box-shadow: none !important;
+}
+
+.sm-dox ul {
+	border: 1px solid #000000;
+	background: #3c3c3c;
+}
+
+.directory tr.even {
+	background: #3c3c3c;
+}
+
+/*********************************************/
+/**               Top search                **/
+/*********************************************/
+
+#MSearchSelectWindow {
+	border: 1px solid #000000;
+	background: #202020;
+}
+
+a.selectItem {
+	padding: 3px;
+}
+
+a.SelectItem:hover {
+	background: #282923 !important;
+}
+
+#MSearchResultsWindow {
+	border: 1px solid #000000;
+	background: #202020;
+}
+
+/*********************************************/
+/**                Main menu                **/
+/*********************************************/
+
+#nav-tree {
+	color: #4665a2;
+        text-decoration: underline;  
+        background: #202020;
+}
+
+#nav-tree .selected {
+	background-image: none;
+	background: #2b7e83;
+        color: #202020;
+        text-decoration: underline;  
+        text-decoration-color: #2b7e83;
+        text-shadow: none;
+}
+
+#nav-tree .selected a {
+    color: #202020;
+}
+
+/*********************************************/
+/**               Main content              **/
+/*********************************************/
+
+/*********************************************/
+/**               Inline code               **/
+/*********************************************/
+
+p code,
+li code,
+td code,
+dd code {
+	background-color: #2b7e83; 
+	border: 1px solid #A8B8D9;
+	color: #202020;
+}
+
+code a {
+    color: inherit;
+}
+
+.el {
+    color: inherit;
+}
+
+/*********************************************/
+/**         Table of Contents (ToC)         **/
+/*********************************************/
+
+div.toc {
+	background: #32363d;
+	border: 1px solid #000000;
+}
+
+div.toc h3 {
+	font-size: 150%;
+	color: inherit;
+}
+
+/*********************************************/
+/**              Content table              **/
+/*********************************************/
+
+table.doxtable tr:nth-child(even) td {
+	background: #32363d;
+}
+
+/*********************************************/
+/**               Field table               **/
+/*********************************************/
+
+.fieldtable th {
+	background: #2b7e83; 
+	color: inherit;
+}
+
+/*********************************************/
+/**           Memitem and memtitle          **/
+/*********************************************/
+
+.memdoc {
+	border: 1px solid #d9a8a8;
+}
+
+/*********************************************/
+/**             TOP navigation              **/
+/*********************************************/
+
+.tabs, .tabs2, .tabs3 {
+	background: #DDDDDD;
+}
+
+.tablist li {
+	background: transparent !important;
+}
+
+.tablist a {
+	background-image: none;
+	border-right: 1px solid #2b7e83;
+	color: #32363d;
+}
+
+.tablist a:hover,
+.tablist li.current a {
+	text-decoration: none;
+	color: #000000;
+	background: #CCCCCC;
+	background-image: none;
+}
+
+/*********************************************/
+/**              H1 in textblocks           **/
+/*********************************************/
+
+/*********************************************/
+/**               Note, warning             **/
+/*********************************************/
+
+/*********************************************/
+/**               Reference list            **/
+/**Similar to warning/note/todo/... messages**/
+/*********************************************/
+
+dl.reflist {
+
+}
+
+/*********************************************/
+/**               Note, warning             **/
+/*********************************************/
+
+#docs_list {
+	background: #32363d;
+}
+
+#docs_list ul li {
+	border-right: 1px solid #BFBFBF;
+}
+
+#docs_list ul li a {
+	color: #1b1e21;
+}
+
+#docs_list ul li a:hover,
+#docs_list ul li a.docs_current {
+	background: #282923;
+}
+
+/*********************************************/
+/**               Resizable UI              **/
+/*********************************************/
+
+.ui-resizable-e {
+	background: #2b7e83;
+}
+
+/*********************************************/
+/**               Download url              **/
+/*********************************************/
+
+/*********************************************/
+/**               Syntax folor              **/
+/*********************************************/
+
+div.line {
+	background: transparent;
+	color: inherit;
+}
+
+div.line a {
+	color: inherit;
+}
+
+span.keyword {
+	color: #f92472;
+	font-style: italic;
+}
+
+span.keywordtype {
+	color: #67cfc1;
+	font-style: italic;
+}
+
+span.keywordflow {
+	color: #f92472;
+	font-style: italic;
+}
+
+span.comment {
+	color: #74705a;
+}
+
+span.preprocessor {
+	color: #a6e22b;
+}
+
+span.stringliteral {
+	color: #e7db74;
+}
+
+span.charliteral {
+	color: #e7db74;
+}
+
+span.vhdldigit { 
+	color: #ff00ff;
+}
+
+span.vhdlchar { 
+	color: #000000;
+}
+
+span.vhdlkeyword { 
+	color: #700070;
+}
+
+span.vhdllogic { 
+	color: #ff0000;
+}
+
+span.lineno {
+	background: transparent;
+}
+
+span.lineno a {
+	background: transparent;
+}
+
+/*********************************************/
+/**          Modules/Directory table        **/
+/*********************************************/
+
+.mdescLeft, .mdescRight, .memItemLeft, .memItemRight,
+.memTemplItemLeft, .memTemplItemRight, .memTemplParams {
+        color: #202020;
+	background: #2b7e83;
+}
+
+.memSeparator {
+	border: none;
+	background: transparent;
+}
+
+/*********************************************/
+/**                 Mem items               **/
+/*********************************************/
+
+.memproto {
+	background: inherit;
+	border-color: #000000;
+	color: inherit;
+	text-shadow: none;
+}
+
+.memproto table td {
+	font-family: monospace, fixed !important;
+}
+
+td.memItemLeft, td.memItemRight {
+	font-family: monospace, fixed;
+}
+
+.paramname, .paramname em {
+	color: #202020;
+}
+
+.memdoc {
+	background: inherit;
+	border-color: #000000;
+}
+
+/*********************************************/
+/**                 Footer                  **/
+/*********************************************/
+
+.titlearea {
+	border-bottom: 1px solid #2b7e83;
+        
+}
+
+/*********************************************/
+/**                 Title                   **/
+/*********************************************/
+
+#titlearea
+{
+        background: #202020;
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+	border-bottom: 3px solid #2b7e83;
+        color: #2b7e83;
+}
+
+/*********************************************/
+/**                 Footer                  **/
+/*********************************************/
+
+#nav-path {
+        background: #2b7e83;
+}
+
+#nav-path ul {
+	background: transparent;
+	color: inherit;
+}
+
+.navpath li.footer {
+	color: inherit;
+}
+
+.navpath li.navelem a {
+	text-shadow: none;
+}
+
+.ui-resizable-handle {
+        background-color: #2b7e83;
+}
+
+/*********************************************/
+/**             Custom scrollbar            **/
+/*********************************************/
+
+::-webkit-scrollbar {
+	width: 10px;
+        background: #202020;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #234567;
+	border: none;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #32363d; 
+}
+
+/***********************************/
+/**            Various            **/
+/***********************************/
+
+h1.glow, h2.glow, h3.glow,
+h4.glow, h5.glow, h6.glow {
+	text-shadow: 0 0 15px #67d8ef;
+}
+
+code a:visited {
+	color: #202020 !important;
+}
+        
+.entry a:visited {
+	color: #202020 !important;
+}
+
+.arrow {
+    color: #2b7e83;
+}
+
+#projectname {
+}
+
+hr {
+	height: 0px;
+	border: none;
+	border-top: 1px solid #2b7e83;
+}
+
+table.markdownTable td, table.markdownTable th {
+	border: 1px solid #2b7e83;
+	padding: 3px 7px 2px;
+}
+
+th.markdownTableHeadLeft, th.markdownTableHeadRight, th.markdownTableHeadCenter, th.markdownTableHeadNone {
+	background-color: #2b7e83;
+	color: #FFFFFF;
+	font-size: 110%;
+	padding-bottom: 4px;
+	padding-top: 5px;
+}
+
+div.directory {
+	margin: 10px 0px;
+	border-top: 1px solid #2b7e83;
+	border-bottom: 1px solid #2b7e83;
+	width: 100%;
+}
+
+table.fieldtable {
+	/*width: 100%;*/
+	margin-bottom: 10px;
+	border: 1px solid #2b7e83;
+}
+
+.fieldtable td.fieldtype, .fieldtable td.fieldname {
+	#202020-space: nowrap;
+	border-right: 1px solid #2b7e83;
+	border-bottom: 1px solid #2b7e83;
+	vertical-align: top;
+}
+
+.fieldtable th {
+        border-bottom: 1px solid #2b7e83;
+}
+
+.fieldtable td.fielddoc {
+	border-bottom: 1px solid #2b7e83;
+	/*width: 100%;*/
+}
+
+body {
+	background: #202020;
+	color: #2b7e83;
+}
+
+
+div.fragment, pre.fragment {
+	border: 1px solid #2b7e83;
+        background: #202020; 
+}
+
+div.header {
+	background: transparent;
+	border-bottom: 1px solid #2b7e83; 
+}
+
+h2.groupheader {
+        border-bottom: 1px solid #2b7e83;
+	color: #2b7e83;
+}
+
+.memtitle {
+	background: #2b7e83 !important;
+	border-color: #000000;
+        color: #202020;
+}
+
+.memitem {
+	background: #2b7e83 !important;
+	color: #202020;
+	text-shadow: none;
+}
+
+.PageDoc a {
+	color: #4665a2 !important;
+        text-decoration: underline;  
+}
+
+.memItemRight a {
+	color: #202020 !important;
+}
+
+.memItemLeft a {
+	color: #202020 !important;
+}
+
+.memname a {
+	color: #202020 !important;
+}
+
+.even {
+	background: #2b7e83 !important;
+	color: #202020 !important;
+}
+
+.even a {
+	color: #202020 !important;
+}
+
+.mdescRight a {
+        color: #202020;
+}
+
+.mdescRight a:visited {
+        color: #202020;
+}
+
+.entry {
+	background: #2b7e83 !important;
+	color: #202020 !important;
+}
+
+.entry a {
+        text-decoration: underline;  
+}
+
+.entry el {
+        color: #202020;
+}
+
+.memdoc a:visited {
+        color: #202020;
+}
+
+.desc {
+	background: #2b7e83 !important;
+	color: #202020 !important;
+}
+
+#row_1_ {border-top: 2px solid #202020;}
+#row_2_ {border-top: 2px solid #202020;}
+#row_3_ {border-top: 2px solid #202020;}
+#row_4_ {border-top: 2px solid #202020;}
+#row_5_ {border-top: 2px solid #202020;}
+#row_6_ {border-top: 2px solid #202020;}
+#row_7_ {border-top: 2px solid #202020;}
+#row_8_ {border-top: 2px solid #202020;}
+#row_9_ {border-top: 2px solid #202020;}
+#row_10_ {border-top: 2px solid #202020;}
+#row_11_ {border-top: 2px solid #202020;}
+#row_12_ {border-top: 2px solid #202020;}
+#row_13_ {border-top: 2px solid #202020;}
+#row_14_ {border-top: 2px solid #202020;}
+#row_15_ {border-top: 2px solid #202020;}
+#row_16_ {border-top: 2px solid #202020;}
+#row_17_ {border-top: 2px solid #202020;}
+#row_18_ {border-top: 2px solid #202020;}
+#row_19_ {border-top: 2px solid #202020;}
+#row_20_ {border-top: 2px solid #202020;}
+#row_21_ {border-top: 2px solid #202020;}
+#row_22_ {border-top: 2px solid #202020;}
+#row_23_ {border-top: 2px solid #202020;}
+#row_24_ {border-top: 2px solid #202020;}
+#row_25_ {border-top: 2px solid #202020;}
+#row_26_ {border-top: 2px solid #202020;}
+#row_27_ {border-top: 2px solid #202020;}
+#row_28_ {border-top: 2px solid #202020;}
+#row_29_ {border-top: 2px solid #202020;}
+#row_30_ {border-top: 2px solid #202020;}
+#row_31_ {border-top: 2px solid #202020;}
+#row_32_ {border-top: 2px solid #202020;}
+#row_33_ {border-top: 2px solid #202020;}
+#row_34_ {border-top: 2px solid #202020;}
+#row_35_ {border-top: 2px solid #202020;}
+#row_36_ {border-top: 2px solid #202020;}
+#row_37_ {border-top: 2px solid #202020;}
+#row_38_ {border-top: 2px solid #202020;}
+#row_39_ {border-top: 2px solid #202020;}
+#row_40_ {border-top: 2px solid #202020;}
+#row_41_ {border-top: 2px solid #202020;}
+#row_42_ {border-top: 2px solid #202020;}
+#row_43_ {border-top: 2px solid #202020;}
+#row_44_ {border-top: 2px solid #202020;}
+#row_45_ {border-top: 2px solid #202020;}
+#row_46_ {border-top: 2px solid #202020;}
+#row_47_ {border-top: 2px solid #202020;}
+#row_48_ {border-top: 2px solid #202020;}
+#row_49_ {border-top: 2px solid #202020;}
+#row_50_ {border-top: 2px solid #202020;}
+#row_51_ {border-top: 2px solid #202020;}
+#row_52_ {border-top: 2px solid #202020;}
+#row_53_ {border-top: 2px solid #202020;}
+#row_54_ {border-top: 2px solid #202020;}
+#row_55_ {border-top: 2px solid #202020;}
+#row_56_ {border-top: 2px solid #202020;}
+#row_57_ {border-top: 2px solid #202020;}
+#row_58_ {border-top: 2px solid #202020;}
+#row_59_ {border-top: 2px solid #202020;}
+#row_60_ {border-top: 2px solid #202020;}
+#row_61_ {border-top: 2px solid #202020;}
+#row_62_ {border-top: 2px solid #202020;}
+#row_63_ {border-top: 2px solid #202020;}
+#row_64_ {border-top: 2px solid #202020;}
+#row_65_ {border-top: 2px solid #202020;}
+#row_66_ {border-top: 2px solid #202020;}
+#row_67_ {border-top: 2px solid #202020;}
+#row_68_ {border-top: 2px solid #202020;}
+#row_69_ {border-top: 2px solid #202020;}
+#row_70_ {border-top: 2px solid #202020;}
+#row_71_ {border-top: 2px solid #202020;}
+#row_72_ {border-top: 2px solid #202020;}
+#row_73_ {border-top: 2px solid #202020;}
+#row_74_ {border-top: 2px solid #202020;}
+#row_75_ {border-top: 2px solid #202020;}
+#row_76_ {border-top: 2px solid #202020;}
+#row_77_ {border-top: 2px solid #202020;}
+#row_78_ {border-top: 2px solid #202020;}
+#row_79_ {border-top: 2px solid #202020;}
+#row_80_ {border-top: 2px solid #202020;}
+#row_81_ {border-top: 2px solid #202020;}
+#row_82_ {border-top: 2px solid #202020;}
+#row_83_ {border-top: 2px solid #202020;}
+#row_84_ {border-top: 2px solid #202020;}
+#row_85_ {border-top: 2px solid #202020;}
+#row_86_ {border-top: 2px solid #202020;}
+#row_87_ {border-top: 2px solid #202020;}
+#row_88_ {border-top: 2px solid #202020;}
+#row_89_ {border-top: 2px solid #202020;}
+#row_90_ {border-top: 2px solid #202020;}
+#row_91_ {border-top: 2px solid #202020;}
+#row_92_ {border-top: 2px solid #202020;}
+#row_93_ {border-top: 2px solid #202020;}
+#row_94_ {border-top: 2px solid #202020;}
+#row_95_ {border-top: 2px solid #202020;}
+#row_96_ {border-top: 2px solid #202020;}
+#row_97_ {border-top: 2px solid #202020;}
+#row_98_ {border-top: 2px solid #202020;}
+#row_99_ {border-top: 2px solid #202020;}
+#row_100_ {border-top: 2px solid #202020;}
+#row_101_ {border-top: 2px solid #202020;}
+#row_102_ {border-top: 2px solid #202020;}
+#row_103_ {border-top: 2px solid #202020;}
+#row_104_ {border-top: 2px solid #202020;}
+#row_105_ {border-top: 2px solid #202020;}
+#row_106_ {border-top: 2px solid #202020;}
+#row_107_ {border-top: 2px solid #202020;}
+#row_108_ {border-top: 2px solid #202020;}
+#row_109_ {border-top: 2px solid #202020;}
+#row_110_ {border-top: 2px solid #202020;}
+#row_111_ {border-top: 2px solid #202020;}
+#row_112_ {border-top: 2px solid #202020;}
+#row_113_ {border-top: 2px solid #202020;}
+#row_114_ {border-top: 2px solid #202020;}
+#row_115_ {border-top: 2px solid #202020;}
+#row_116_ {border-top: 2px solid #202020;}
+#row_117_ {border-top: 2px solid #202020;}
+#row_118_ {border-top: 2px solid #202020;}
+#row_119_ {border-top: 2px solid #202020;}
+#row_120_ {border-top: 2px solid #202020;}
+#row_121_ {border-top: 2px solid #202020;}
+#row_122_ {border-top: 2px solid #202020;}
+#row_123_ {border-top: 2px solid #202020;}
+#row_124_ {border-top: 2px solid #202020;}
+#row_125_ {border-top: 2px solid #202020;}
+#row_126_ {border-top: 2px solid #202020;}
+#row_127_ {border-top: 2px solid #202020;}
+#row_128_ {border-top: 2px solid #202020;}
+#row_129_ {border-top: 2px solid #202020;}
+#row_130_ {border-top: 2px solid #202020;}
+#row_131_ {border-top: 2px solid #202020;}
+#row_132_ {border-top: 2px solid #202020;}
+#row_133_ {border-top: 2px solid #202020;}
+#row_134_ {border-top: 2px solid #202020;}
+#row_135_ {border-top: 2px solid #202020;}
+#row_136_ {border-top: 2px solid #202020;}
+#row_137_ {border-top: 2px solid #202020;}
+#row_138_ {border-top: 2px solid #202020;}
+#row_139_ {border-top: 2px solid #202020;}
+#row_140_ {border-top: 2px solid #202020;}
+#row_141_ {border-top: 2px solid #202020;}
+#row_142_ {border-top: 2px solid #202020;}
+#row_143_ {border-top: 2px solid #202020;}
+#row_144_ {border-top: 2px solid #202020;}
+#row_145_ {border-top: 2px solid #202020;}
+#row_146_ {border-top: 2px solid #202020;}
+#row_147_ {border-top: 2px solid #202020;}
+#row_148_ {border-top: 2px solid #202020;}
+#row_149_ {border-top: 2px solid #202020;}
+#row_150_ {border-top: 2px solid #202020;}
+#row_151_ {border-top: 2px solid #202020;}
+#row_152_ {border-top: 2px solid #202020;}
+#row_153_ {border-top: 2px solid #202020;}
+#row_154_ {border-top: 2px solid #202020;}
+#row_155_ {border-top: 2px solid #202020;}
+#row_156_ {border-top: 2px solid #202020;}
+#row_157_ {border-top: 2px solid #202020;}
+#row_158_ {border-top: 2px solid #202020;}
+#row_159_ {border-top: 2px solid #202020;}
+#row_160_ {border-top: 2px solid #202020;}
+#row_161_ {border-top: 2px solid #202020;}
+#row_162_ {border-top: 2px solid #202020;}
+#row_163_ {border-top: 2px solid #202020;}
+#row_164_ {border-top: 2px solid #202020;}
+#row_165_ {border-top: 2px solid #202020;}
+#row_166_ {border-top: 2px solid #202020;}
+#row_167_ {border-top: 2px solid #202020;}
+#row_168_ {border-top: 2px solid #202020;}
+#row_169_ {border-top: 2px solid #202020;}
+#row_170_ {border-top: 2px solid #202020;}
+#row_171_ {border-top: 2px solid #202020;}
+#row_172_ {border-top: 2px solid #202020;}
+#row_173_ {border-top: 2px solid #202020;}
+#row_174_ {border-top: 2px solid #202020;}
+#row_175_ {border-top: 2px solid #202020;}
+#row_176_ {border-top: 2px solid #202020;}
+#row_177_ {border-top: 2px solid #202020;}
+#row_178_ {border-top: 2px solid #202020;}
+#row_179_ {border-top: 2px solid #202020;}
+#row_180_ {border-top: 2px solid #202020;}
+#row_181_ {border-top: 2px solid #202020;}
+#row_182_ {border-top: 2px solid #202020;}
+#row_183_ {border-top: 2px solid #202020;}
+#row_184_ {border-top: 2px solid #202020;}
+#row_185_ {border-top: 2px solid #202020;}
+#row_186_ {border-top: 2px solid #202020;}
+#row_187_ {border-top: 2px solid #202020;}
+#row_188_ {border-top: 2px solid #202020;}
+#row_189_ {border-top: 2px solid #202020;}
+#row_190_ {border-top: 2px solid #202020;}
+#row_191_ {border-top: 2px solid #202020;}
+#row_192_ {border-top: 2px solid #202020;}
+#row_193_ {border-top: 2px solid #202020;}
+#row_194_ {border-top: 2px solid #202020;}
+#row_195_ {border-top: 2px solid #202020;}
+#row_196_ {border-top: 2px solid #202020;}
+#row_197_ {border-top: 2px solid #202020;}
+#row_198_ {border-top: 2px solid #202020;}
+#row_199_ {border-top: 2px solid #202020;}
+#row_200_ {border-top: 2px solid #202020;}
+#row_201_ {border-top: 2px solid #202020;}
+#row_202_ {border-top: 2px solid #202020;}
+#row_203_ {border-top: 2px solid #202020;}
+#row_204_ {border-top: 2px solid #202020;}
+#row_205_ {border-top: 2px solid #202020;}
+#row_206_ {border-top: 2px solid #202020;}
+#row_207_ {border-top: 2px solid #202020;}
+#row_208_ {border-top: 2px solid #202020;}
+#row_209_ {border-top: 2px solid #202020;}
+#row_210_ {border-top: 2px solid #202020;}
+#row_211_ {border-top: 2px solid #202020;}
+#row_212_ {border-top: 2px solid #202020;}
+#row_213_ {border-top: 2px solid #202020;}
+#row_214_ {border-top: 2px solid #202020;}
+#row_215_ {border-top: 2px solid #202020;}
+#row_216_ {border-top: 2px solid #202020;}
+#row_217_ {border-top: 2px solid #202020;}
+#row_218_ {border-top: 2px solid #202020;}
+#row_219_ {border-top: 2px solid #202020;}
+#row_220_ {border-top: 2px solid #202020;}
+#row_221_ {border-top: 2px solid #202020;}
+#row_222_ {border-top: 2px solid #202020;}
+#row_223_ {border-top: 2px solid #202020;}
+#row_224_ {border-top: 2px solid #202020;}
+#row_225_ {border-top: 2px solid #202020;}
+#row_226_ {border-top: 2px solid #202020;}
+#row_227_ {border-top: 2px solid #202020;}
+#row_228_ {border-top: 2px solid #202020;}
+#row_229_ {border-top: 2px solid #202020;}
+#row_230_ {border-top: 2px solid #202020;}
+#row_231_ {border-top: 2px solid #202020;}
+#row_232_ {border-top: 2px solid #202020;}
+#row_233_ {border-top: 2px solid #202020;}
+#row_234_ {border-top: 2px solid #202020;}
+#row_235_ {border-top: 2px solid #202020;}
+#row_236_ {border-top: 2px solid #202020;}
+#row_237_ {border-top: 2px solid #202020;}
+#row_238_ {border-top: 2px solid #202020;}
+#row_239_ {border-top: 2px solid #202020;}
+#row_240_ {border-top: 2px solid #202020;}
+#row_241_ {border-top: 2px solid #202020;}
+#row_242_ {border-top: 2px solid #202020;}
+#row_243_ {border-top: 2px solid #202020;}
+#row_244_ {border-top: 2px solid #202020;}
+#row_245_ {border-top: 2px solid #202020;}
+#row_246_ {border-top: 2px solid #202020;}
+#row_247_ {border-top: 2px solid #202020;}
+#row_248_ {border-top: 2px solid #202020;}
+#row_249_ {border-top: 2px solid #202020;}
+#row_250_ {border-top: 2px solid #202020;}
+#row_251_ {border-top: 2px solid #202020;}
+#row_252_ {border-top: 2px solid #202020;}
+#row_253_ {border-top: 2px solid #202020;}
+#row_254_ {border-top: 2px solid #202020;}
+#row_255_ {border-top: 2px solid #202020;}
+#row_256_ {border-top: 2px solid #202020;}
+#row_257_ {border-top: 2px solid #202020;}
+#row_258_ {border-top: 2px solid #202020;}
+#row_259_ {border-top: 2px solid #202020;}
+#row_260_ {border-top: 2px solid #202020;}
+#row_261_ {border-top: 2px solid #202020;}
+#row_262_ {border-top: 2px solid #202020;}
+#row_263_ {border-top: 2px solid #202020;}
+#row_264_ {border-top: 2px solid #202020;}
+#row_265_ {border-top: 2px solid #202020;}
+#row_266_ {border-top: 2px solid #202020;}
+#row_267_ {border-top: 2px solid #202020;}
+#row_268_ {border-top: 2px solid #202020;}
+#row_269_ {border-top: 2px solid #202020;}
+#row_270_ {border-top: 2px solid #202020;}
+#row_271_ {border-top: 2px solid #202020;}
+#row_272_ {border-top: 2px solid #202020;}
+#row_273_ {border-top: 2px solid #202020;}
+#row_274_ {border-top: 2px solid #202020;}
+#row_275_ {border-top: 2px solid #202020;}
+#row_276_ {border-top: 2px solid #202020;}
+#row_277_ {border-top: 2px solid #202020;}
+#row_278_ {border-top: 2px solid #202020;}
+#row_279_ {border-top: 2px solid #202020;}
+#row_280_ {border-top: 2px solid #202020;}
+#row_281_ {border-top: 2px solid #202020;}
+#row_282_ {border-top: 2px solid #202020;}
+#row_283_ {border-top: 2px solid #202020;}
+#row_284_ {border-top: 2px solid #202020;}
+#row_285_ {border-top: 2px solid #202020;}
+#row_286_ {border-top: 2px solid #202020;}
+#row_287_ {border-top: 2px solid #202020;}
+#row_288_ {border-top: 2px solid #202020;}
+#row_289_ {border-top: 2px solid #202020;}
+#row_290_ {border-top: 2px solid #202020;}
+#row_291_ {border-top: 2px solid #202020;}
+#row_292_ {border-top: 2px solid #202020;}
+#row_293_ {border-top: 2px solid #202020;}
+#row_294_ {border-top: 2px solid #202020;}
+#row_295_ {border-top: 2px solid #202020;}
+#row_296_ {border-top: 2px solid #202020;}
+#row_297_ {border-top: 2px solid #202020;}
+#row_298_ {border-top: 2px solid #202020;}
+#row_299_ {border-top: 2px solid #202020;}
+#row_300_ {border-top: 2px solid #202020;}
+#row_301_ {border-top: 2px solid #202020;}
+#row_302_ {border-top: 2px solid #202020;}
+#row_303_ {border-top: 2px solid #202020;}
+#row_304_ {border-top: 2px solid #202020;}
+#row_305_ {border-top: 2px solid #202020;}
+#row_306_ {border-top: 2px solid #202020;}
+#row_307_ {border-top: 2px solid #202020;}
+#row_308_ {border-top: 2px solid #202020;}
+#row_309_ {border-top: 2px solid #202020;}
+#row_310_ {border-top: 2px solid #202020;}
+#row_311_ {border-top: 2px solid #202020;}
+#row_312_ {border-top: 2px solid #202020;}
+#row_313_ {border-top: 2px solid #202020;}
+#row_314_ {border-top: 2px solid #202020;}
+#row_315_ {border-top: 2px solid #202020;}
+#row_316_ {border-top: 2px solid #202020;}
+#row_317_ {border-top: 2px solid #202020;}
+#row_318_ {border-top: 2px solid #202020;}
+#row_319_ {border-top: 2px solid #202020;}
+#row_320_ {border-top: 2px solid #202020;}
+#row_321_ {border-top: 2px solid #202020;}
+#row_322_ {border-top: 2px solid #202020;}
+#row_323_ {border-top: 2px solid #202020;}
+#row_324_ {border-top: 2px solid #202020;}
+#row_325_ {border-top: 2px solid #202020;}
+#row_326_ {border-top: 2px solid #202020;}
+#row_327_ {border-top: 2px solid #202020;}
+#row_328_ {border-top: 2px solid #202020;}
+#row_329_ {border-top: 2px solid #202020;}
+#row_330_ {border-top: 2px solid #202020;}
+#row_331_ {border-top: 2px solid #202020;}
+#row_332_ {border-top: 2px solid #202020;}
+#row_333_ {border-top: 2px solid #202020;}
+#row_334_ {border-top: 2px solid #202020;}
+#row_335_ {border-top: 2px solid #202020;}
+#row_336_ {border-top: 2px solid #202020;}
+#row_337_ {border-top: 2px solid #202020;}
+#row_338_ {border-top: 2px solid #202020;}
+#row_339_ {border-top: 2px solid #202020;}
+#row_340_ {border-top: 2px solid #202020;}
+#row_341_ {border-top: 2px solid #202020;}
+#row_342_ {border-top: 2px solid #202020;}
+#row_343_ {border-top: 2px solid #202020;}
+#row_344_ {border-top: 2px solid #202020;}
+#row_345_ {border-top: 2px solid #202020;}
+#row_346_ {border-top: 2px solid #202020;}
+#row_347_ {border-top: 2px solid #202020;}
+#row_348_ {border-top: 2px solid #202020;}
+#row_349_ {border-top: 2px solid #202020;}
+#row_350_ {border-top: 2px solid #202020;}
+#row_351_ {border-top: 2px solid #202020;}
+#row_352_ {border-top: 2px solid #202020;}
+#row_353_ {border-top: 2px solid #202020;}
+#row_354_ {border-top: 2px solid #202020;}
+#row_355_ {border-top: 2px solid #202020;}
+#row_356_ {border-top: 2px solid #202020;}
+#row_357_ {border-top: 2px solid #202020;}
+#row_358_ {border-top: 2px solid #202020;}
+#row_359_ {border-top: 2px solid #202020;}
+#row_360_ {border-top: 2px solid #202020;}
+#row_361_ {border-top: 2px solid #202020;}
+#row_362_ {border-top: 2px solid #202020;}
+#row_363_ {border-top: 2px solid #202020;}
+#row_364_ {border-top: 2px solid #202020;}
+#row_365_ {border-top: 2px solid #202020;}
+#row_366_ {border-top: 2px solid #202020;}
+#row_367_ {border-top: 2px solid #202020;}
+#row_368_ {border-top: 2px solid #202020;}
+#row_369_ {border-top: 2px solid #202020;}
+#row_370_ {border-top: 2px solid #202020;}
+#row_371_ {border-top: 2px solid #202020;}
+#row_372_ {border-top: 2px solid #202020;}
+#row_373_ {border-top: 2px solid #202020;}
+#row_374_ {border-top: 2px solid #202020;}
+#row_375_ {border-top: 2px solid #202020;}
+#row_376_ {border-top: 2px solid #202020;}
+#row_377_ {border-top: 2px solid #202020;}
+#row_378_ {border-top: 2px solid #202020;}
+#row_379_ {border-top: 2px solid #202020;}
+#row_380_ {border-top: 2px solid #202020;}
+#row_381_ {border-top: 2px solid #202020;}
+#row_382_ {border-top: 2px solid #202020;}
+#row_383_ {border-top: 2px solid #202020;}
+#row_384_ {border-top: 2px solid #202020;}
+#row_385_ {border-top: 2px solid #202020;}
+#row_386_ {border-top: 2px solid #202020;}
+#row_387_ {border-top: 2px solid #202020;}
+#row_388_ {border-top: 2px solid #202020;}
+#row_389_ {border-top: 2px solid #202020;}
+#row_390_ {border-top: 2px solid #202020;}
+#row_391_ {border-top: 2px solid #202020;}
+#row_392_ {border-top: 2px solid #202020;}
+#row_393_ {border-top: 2px solid #202020;}
+#row_394_ {border-top: 2px solid #202020;}
+#row_395_ {border-top: 2px solid #202020;}
+#row_396_ {border-top: 2px solid #202020;}
+#row_397_ {border-top: 2px solid #202020;}
+#row_398_ {border-top: 2px solid #202020;}
+#row_399_ {border-top: 2px solid #202020;}
+#row_400_ {border-top: 2px solid #202020;}
+#row_401_ {border-top: 2px solid #202020;}
+#row_402_ {border-top: 2px solid #202020;}
+#row_403_ {border-top: 2px solid #202020;}
+#row_404_ {border-top: 2px solid #202020;}
+#row_405_ {border-top: 2px solid #202020;}
+#row_406_ {border-top: 2px solid #202020;}
+#row_407_ {border-top: 2px solid #202020;}
+#row_408_ {border-top: 2px solid #202020;}
+#row_409_ {border-top: 2px solid #202020;}
+#row_410_ {border-top: 2px solid #202020;}
+#row_411_ {border-top: 2px solid #202020;}
+#row_412_ {border-top: 2px solid #202020;}
+#row_413_ {border-top: 2px solid #202020;}
+#row_414_ {border-top: 2px solid #202020;}
+#row_415_ {border-top: 2px solid #202020;}
+#row_416_ {border-top: 2px solid #202020;}
+#row_417_ {border-top: 2px solid #202020;}
+#row_418_ {border-top: 2px solid #202020;}
+#row_419_ {border-top: 2px solid #202020;}
+#row_420_ {border-top: 2px solid #202020;}
+#row_421_ {border-top: 2px solid #202020;}
+#row_422_ {border-top: 2px solid #202020;}
+#row_423_ {border-top: 2px solid #202020;}
+#row_424_ {border-top: 2px solid #202020;}
+#row_425_ {border-top: 2px solid #202020;}
+#row_426_ {border-top: 2px solid #202020;}
+#row_427_ {border-top: 2px solid #202020;}
+#row_428_ {border-top: 2px solid #202020;}
+#row_429_ {border-top: 2px solid #202020;}
+#row_430_ {border-top: 2px solid #202020;}
+#row_431_ {border-top: 2px solid #202020;}
+#row_432_ {border-top: 2px solid #202020;}
+#row_433_ {border-top: 2px solid #202020;}
+#row_434_ {border-top: 2px solid #202020;}
+#row_435_ {border-top: 2px solid #202020;}
+#row_436_ {border-top: 2px solid #202020;}
+#row_437_ {border-top: 2px solid #202020;}
+#row_438_ {border-top: 2px solid #202020;}
+#row_439_ {border-top: 2px solid #202020;}
+#row_440_ {border-top: 2px solid #202020;}
+#row_441_ {border-top: 2px solid #202020;}
+#row_442_ {border-top: 2px solid #202020;}
+#row_443_ {border-top: 2px solid #202020;}
+#row_444_ {border-top: 2px solid #202020;}
+#row_445_ {border-top: 2px solid #202020;}
+#row_446_ {border-top: 2px solid #202020;}
+#row_447_ {border-top: 2px solid #202020;}
+#row_448_ {border-top: 2px solid #202020;}
+#row_449_ {border-top: 2px solid #202020;}
+#row_450_ {border-top: 2px solid #202020;}
+#row_451_ {border-top: 2px solid #202020;}
+#row_452_ {border-top: 2px solid #202020;}
+#row_453_ {border-top: 2px solid #202020;}
+#row_454_ {border-top: 2px solid #202020;}
+#row_455_ {border-top: 2px solid #202020;}
+#row_456_ {border-top: 2px solid #202020;}
+#row_457_ {border-top: 2px solid #202020;}
+#row_458_ {border-top: 2px solid #202020;}
+#row_459_ {border-top: 2px solid #202020;}
+#row_460_ {border-top: 2px solid #202020;}
+#row_461_ {border-top: 2px solid #202020;}
+#row_462_ {border-top: 2px solid #202020;}
+#row_463_ {border-top: 2px solid #202020;}
+#row_464_ {border-top: 2px solid #202020;}
+#row_465_ {border-top: 2px solid #202020;}
+#row_466_ {border-top: 2px solid #202020;}
+#row_467_ {border-top: 2px solid #202020;}
+#row_468_ {border-top: 2px solid #202020;}
+#row_469_ {border-top: 2px solid #202020;}
+#row_470_ {border-top: 2px solid #202020;}
+#row_471_ {border-top: 2px solid #202020;}
+#row_472_ {border-top: 2px solid #202020;}
+#row_473_ {border-top: 2px solid #202020;}
+#row_474_ {border-top: 2px solid #202020;}
+#row_475_ {border-top: 2px solid #202020;}
+#row_476_ {border-top: 2px solid #202020;}
+#row_477_ {border-top: 2px solid #202020;}
+#row_478_ {border-top: 2px solid #202020;}
+#row_479_ {border-top: 2px solid #202020;}
+#row_480_ {border-top: 2px solid #202020;}
+#row_481_ {border-top: 2px solid #202020;}
+#row_482_ {border-top: 2px solid #202020;}
+#row_483_ {border-top: 2px solid #202020;}
+#row_484_ {border-top: 2px solid #202020;}
+#row_485_ {border-top: 2px solid #202020;}
+#row_486_ {border-top: 2px solid #202020;}
+#row_487_ {border-top: 2px solid #202020;}
+#row_488_ {border-top: 2px solid #202020;}
+#row_489_ {border-top: 2px solid #202020;}
+#row_490_ {border-top: 2px solid #202020;}
+#row_491_ {border-top: 2px solid #202020;}
+#row_492_ {border-top: 2px solid #202020;}
+#row_493_ {border-top: 2px solid #202020;}
+#row_494_ {border-top: 2px solid #202020;}
+#row_495_ {border-top: 2px solid #202020;}
+#row_496_ {border-top: 2px solid #202020;}
+#row_497_ {border-top: 2px solid #202020;}
+#row_498_ {border-top: 2px solid #202020;}
+#row_499_ {border-top: 2px solid #202020;}
+#row_500_ {border-top: 2px solid #202020;}
+#row_501_ {border-top: 2px solid #202020;}
+#row_502_ {border-top: 2px solid #202020;}
+#row_503_ {border-top: 2px solid #202020;}
+#row_504_ {border-top: 2px solid #202020;}
+#row_505_ {border-top: 2px solid #202020;}
+#row_506_ {border-top: 2px solid #202020;}
+#row_507_ {border-top: 2px solid #202020;}
+#row_508_ {border-top: 2px solid #202020;}
+#row_509_ {border-top: 2px solid #202020;}
+#row_510_ {border-top: 2px solid #202020;}
+#row_511_ {border-top: 2px solid #202020;}
+#row_512_ {border-top: 2px solid #202020;}
+#row_513_ {border-top: 2px solid #202020;}
+#row_514_ {border-top: 2px solid #202020;}
+#row_515_ {border-top: 2px solid #202020;}
+#row_516_ {border-top: 2px solid #202020;}
+#row_517_ {border-top: 2px solid #202020;}
+#row_518_ {border-top: 2px solid #202020;}
+#row_519_ {border-top: 2px solid #202020;}
+#row_520_ {border-top: 2px solid #202020;}
+#row_521_ {border-top: 2px solid #202020;}
+#row_522_ {border-top: 2px solid #202020;}
+#row_523_ {border-top: 2px solid #202020;}
+#row_524_ {border-top: 2px solid #202020;}
+#row_525_ {border-top: 2px solid #202020;}
+#row_526_ {border-top: 2px solid #202020;}
+#row_527_ {border-top: 2px solid #202020;}
+#row_528_ {border-top: 2px solid #202020;}
+#row_529_ {border-top: 2px solid #202020;}
+#row_530_ {border-top: 2px solid #202020;}
+#row_531_ {border-top: 2px solid #202020;}
+#row_532_ {border-top: 2px solid #202020;}
+#row_533_ {border-top: 2px solid #202020;}
+#row_534_ {border-top: 2px solid #202020;}
+#row_535_ {border-top: 2px solid #202020;}
+#row_536_ {border-top: 2px solid #202020;}
+#row_537_ {border-top: 2px solid #202020;}
+#row_538_ {border-top: 2px solid #202020;}
+#row_539_ {border-top: 2px solid #202020;}
+#row_540_ {border-top: 2px solid #202020;}
+#row_541_ {border-top: 2px solid #202020;}
+#row_542_ {border-top: 2px solid #202020;}
+#row_543_ {border-top: 2px solid #202020;}
+#row_544_ {border-top: 2px solid #202020;}
+#row_545_ {border-top: 2px solid #202020;}
+#row_546_ {border-top: 2px solid #202020;}
+#row_547_ {border-top: 2px solid #202020;}
+#row_548_ {border-top: 2px solid #202020;}
+#row_549_ {border-top: 2px solid #202020;}
+#row_550_ {border-top: 2px solid #202020;}
+#row_551_ {border-top: 2px solid #202020;}
+#row_552_ {border-top: 2px solid #202020;}
+#row_553_ {border-top: 2px solid #202020;}
+#row_554_ {border-top: 2px solid #202020;}
+#row_555_ {border-top: 2px solid #202020;}
+#row_556_ {border-top: 2px solid #202020;}
+#row_557_ {border-top: 2px solid #202020;}
+#row_558_ {border-top: 2px solid #202020;}
+#row_559_ {border-top: 2px solid #202020;}
+#row_560_ {border-top: 2px solid #202020;}
+#row_561_ {border-top: 2px solid #202020;}
+#row_562_ {border-top: 2px solid #202020;}
+#row_563_ {border-top: 2px solid #202020;}
+#row_564_ {border-top: 2px solid #202020;}
+#row_565_ {border-top: 2px solid #202020;}
+#row_566_ {border-top: 2px solid #202020;}
+#row_567_ {border-top: 2px solid #202020;}
+#row_568_ {border-top: 2px solid #202020;}
+#row_569_ {border-top: 2px solid #202020;}
+#row_570_ {border-top: 2px solid #202020;}
+#row_571_ {border-top: 2px solid #202020;}
+#row_572_ {border-top: 2px solid #202020;}
+#row_573_ {border-top: 2px solid #202020;}
+#row_574_ {border-top: 2px solid #202020;}
+#row_575_ {border-top: 2px solid #202020;}
+#row_576_ {border-top: 2px solid #202020;}
+#row_577_ {border-top: 2px solid #202020;}
+#row_578_ {border-top: 2px solid #202020;}
+#row_579_ {border-top: 2px solid #202020;}
+#row_580_ {border-top: 2px solid #202020;}
+#row_581_ {border-top: 2px solid #202020;}
+#row_582_ {border-top: 2px solid #202020;}
+#row_583_ {border-top: 2px solid #202020;}
+#row_584_ {border-top: 2px solid #202020;}
+#row_585_ {border-top: 2px solid #202020;}
+#row_586_ {border-top: 2px solid #202020;}
+#row_587_ {border-top: 2px solid #202020;}
+#row_588_ {border-top: 2px solid #202020;}
+#row_589_ {border-top: 2px solid #202020;}
+#row_590_ {border-top: 2px solid #202020;}
+#row_591_ {border-top: 2px solid #202020;}
+#row_592_ {border-top: 2px solid #202020;}
+#row_593_ {border-top: 2px solid #202020;}
+#row_594_ {border-top: 2px solid #202020;}
+#row_595_ {border-top: 2px solid #202020;}
+#row_596_ {border-top: 2px solid #202020;}
+#row_597_ {border-top: 2px solid #202020;}
+#row_598_ {border-top: 2px solid #202020;}
+#row_599_ {border-top: 2px solid #202020;}
+#row_600_ {border-top: 2px solid #202020;}
+#row_601_ {border-top: 2px solid #202020;}
+#row_602_ {border-top: 2px solid #202020;}
+#row_603_ {border-top: 2px solid #202020;}
+#row_604_ {border-top: 2px solid #202020;}
+#row_605_ {border-top: 2px solid #202020;}
+#row_606_ {border-top: 2px solid #202020;}
+#row_607_ {border-top: 2px solid #202020;}
+#row_608_ {border-top: 2px solid #202020;}
+#row_609_ {border-top: 2px solid #202020;}
+#row_610_ {border-top: 2px solid #202020;}
+#row_611_ {border-top: 2px solid #202020;}
+#row_612_ {border-top: 2px solid #202020;}
+#row_613_ {border-top: 2px solid #202020;}
+#row_614_ {border-top: 2px solid #202020;}
+#row_615_ {border-top: 2px solid #202020;}
+#row_616_ {border-top: 2px solid #202020;}
+#row_617_ {border-top: 2px solid #202020;}
+#row_618_ {border-top: 2px solid #202020;}
+#row_619_ {border-top: 2px solid #202020;}
+#row_620_ {border-top: 2px solid #202020;}
+#row_621_ {border-top: 2px solid #202020;}
+#row_622_ {border-top: 2px solid #202020;}
+#row_623_ {border-top: 2px solid #202020;}
+#row_624_ {border-top: 2px solid #202020;}
+#row_625_ {border-top: 2px solid #202020;}
+#row_626_ {border-top: 2px solid #202020;}
+#row_627_ {border-top: 2px solid #202020;}
+#row_628_ {border-top: 2px solid #202020;}
+#row_629_ {border-top: 2px solid #202020;}
+#row_630_ {border-top: 2px solid #202020;}
+#row_631_ {border-top: 2px solid #202020;}
+#row_632_ {border-top: 2px solid #202020;}
+#row_633_ {border-top: 2px solid #202020;}
+#row_634_ {border-top: 2px solid #202020;}
+#row_635_ {border-top: 2px solid #202020;}
+#row_636_ {border-top: 2px solid #202020;}
+#row_637_ {border-top: 2px solid #202020;}
+#row_638_ {border-top: 2px solid #202020;}
+#row_639_ {border-top: 2px solid #202020;}
+#row_640_ {border-top: 2px solid #202020;}
+#row_641_ {border-top: 2px solid #202020;}
+#row_642_ {border-top: 2px solid #202020;}
+#row_643_ {border-top: 2px solid #202020;}
+#row_644_ {border-top: 2px solid #202020;}
+#row_645_ {border-top: 2px solid #202020;}
+#row_646_ {border-top: 2px solid #202020;}
+#row_647_ {border-top: 2px solid #202020;}
+#row_648_ {border-top: 2px solid #202020;}
+#row_649_ {border-top: 2px solid #202020;}
+#row_650_ {border-top: 2px solid #202020;}
+#row_651_ {border-top: 2px solid #202020;}
+#row_652_ {border-top: 2px solid #202020;}
+#row_653_ {border-top: 2px solid #202020;}
+#row_654_ {border-top: 2px solid #202020;}
+#row_655_ {border-top: 2px solid #202020;}
+#row_656_ {border-top: 2px solid #202020;}
+#row_657_ {border-top: 2px solid #202020;}
+#row_658_ {border-top: 2px solid #202020;}
+#row_659_ {border-top: 2px solid #202020;}
+#row_660_ {border-top: 2px solid #202020;}
+#row_661_ {border-top: 2px solid #202020;}
+#row_662_ {border-top: 2px solid #202020;}
+#row_663_ {border-top: 2px solid #202020;}
+#row_664_ {border-top: 2px solid #202020;}
+#row_665_ {border-top: 2px solid #202020;}
+#row_666_ {border-top: 2px solid #202020;}
+#row_667_ {border-top: 2px solid #202020;}
+#row_668_ {border-top: 2px solid #202020;}
+#row_669_ {border-top: 2px solid #202020;}
+#row_670_ {border-top: 2px solid #202020;}
+#row_671_ {border-top: 2px solid #202020;}
+#row_672_ {border-top: 2px solid #202020;}
+#row_673_ {border-top: 2px solid #202020;}
+#row_674_ {border-top: 2px solid #202020;}
+#row_675_ {border-top: 2px solid #202020;}
+#row_676_ {border-top: 2px solid #202020;}
+#row_677_ {border-top: 2px solid #202020;}
+#row_678_ {border-top: 2px solid #202020;}
+#row_679_ {border-top: 2px solid #202020;}
+#row_680_ {border-top: 2px solid #202020;}
+#row_681_ {border-top: 2px solid #202020;}
+#row_682_ {border-top: 2px solid #202020;}
+#row_683_ {border-top: 2px solid #202020;}
+#row_684_ {border-top: 2px solid #202020;}
+#row_685_ {border-top: 2px solid #202020;}
+#row_686_ {border-top: 2px solid #202020;}
+#row_687_ {border-top: 2px solid #202020;}
+#row_688_ {border-top: 2px solid #202020;}
+#row_689_ {border-top: 2px solid #202020;}
+#row_690_ {border-top: 2px solid #202020;}
+#row_691_ {border-top: 2px solid #202020;}
+#row_692_ {border-top: 2px solid #202020;}
+#row_693_ {border-top: 2px solid #202020;}
+#row_694_ {border-top: 2px solid #202020;}
+#row_695_ {border-top: 2px solid #202020;}
+#row_696_ {border-top: 2px solid #202020;}
+#row_697_ {border-top: 2px solid #202020;}
+#row_698_ {border-top: 2px solid #202020;}
+#row_699_ {border-top: 2px solid #202020;}
+#row_700_ {border-top: 2px solid #202020;}
+#row_701_ {border-top: 2px solid #202020;}
+#row_702_ {border-top: 2px solid #202020;}
+#row_703_ {border-top: 2px solid #202020;}
+#row_704_ {border-top: 2px solid #202020;}
+#row_705_ {border-top: 2px solid #202020;}
+#row_706_ {border-top: 2px solid #202020;}
+#row_707_ {border-top: 2px solid #202020;}
+#row_708_ {border-top: 2px solid #202020;}
+#row_709_ {border-top: 2px solid #202020;}
+#row_710_ {border-top: 2px solid #202020;}
+#row_711_ {border-top: 2px solid #202020;}
+#row_712_ {border-top: 2px solid #202020;}
+#row_713_ {border-top: 2px solid #202020;}
+#row_714_ {border-top: 2px solid #202020;}
+#row_715_ {border-top: 2px solid #202020;}
+#row_716_ {border-top: 2px solid #202020;}
+#row_717_ {border-top: 2px solid #202020;}
+#row_718_ {border-top: 2px solid #202020;}
+#row_719_ {border-top: 2px solid #202020;}
+#row_720_ {border-top: 2px solid #202020;}
+#row_721_ {border-top: 2px solid #202020;}
+#row_722_ {border-top: 2px solid #202020;}
+#row_723_ {border-top: 2px solid #202020;}
+#row_724_ {border-top: 2px solid #202020;}
+#row_725_ {border-top: 2px solid #202020;}
+#row_726_ {border-top: 2px solid #202020;}
+#row_727_ {border-top: 2px solid #202020;}
+#row_728_ {border-top: 2px solid #202020;}
+#row_729_ {border-top: 2px solid #202020;}
+#row_730_ {border-top: 2px solid #202020;}
+#row_731_ {border-top: 2px solid #202020;}
+#row_732_ {border-top: 2px solid #202020;}
+#row_733_ {border-top: 2px solid #202020;}
+#row_734_ {border-top: 2px solid #202020;}
+#row_735_ {border-top: 2px solid #202020;}
+#row_736_ {border-top: 2px solid #202020;}
+#row_737_ {border-top: 2px solid #202020;}
+#row_738_ {border-top: 2px solid #202020;}
+#row_739_ {border-top: 2px solid #202020;}
+#row_740_ {border-top: 2px solid #202020;}
+#row_741_ {border-top: 2px solid #202020;}
+#row_742_ {border-top: 2px solid #202020;}
+#row_743_ {border-top: 2px solid #202020;}
+#row_744_ {border-top: 2px solid #202020;}
+#row_745_ {border-top: 2px solid #202020;}
+#row_746_ {border-top: 2px solid #202020;}
+#row_747_ {border-top: 2px solid #202020;}
+#row_748_ {border-top: 2px solid #202020;}
+#row_749_ {border-top: 2px solid #202020;}
+#row_750_ {border-top: 2px solid #202020;}
+#row_751_ {border-top: 2px solid #202020;}
+#row_752_ {border-top: 2px solid #202020;}
+#row_753_ {border-top: 2px solid #202020;}
+#row_754_ {border-top: 2px solid #202020;}
+#row_755_ {border-top: 2px solid #202020;}
+#row_756_ {border-top: 2px solid #202020;}
+#row_757_ {border-top: 2px solid #202020;}
+#row_758_ {border-top: 2px solid #202020;}
+#row_759_ {border-top: 2px solid #202020;}
+#row_760_ {border-top: 2px solid #202020;}
+#row_761_ {border-top: 2px solid #202020;}
+#row_762_ {border-top: 2px solid #202020;}
+#row_763_ {border-top: 2px solid #202020;}
+#row_764_ {border-top: 2px solid #202020;}
+#row_765_ {border-top: 2px solid #202020;}
+#row_766_ {border-top: 2px solid #202020;}
+#row_767_ {border-top: 2px solid #202020;}
+#row_768_ {border-top: 2px solid #202020;}
+#row_769_ {border-top: 2px solid #202020;}
+#row_770_ {border-top: 2px solid #202020;}
+#row_771_ {border-top: 2px solid #202020;}
+#row_772_ {border-top: 2px solid #202020;}
+#row_773_ {border-top: 2px solid #202020;}
+#row_774_ {border-top: 2px solid #202020;}
+#row_775_ {border-top: 2px solid #202020;}
+#row_776_ {border-top: 2px solid #202020;}
+#row_777_ {border-top: 2px solid #202020;}
+#row_778_ {border-top: 2px solid #202020;}
+#row_779_ {border-top: 2px solid #202020;}
+#row_780_ {border-top: 2px solid #202020;}
+#row_781_ {border-top: 2px solid #202020;}
+#row_782_ {border-top: 2px solid #202020;}
+#row_783_ {border-top: 2px solid #202020;}
+#row_784_ {border-top: 2px solid #202020;}
+#row_785_ {border-top: 2px solid #202020;}
+#row_786_ {border-top: 2px solid #202020;}
+#row_787_ {border-top: 2px solid #202020;}
+#row_788_ {border-top: 2px solid #202020;}
+#row_789_ {border-top: 2px solid #202020;}
+#row_790_ {border-top: 2px solid #202020;}
+#row_791_ {border-top: 2px solid #202020;}
+#row_792_ {border-top: 2px solid #202020;}
+#row_793_ {border-top: 2px solid #202020;}
+#row_794_ {border-top: 2px solid #202020;}
+#row_795_ {border-top: 2px solid #202020;}
+#row_796_ {border-top: 2px solid #202020;}
+#row_797_ {border-top: 2px solid #202020;}
+#row_798_ {border-top: 2px solid #202020;}
+#row_799_ {border-top: 2px solid #202020;}
+#row_800_ {border-top: 2px solid #202020;}
+#row_801_ {border-top: 2px solid #202020;}
+#row_802_ {border-top: 2px solid #202020;}
+#row_803_ {border-top: 2px solid #202020;}
+#row_804_ {border-top: 2px solid #202020;}
+#row_805_ {border-top: 2px solid #202020;}
+#row_806_ {border-top: 2px solid #202020;}
+#row_807_ {border-top: 2px solid #202020;}
+#row_808_ {border-top: 2px solid #202020;}
+#row_809_ {border-top: 2px solid #202020;}
+#row_810_ {border-top: 2px solid #202020;}
+#row_811_ {border-top: 2px solid #202020;}
+#row_812_ {border-top: 2px solid #202020;}
+#row_813_ {border-top: 2px solid #202020;}
+#row_814_ {border-top: 2px solid #202020;}
+#row_815_ {border-top: 2px solid #202020;}
+#row_816_ {border-top: 2px solid #202020;}
+#row_817_ {border-top: 2px solid #202020;}
+#row_818_ {border-top: 2px solid #202020;}
+#row_819_ {border-top: 2px solid #202020;}
+#row_820_ {border-top: 2px solid #202020;}
+#row_821_ {border-top: 2px solid #202020;}
+#row_822_ {border-top: 2px solid #202020;}
+#row_823_ {border-top: 2px solid #202020;}
+#row_824_ {border-top: 2px solid #202020;}
+#row_825_ {border-top: 2px solid #202020;}
+#row_826_ {border-top: 2px solid #202020;}
+#row_827_ {border-top: 2px solid #202020;}
+#row_828_ {border-top: 2px solid #202020;}
+#row_829_ {border-top: 2px solid #202020;}
+#row_830_ {border-top: 2px solid #202020;}
+#row_831_ {border-top: 2px solid #202020;}
+#row_832_ {border-top: 2px solid #202020;}
+#row_833_ {border-top: 2px solid #202020;}
+#row_834_ {border-top: 2px solid #202020;}
+#row_835_ {border-top: 2px solid #202020;}
+#row_836_ {border-top: 2px solid #202020;}
+#row_837_ {border-top: 2px solid #202020;}
+#row_838_ {border-top: 2px solid #202020;}
+#row_839_ {border-top: 2px solid #202020;}
+#row_840_ {border-top: 2px solid #202020;}
+#row_841_ {border-top: 2px solid #202020;}
+#row_842_ {border-top: 2px solid #202020;}
+#row_843_ {border-top: 2px solid #202020;}
+#row_844_ {border-top: 2px solid #202020;}
+#row_845_ {border-top: 2px solid #202020;}
+#row_846_ {border-top: 2px solid #202020;}
+#row_847_ {border-top: 2px solid #202020;}
+#row_848_ {border-top: 2px solid #202020;}
+#row_849_ {border-top: 2px solid #202020;}
+#row_850_ {border-top: 2px solid #202020;}
+#row_851_ {border-top: 2px solid #202020;}
+#row_852_ {border-top: 2px solid #202020;}
+#row_853_ {border-top: 2px solid #202020;}
+#row_854_ {border-top: 2px solid #202020;}
+#row_855_ {border-top: 2px solid #202020;}
+#row_856_ {border-top: 2px solid #202020;}
+#row_857_ {border-top: 2px solid #202020;}
+#row_858_ {border-top: 2px solid #202020;}
+#row_859_ {border-top: 2px solid #202020;}
+#row_860_ {border-top: 2px solid #202020;}
+#row_861_ {border-top: 2px solid #202020;}
+#row_862_ {border-top: 2px solid #202020;}
+#row_863_ {border-top: 2px solid #202020;}
+#row_864_ {border-top: 2px solid #202020;}
+#row_865_ {border-top: 2px solid #202020;}
+#row_866_ {border-top: 2px solid #202020;}
+#row_867_ {border-top: 2px solid #202020;}
+#row_868_ {border-top: 2px solid #202020;}
+#row_869_ {border-top: 2px solid #202020;}
+#row_870_ {border-top: 2px solid #202020;}
+#row_871_ {border-top: 2px solid #202020;}
+#row_872_ {border-top: 2px solid #202020;}
+#row_873_ {border-top: 2px solid #202020;}
+#row_874_ {border-top: 2px solid #202020;}
+#row_875_ {border-top: 2px solid #202020;}
+#row_876_ {border-top: 2px solid #202020;}
+#row_877_ {border-top: 2px solid #202020;}
+#row_878_ {border-top: 2px solid #202020;}
+#row_879_ {border-top: 2px solid #202020;}
+#row_880_ {border-top: 2px solid #202020;}
+#row_881_ {border-top: 2px solid #202020;}
+#row_882_ {border-top: 2px solid #202020;}
+#row_883_ {border-top: 2px solid #202020;}
+#row_884_ {border-top: 2px solid #202020;}
+#row_885_ {border-top: 2px solid #202020;}
+#row_886_ {border-top: 2px solid #202020;}
+#row_887_ {border-top: 2px solid #202020;}
+#row_888_ {border-top: 2px solid #202020;}
+#row_889_ {border-top: 2px solid #202020;}
+#row_890_ {border-top: 2px solid #202020;}
+#row_891_ {border-top: 2px solid #202020;}
+#row_892_ {border-top: 2px solid #202020;}
+#row_893_ {border-top: 2px solid #202020;}
+#row_894_ {border-top: 2px solid #202020;}
+#row_895_ {border-top: 2px solid #202020;}
+#row_896_ {border-top: 2px solid #202020;}
+#row_897_ {border-top: 2px solid #202020;}
+#row_898_ {border-top: 2px solid #202020;}
+#row_899_ {border-top: 2px solid #202020;}
+#row_900_ {border-top: 2px solid #202020;}
+#row_901_ {border-top: 2px solid #202020;}
+#row_902_ {border-top: 2px solid #202020;}
+#row_903_ {border-top: 2px solid #202020;}
+#row_904_ {border-top: 2px solid #202020;}
+#row_905_ {border-top: 2px solid #202020;}
+#row_906_ {border-top: 2px solid #202020;}
+#row_907_ {border-top: 2px solid #202020;}
+#row_908_ {border-top: 2px solid #202020;}
+#row_909_ {border-top: 2px solid #202020;}
+#row_910_ {border-top: 2px solid #202020;}
+#row_911_ {border-top: 2px solid #202020;}
+#row_912_ {border-top: 2px solid #202020;}
+#row_913_ {border-top: 2px solid #202020;}
+#row_914_ {border-top: 2px solid #202020;}
+#row_915_ {border-top: 2px solid #202020;}
+#row_916_ {border-top: 2px solid #202020;}
+#row_917_ {border-top: 2px solid #202020;}
+#row_918_ {border-top: 2px solid #202020;}
+#row_919_ {border-top: 2px solid #202020;}
+#row_920_ {border-top: 2px solid #202020;}
+#row_921_ {border-top: 2px solid #202020;}
+#row_922_ {border-top: 2px solid #202020;}
+#row_923_ {border-top: 2px solid #202020;}
+#row_924_ {border-top: 2px solid #202020;}
+#row_925_ {border-top: 2px solid #202020;}
+#row_926_ {border-top: 2px solid #202020;}
+#row_927_ {border-top: 2px solid #202020;}
+#row_928_ {border-top: 2px solid #202020;}
+#row_929_ {border-top: 2px solid #202020;}
+#row_930_ {border-top: 2px solid #202020;}
+#row_931_ {border-top: 2px solid #202020;}
+#row_932_ {border-top: 2px solid #202020;}
+#row_933_ {border-top: 2px solid #202020;}
+#row_934_ {border-top: 2px solid #202020;}
+#row_935_ {border-top: 2px solid #202020;}
+#row_936_ {border-top: 2px solid #202020;}
+#row_937_ {border-top: 2px solid #202020;}
+#row_938_ {border-top: 2px solid #202020;}
+#row_939_ {border-top: 2px solid #202020;}
+#row_940_ {border-top: 2px solid #202020;}
+#row_941_ {border-top: 2px solid #202020;}
+#row_942_ {border-top: 2px solid #202020;}
+#row_943_ {border-top: 2px solid #202020;}
+#row_944_ {border-top: 2px solid #202020;}
+#row_945_ {border-top: 2px solid #202020;}
+#row_946_ {border-top: 2px solid #202020;}
+#row_947_ {border-top: 2px solid #202020;}
+#row_948_ {border-top: 2px solid #202020;}
+#row_949_ {border-top: 2px solid #202020;}
+#row_950_ {border-top: 2px solid #202020;}
+#row_951_ {border-top: 2px solid #202020;}
+#row_952_ {border-top: 2px solid #202020;}
+#row_953_ {border-top: 2px solid #202020;}
+#row_954_ {border-top: 2px solid #202020;}
+#row_955_ {border-top: 2px solid #202020;}
+#row_956_ {border-top: 2px solid #202020;}
+#row_957_ {border-top: 2px solid #202020;}
+#row_958_ {border-top: 2px solid #202020;}
+#row_959_ {border-top: 2px solid #202020;}
+#row_960_ {border-top: 2px solid #202020;}
+#row_961_ {border-top: 2px solid #202020;}
+#row_962_ {border-top: 2px solid #202020;}
+#row_963_ {border-top: 2px solid #202020;}
+#row_964_ {border-top: 2px solid #202020;}
+#row_965_ {border-top: 2px solid #202020;}
+#row_966_ {border-top: 2px solid #202020;}
+#row_967_ {border-top: 2px solid #202020;}
+#row_968_ {border-top: 2px solid #202020;}
+#row_969_ {border-top: 2px solid #202020;}
+#row_970_ {border-top: 2px solid #202020;}
+#row_971_ {border-top: 2px solid #202020;}
+#row_972_ {border-top: 2px solid #202020;}
+#row_973_ {border-top: 2px solid #202020;}
+#row_974_ {border-top: 2px solid #202020;}
+#row_975_ {border-top: 2px solid #202020;}
+#row_976_ {border-top: 2px solid #202020;}
+#row_977_ {border-top: 2px solid #202020;}
+#row_978_ {border-top: 2px solid #202020;}
+#row_979_ {border-top: 2px solid #202020;}
+#row_980_ {border-top: 2px solid #202020;}
+#row_981_ {border-top: 2px solid #202020;}
+#row_982_ {border-top: 2px solid #202020;}
+#row_983_ {border-top: 2px solid #202020;}
+#row_984_ {border-top: 2px solid #202020;}
+#row_985_ {border-top: 2px solid #202020;}
+#row_986_ {border-top: 2px solid #202020;}
+#row_987_ {border-top: 2px solid #202020;}
+#row_988_ {border-top: 2px solid #202020;}
+#row_989_ {border-top: 2px solid #202020;}
+#row_990_ {border-top: 2px solid #202020;}
+#row_991_ {border-top: 2px solid #202020;}
+#row_992_ {border-top: 2px solid #202020;}
+#row_993_ {border-top: 2px solid #202020;}
+#row_994_ {border-top: 2px solid #202020;}
+#row_995_ {border-top: 2px solid #202020;}
+#row_996_ {border-top: 2px solid #202020;}
+#row_997_ {border-top: 2px solid #202020;}
+#row_998_ {border-top: 2px solid #202020;}
+#row_999_ {border-top: 2px solid #202020;}
