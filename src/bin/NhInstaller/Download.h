@@ -21,9 +21,6 @@
     NH_INSTALLER_RESULT Nh_Installer_downloadExternals(
     );
 
-    NH_INSTALLER_RESULT Nh_Installer_downloadProject(
-    );
-
 /** @} */
 
 #endif

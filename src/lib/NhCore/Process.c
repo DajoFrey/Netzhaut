@@ -244,7 +244,7 @@ NH_BEGIN()
     Args.encoding = NH_UNICODE_ENCODING_UTF8;
     Args.bytes_p  = bytes_p + 17;
 
-    if (NH_LOADER.load_f("NhECMAScript", 0, NH_TRUE) == NH_SUCCESS) 
+    if (NH_LOADER.load_f("NhECMAScript", 0) == NH_SUCCESS) 
     {
         Nh_activateWorkload(
             (Nh_ECMAScript_initAgent_f)NH_LOADER.loadFunction_f("NhECMAScript", 0, "Nh_ECMAScript_initAgent"), 

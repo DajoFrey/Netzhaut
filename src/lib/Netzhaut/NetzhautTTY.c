@@ -25,16 +25,15 @@
 
 Nh_TTY_Terminal *Nh_TTY_openTerminal()
 {
-    if (((Nh_Loader*)NH_LOADER_P)->load_f("NhTTY", 0, NH_TRUE) != NH_LOADER_SUCCESS) {return NULL;}
-    return ((Nh_TTY_openTerminal_f)((Nh_Loader*)NH_LOADER_P)->loadFunction_f("NhTTY", 0, "Nh_TTY_openTerminal"))();
+    Nh_TTY_openTerminal_f openTerminal_f = !NH_LOADER_P ? NULL : NH_LOADER_P->loadFunction_f("NhTTY", 0, "Nh_TTY_openTerminal");
+    return openTerminal_f ? openTerminal_f() : NULL;
 }
 
 NH_TTY_RESULT Nh_TTY_addDefaultProgram(
     Nh_TTY_Terminal *Terminal_p, NH_BYTE *name_p) 
 {
-    if (!Terminal_p || !name_p) {return NH_TTY_ERROR_BAD_STATE;}
-    if (((Nh_Loader*)NH_LOADER_P)->load_f("NhTTY", 0, NH_TRUE) != NH_LOADER_SUCCESS) {return NH_TTY_ERROR_BAD_STATE;}
-    return ((Nh_TTY_addDefaultProgram_f)((Nh_Loader*)NH_LOADER_P)->loadFunction_f("NhTTY", 0, "Nh_TTY_addDefaultProgram"))(Terminal_p, name_p);
+    Nh_TTY_addDefaultProgram_f addDefaultProgram_f = !NH_LOADER_P || !Terminal_p || !name_p ? NULL : NH_LOADER_P->loadFunction_f("NhTTY", 0, "Nh_TTY_addDefaultProgram");
+    return addDefaultProgram_f ? addDefaultProgram_f(Terminal_p, name_p) : NH_TTY_ERROR_BAD_STATE;
 }
 
 NH_TTY_RESULT Nh_TTY_addProgram(
@@ -42,3 +41,4 @@ NH_TTY_RESULT Nh_TTY_addProgram(
 {
     return 1;
 }
+

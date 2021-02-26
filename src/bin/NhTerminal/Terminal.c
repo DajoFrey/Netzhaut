@@ -13,6 +13,7 @@
 
 int main(int argc, char **argv_pp) 
 {
+    if (Nh_initLoader(NH_LOADER_SCOPE_SYSTEM, NULL, NH_FALSE) != NH_SUCCESS) {return 1;}
     if (Nh_init() != NH_SUCCESS) {return 1;}
 
     Nh_TTY_Terminal *Terminal_p = Nh_TTY_openTerminal();

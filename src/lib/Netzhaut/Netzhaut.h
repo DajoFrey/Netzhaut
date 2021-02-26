@@ -11,6 +11,7 @@
 
 #include "NhCore/Common/API.h"
 #include "NhCore/Common/Result.h"
+#include "NhLoader/Common/API.h"
 
 #endif
 
@@ -44,7 +45,7 @@
  *  @{
  */
 
-    extern void *NH_LOADER_P;
+    extern Nh_Loader *NH_LOADER_P;
 
 /** @} */
 
@@ -52,6 +53,10 @@
  *  \ingroup CCore 
  *  @{
  */
+
+    NH_RESULT Nh_initLoader(
+         NH_LOADER_SCOPE loaderScope, NH_BYTE *loaderPath_p, NH_BOOL install
+    );
 
     NH_RESULT Nh_init(
     );

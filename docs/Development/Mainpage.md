@@ -7,7 +7,7 @@
 This is the development documentation for Netzhaut. It features 
 - an architecture document
 - a target document
-- detailed descriptions of internal libraries including changelogs
+- detailed descriptions of most modules including changelogs
 
 \section CONTRIBUTE CONTRIBUTE
 Contributing to Netzhaut is pretty simple. If you changed something in an internal library and want it to be merged into Netzhaut, make a pull request on the corresponding branch. 
@@ -19,18 +19,19 @@ NOTICE
 - Properly document non-private functions.
 - Make sure that you update the corresponding Common/About.h by adding a small description of changes to the MAJOR,MINOR or PATCH version, depending on the nature of your changes.
 
-\section LIBRARIES INTERNAL LIBRARIES 
+\section MODULES MODULES 
 
-The Netzhaut implementation is split into multiple internal libraries. 
+The implementation of Netzhaut is split into multiple modules (libraries): 
 
 - [Netzhaut](TODO)
 - [NhLoader](group__API.html)
 - [NhCore](group__Core.html)
 - [NhTTY](group__CSS.html)
+- [NhECMAScript](TODO)
 
 \section SPECS SPECS
 
-Here is a list of specifications that are used in development.
+Here is a list of specifications which are currently used in development:
 
 - [HTML](https://html.spec.whatwg.org/multipage/)  
 - [URL](https://url.spec.whatwg.org/)  

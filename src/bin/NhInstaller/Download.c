@@ -22,42 +22,6 @@
 
 // GITHUB ==========================================================================================
 
-// This assumes external build
-NH_INSTALLER_RESULT Nh_Installer_downloadProjectFromGithub(
-    const char *owner_p, const char *repo_p)
-{
-NH_INSTALLER_BEGIN()
-
-    if (!Nh_Installer_canRunCommand("wget")) {NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_ERROR_WGET_NOT_FOUND)}
-    if (!Nh_Installer_canRunCommand("unzip")) {NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_ERROR_UNZIP_NOT_FOUND)}
-
-#include NH_INSTALLER_CUSTOM_CHECK
-
-    char exeDir_p[2048] = {'\0'};
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_GET_PROJECT_DIRECTORY, Nh_Installer_getExeDir(exeDir_p, 2048))
-
-    char zip_p[2048] = {'\0'};
-    sprintf(zip_p, "%s%s", exeDir_p, "tmp.zip");
-
-    char command_p[2048] = {'\0'};
-    sprintf(command_p, "wget -O %s https://github.com/%s/%s/archive/master.zip", zip_p, owner_p, repo_p);
-
-    int status = system(command_p);
-    if (WEXITSTATUS(status) || WIFSIGNALED(status)) {NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_ERROR_WGET_EXECUTION_FAILED)}
-
-    memset(command_p, '\0', sizeof(char) * 2048);
-    sprintf(command_p, "unzip -o %s -d %s", zip_p, exeDir_p);
-
-    status = system(command_p);
-    if (WEXITSTATUS(status) || WIFSIGNALED(status)) {NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_ERROR_UNZIP_EXECUTION_FAILED)}
-
-    remove(zip_p);
-
-#include NH_INSTALLER_DEFAULT_CHECK
-
-NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
-}
-
 static NH_INSTALLER_RESULT Nh_Installer_downloadFromGithub(
     const char *owner_p, const char *repo_p)
 {
@@ -116,19 +80,6 @@ NH_INSTALLER_BEGIN()
 
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_DOWNLOAD_VULKAN_HEADERS, Nh_Installer_downloadFromGithub("KhronosGroup", "Vulkan-Headers"))
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_DOWNLOAD_VOLK, Nh_Installer_downloadFromGithub("zeux", "volk"))
-
-#include NH_INSTALLER_DEFAULT_CHECK
-
-NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
-}
-
-NH_INSTALLER_RESULT Nh_Installer_downloadProject()
-{
-NH_INSTALLER_BEGIN()
-
-#include NH_INSTALLER_CUSTOM_CHECK
-
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_DOWNLOAD_PROJECT, Nh_Installer_downloadProjectFromGithub("DajoFrey", "Netzhaut"))
 
 #include NH_INSTALLER_DEFAULT_CHECK
 

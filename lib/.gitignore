@@ -1,5 +1,6 @@
 # Ignore everything in this directory
 *
-# Except this file and the Netzhaut library 
+# Except this file and the Netzhaut/NhLoader library 
 !.gitignore
 !libNetzhaut.so.?.?.?
+!libNhLoader.so.?.?.?

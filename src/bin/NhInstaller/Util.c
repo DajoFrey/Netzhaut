@@ -55,18 +55,10 @@ NH_INSTALLER_BEGIN()
 
     if (Nh_Installer_getExeDir(buffer_p, size) != NH_INSTALLER_SUCCESS) {NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_ERROR_BAD_STATE)}
 
-    if (NH_INSTALLER_EXTERNAL) {
-        sprintf(buffer_p, "%s%s", buffer_p, "/Netzhaut-master");
-    }
-    else {
-        int i;
-        for (i = strlen(buffer_p); i > -1 && buffer_p[i] != '/'; --i) {}
-        if (i == -1) {NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_ERROR_BAD_STATE)}
-        buffer_p[i] = '\0';
-        for (i = strlen(buffer_p); i > -1 && buffer_p[i] != '/'; --i) {}
-        if (i == -1) {NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_ERROR_BAD_STATE)}
-        buffer_p[i] = '\0'; // return parent dir of parent dir of exe
-    }
+    int i;
+    for (i = strlen(buffer_p); i > -1 && buffer_p[i] != '/'; --i) {}
+    if (i == -1) {NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_ERROR_BAD_STATE)}
+    buffer_p[i] = '\0';
 
 NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
 }

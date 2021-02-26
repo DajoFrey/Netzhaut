@@ -8,15 +8,14 @@
 
 // INCLUDE =========================================================================================
 
-#include "Docs.h"
+#include "Main.h"
+#include "Documents.h"
 #include "Util.h"
 #include "Download.h" 
-#include "Example.h"
+#include "Binaries.h"
 #include "GUI.h"
-#include "Library.h"
-#include "Library.h"
+#include "Libraries.h"
 #include "Message.h"
-#include "Tool.h"
 
 #include "Common/Macro.h"
 
@@ -64,10 +63,8 @@ static NH_BOOL VULKAN_SHADERS = NH_FALSE;
 static NH_BOOL OFFLINE        = NH_FALSE;
 
 NH_BOOL NH_INSTALLER_QUIET        = NH_FALSE;
-NH_BOOL NH_INSTALLER_EXTERNAL     = NH_FALSE;
 NH_BOOL NH_INSTALLER_FLOW_LOGGING = NH_FALSE;
 NH_BOOL NH_INSTALLER_GUI          = NH_FALSE;
-NH_BOOL NH_INSTALLER_RELEASE      = NH_FALSE;
 
 // PARSE INPUT =====================================================================================
 
@@ -146,10 +143,6 @@ NH_INSTALLER_BEGIN()
             else if (!strcmp(argv_pp[i] + 2, "quiet")) {
                 libs = bins = NH_FALSE; 
                 NH_INSTALLER_QUIET = NH_TRUE;
-            }
-            else if (!strcmp(argv_pp[i] + 2, "release")) {
-                libs = bins = NH_FALSE; 
-                NH_INSTALLER_RELEASE = NH_TRUE;
             }
             else {
                 Nh_Installer_noticef("Invalid option \"%s\"", argv_pp[i]);
@@ -258,11 +251,6 @@ NH_INSTALLER_BEGIN()
 
 #include NH_INSTALLER_CUSTOM_CHECK
 
-    if (!OFFLINE && NH_INSTALLER_EXTERNAL) {
-        Nh_Installer_operationf("DOWNLOAD PROJECT");
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_DOWNLOAD_FAILED, Nh_Installer_downloadProject())
-    }
-
     if (GENERATE_DOCS) {
         Nh_Installer_operationf("GENERATE DOCS");
         NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_GENERATE_DOCUMENTS_FAILURE, Nh_Installer_generateDocs())
@@ -313,22 +301,22 @@ NH_INSTALLER_BEGIN()
 
     if (BINARY_TERMINAL) {
         Nh_Installer_operationf("BUILD TERMINAL");
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_WEB_BROWSER_FAILED, Nh_Installer_buildTerminal())
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_WEB_BROWSER_FAILED, Nh_Installer_buildNhTerminal())
         if (INSTALL_ALL_BINARIES) {
             Nh_Installer_operationf("INSTALL_ALL TERMINAL");
-            NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_INSTALL_ALL_WEB_BROWSER_FAILED, Nh_Installer_installTerminal())
+            NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_INSTALL_ALL_WEB_BROWSER_FAILED, Nh_Installer_installNhTerminal())
         }
     }
 
 //    if (BUILD_ALL_BINARIES || BINARY_WEB_BROWSER) 
 //    {
 //        Nh_Installer_operationf("BUILD WEB BROWSER");
-//        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_WEB_BROWSER_FAILED, Nh_Installer_buildWebBrowser())
+//        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_WEB_BROWSER_FAILED, Nh_Installer_buildNhWebBrowser())
 //
 //        if (INSTALL_ALL_BINARIES)
 //        {
 //            Nh_Installer_operationf("INSTALL_ALL WEB BROWSER");
-//            NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_INSTALL_ALL_WEB_BROWSER_FAILED, Nh_Installer_installWebBrowser())
+//            NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_INSTALL_ALL_WEB_BROWSER_FAILED, Nh_Installer_installNhWebBrowser())
 //        }
 //    }
 
@@ -342,28 +330,28 @@ NH_INSTALLER_BEGIN()
 NH_INSTALLER_END(NH_INSTALLER_SUCCESS)
 }
 
-// EXTERNAL BUILD ==================================================================================
+// CHECK LOCATION ==================================================================================
 
-static void Nh_Installer_setExternalBuildFlag()
+static NH_BOOL Nh_Installer_validLocation()
 {
 NH_INSTALLER_BEGIN()
 
     char projDir_p[2048] = {'\0'};
-    if (Nh_Installer_getProjectDir(projDir_p, 2048) != NH_INSTALLER_SUCCESS) {NH_INSTALLER_SILENT_END()}
+    if (Nh_Installer_getProjectDir(projDir_p, 2048) != NH_INSTALLER_SUCCESS) {NH_INSTALLER_END(NH_FALSE)}
 
     char check_p[2048] = {'\0'};
     sprintf(check_p, "%s%s", projDir_p, "/data");
-    if (!Nh_Installer_fileExists(check_p)) {NH_INSTALLER_EXTERNAL = NH_TRUE; NH_INSTALLER_SILENT_END()}
+    if (!Nh_Installer_fileExists(check_p)) {NH_INSTALLER_END(NH_FALSE)}
 
     memset(check_p, '\0', sizeof(char) * 2048); 
     sprintf(check_p, "%s%s", projDir_p, "/src");
-    if (!Nh_Installer_fileExists(check_p)) {NH_INSTALLER_EXTERNAL = NH_TRUE; NH_INSTALLER_SILENT_END()}
+    if (!Nh_Installer_fileExists(check_p)) {NH_INSTALLER_END(NH_FALSE)}
 
     memset(check_p, '\0', sizeof(char) * 2048);
     sprintf(check_p, "%s%s", projDir_p, "/README.md");
-    if (!Nh_Installer_fileExists(check_p)) {NH_INSTALLER_EXTERNAL = NH_TRUE; NH_INSTALLER_SILENT_END()}
+    if (!Nh_Installer_fileExists(check_p)) {NH_INSTALLER_END(NH_FALSE)}
 
-NH_INSTALLER_SILENT_END()
+NH_INSTALLER_END(NH_TRUE)
 }
 
 // MAIN ============================================================================================
@@ -374,31 +362,31 @@ NH_INSTALLER_RESULT Nh_Installer_main(
 NH_INSTALLER_BEGIN()
 
     NH_INSTALLER_RESULT result = NH_INSTALLER_SUCCESS;
-    Nh_Installer_setExternalBuildFlag();
 
-    if (argc == 1) {
-        NH_INSTALLER_GUI = NH_TRUE;
-        result = Nh_Installer_runGUI();
-    }
-    else { 
-        result = Nh_Installer_parseInput(argc, argv_pp);
-        if (result == NH_INSTALLER_SUCCESS && RUN) {
-            result = Nh_Installer_run();
+    if (Nh_Installer_validLocation()) 
+    {
+        if (argc == 1) {
+            NH_INSTALLER_GUI = NH_TRUE;
+            result = Nh_Installer_runGUI();
+        }
+        else { 
+            result = Nh_Installer_parseInput(argc, argv_pp);
+            if (result == NH_INSTALLER_SUCCESS && RUN) {
+                result = Nh_Installer_run();
+            }
         }
     }
+    else {result = NH_INSTALLER_ERROR_BAD_STATE;}
 
     NH_INSTALLER_CHECK(Nh_Installer_exitMessage(result))
 
 NH_INSTALLER_DIAGNOSTIC_END(result)
 }
 
-#ifdef NH_INSTALLER_EXECUTABLE
+int main(
+    int argc, char **argv_pp)
+{
+NH_INSTALLER_BEGIN()
+NH_INSTALLER_DIAGNOSTIC_END(Nh_Installer_main(argc, argv_pp))
+} 
 
-    int main(
-        int argc, char **argv_pp)
-    {
-    NH_INSTALLER_BEGIN()
-    NH_INSTALLER_DIAGNOSTIC_END(Nh_Installer_main(argc, argv_pp))
-    } 
-
-#endif

@@ -4,7 +4,7 @@
   <navindex>
     <tab type="mainpage" visible="yes" title="MAIN PAGE"/>
     <tab type="pages" visible="yes" title="PAGES" intro=""/>
-    <tab type="modules" visible="yes" title="INTERNAL LIBRARIES" intro="Here is a list of all internal libraries."/>
+    <tab type="modules" visible="yes" title="MODULES" intro=""/>
     <tab type="namespaces" visible="yes" title="">
       <tab type="namespacelist" visible="yes" title="" intro=""/>
       <tab type="namespacemembers" visible="yes" title="" intro=""/>

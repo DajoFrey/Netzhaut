@@ -14,8 +14,7 @@
 
 #endif
 
-/** @addtogroup LoaderFunctions Functions
- *  \ingroup Loader
+/** @addtogroup NhLoaderFunctions
  *  @{
  */
 
