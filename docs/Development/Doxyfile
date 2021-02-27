@@ -817,7 +817,8 @@ INPUT                  = "Mainpage.md" "Target.md" "Architecture.md" \
 "../../src/lib/NhCore/Common" "../../src/lib/NhCore/" \
 "../../src/lib/NhTTY/Common" "../../src/lib/NhTTY/" \
 "../../src/lib/NhLoader/Common" "../../src/lib/NhLoader/" \
-"../../src/lib/NhECMAScript/Common" "../../src/lib/NhECMAScript/Engine" "../../src/lib/NhECMAScript/StaticSemantics"\
+"../../src/lib/NhECMAScript/Common" "../../src/lib/NhECMAScript/Engine" "../../src/lib/NhECMAScript/StaticSemantics" \
+"../../src/lib/NhHTML/Common"
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses

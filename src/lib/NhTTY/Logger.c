@@ -262,13 +262,13 @@ NH_TTY_BEGIN()
 
     switch (key) 
     {
-        case CTRL_KEY('w') :
+        case 'w' :
             if (index > 0) {
                 Current_p->isCurrent = NH_FALSE;
                 ((Nh_TTY_LoggerNode*)Nodes.handles_pp[index - 1])->isCurrent = NH_TRUE;
             }
             break;
-        case CTRL_KEY('s') :
+        case 's' :
             if (Nodes.size > index + 1) {
                 Current_p->isCurrent = NH_FALSE;
                 ((Nh_TTY_LoggerNode*)Nodes.handles_pp[index + 1])->isCurrent = NH_TRUE;
@@ -323,13 +323,13 @@ NH_TTY_BEGIN()
 
     switch (c) 
     {
-        case CTRL_KEY('f') :
+        case 'f' :
             if (focus > 0) {
                 ((Nh_TTY_LoggerNode*)SelectedNodes.handles_pp[focus])->hasFocus = NH_FALSE;
                 ((Nh_TTY_LoggerNode*)SelectedNodes.handles_pp[focus - 1])->hasFocus = NH_TRUE;
             }
             break;
-        case CTRL_KEY('g') :
+        case 'g' :
             if (focus < SelectedNodes.size - 1) {
                 ((Nh_TTY_LoggerNode*)SelectedNodes.handles_pp[focus])->hasFocus = NH_FALSE;
                 ((Nh_TTY_LoggerNode*)SelectedNodes.handles_pp[focus + 1])->hasFocus = NH_TRUE;
@@ -355,37 +355,37 @@ NH_TTY_BEGIN()
 
     switch (c)
     {
-        case CTRL_KEY('w') :
-        case CTRL_KEY('s') :
+        case 'w' :
+        case 's' :
             Nh_TTY_moveCursorVertically(Logger_p, Current_p, c);
             break;
 
-        case CTRL_KEY('f') :
-        case CTRL_KEY('g') :
+        case 'f' :
+        case 'g' :
             Nh_TTY_changeFocus(Logger_p, c);
             break;
 
-        case CTRL_KEY('h') :
+        case 'h' :
             if (Focus_p != NULL && Focus_p->peak > 0) {Focus_p->peak--;}
             break;
-        case CTRL_KEY('l') :
+        case 'l' :
             if (Focus_p != NULL) {Focus_p->peak++;}
             break;
 
-        case CTRL_KEY('j') :
+        case 'j' :
             if (Focus_p != NULL) {
                 Focus_p->focusedRow++;
                 Focus_p->peak = 0;
             }
             break;
-        case CTRL_KEY('k') :
+        case 'k' :
             if (Focus_p != NULL) {
                 Focus_p->focusedRow--;
                 Focus_p->peak = 0;
             }
             break;
 
-        case CTRL_KEY('a') :
+        case 'a' :
             if (Current_p->isSelected) {
                 Nh_TTY_unselectLoggerNode(Logger_p, Current_p);
             }
@@ -404,7 +404,7 @@ NH_TTY_BEGIN()
             }
             break;
 
-        case CTRL_KEY('d') :
+        case 'd' :
 
             Current_p->isOpen = NH_TRUE;
 
@@ -432,13 +432,13 @@ NH_TTY_END(NH_TTY_SUCCESS)
 
 static const char *help_pp[] =
 {
-    "NhTTY Live Logging Interface",
+    "NhTTY Logger",
     " ",
-    "\e[1;7mCTRL\e[0m + \e[1;7mw,a,s,d\e[0m Navigate logging categories.    ",
-    "\e[1;7mCTRL\e[0m + \e[1;7mh,j,k,l\e[0m Navigate log entries.           ",
-    "\e[1;7mCTRL\e[0m + \e[1;7mf,g\e[0m     Jump to left/right selected log.",
-    "\e[1;7mCTRL\e[0m + \e[1;7mc\e[0m       Copy selected log entry.        ",
-    "\e[1;7mCTRL\e[0m + \e[1;7mb\e[0m       Toggle logging categories.      ",
+    "\e[1;7mw,a,s,d\e[0m Navigate logging categories.    ",
+    "\e[1;7mh,j,k,l\e[0m Navigate log entries.           ",
+    "\e[1;7mf,g\e[0m     Jump to left/right selected log.",
+    "\e[1;7mc\e[0m       Copy selected log entry.        ",
+    "\e[1;7mb\e[0m       Toggle logging categories.      ",
 };
 
 static NH_TTY_RESULT Nh_TTY_drawHelp(
@@ -450,7 +450,7 @@ NH_TTY_BEGIN()
     int begin = (rows / 2) - (entries / 2);
 
     if (row >= begin && row < begin + entries) {
-        int len = row - begin > 1 ? strlen(help_pp[row - begin]) - 20 : strlen(help_pp[row - begin]);
+        int len = row - begin > 1 ? strlen(help_pp[row - begin]) - 10 : strlen(help_pp[row - begin]);
         for (int i = 0; i < (cols - len) / 2; ++i) {
             Nh_appendToString(Data_p, " ", 1);
         }
@@ -567,13 +567,19 @@ NH_TTY_BEGIN()
 
     if (Logger_p->showCategories)
     {
+        NH_TTY_TILE_COLOR color = Nh_TTY_getTileColorFromProgHandle(Logger_p);
+        Nh_appendToString(Row_p, NH_TTY_INVERSE_TILE_COLORS_PP[color], 7);
+
         if (Node_p != NULL && row < Nodes.size) 
         {
             if (Node_p->isCurrent) {
-                Nh_appendToString(Row_p, "\e[1;7m", 6);
+                Nh_appendToString(Row_p, "\e[0m\e[1;7m", 10);
+            }
+            else if (Node_p->isSelected && Node_p->isCurrent) {
+                Nh_appendToString(Row_p, "\e[0m\e[1;7m\e[1;5m", 16);
             }
             else if (Node_p->isSelected) {
-                Nh_appendToString(Row_p, "\e[1;32m", 7);
+                Nh_appendToString(Row_p, "\e[1;5m", 6);
             }
 
             int offset = Nh_TTY_getLoggerNodeDepth(Node_p);
@@ -581,19 +587,18 @@ NH_TTY_BEGIN()
             offset *= 2;
     
             Nh_appendFormatToString(Row_p, Node_p->LoggerNode_p->category_p);
-            for (int i = 0; i < (Logger_p->listingWidth + 1) - (strlen(Node_p->LoggerNode_p->category_p) + offset) - 1; ++i) {
+            for (int i = 0; i < Logger_p->listingWidth - (strlen(Node_p->LoggerNode_p->category_p) + offset); ++i) {
                 Nh_appendToString(Row_p, " ", 1);
             }
-
-            Nh_appendToString(Row_p, "\e[0m ", 5);
         }
         else {
-            for (int i = 0; i < Logger_p->listingWidth + 1; ++i) {
+            for (int i = 0; i < Logger_p->listingWidth; ++i) {
                 Nh_appendToString(Row_p, " ", 1);
             }
         }
 
-        NH_TTY_CHECK(Nh_TTY_drawSelected(Logger_p, Row_p, row, width - (Logger_p->listingWidth + 1), height))
+        Nh_appendToString(Row_p, "\e[0m", 4);
+        NH_TTY_CHECK(Nh_TTY_drawSelected(Logger_p, Row_p, row, width - Logger_p->listingWidth, height))
     }
     else {NH_TTY_CHECK(Nh_TTY_drawSelected(Logger_p, Row_p, row, width, height))}
 

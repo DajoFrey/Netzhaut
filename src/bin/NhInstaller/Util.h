@@ -72,18 +72,6 @@
         char *filename_p, char *chars_p
     );
 
-    void *Nh_Installer_openLibrary(
-        char *libPath_p
-    );
-    
-    void *Nh_Installer_loadFunction(
-        void *dl_p, const char *functionName_p
-    );
-    
-    void Nh_Installer_closeLibrary(
-        void *dl_p
-    );
-
 /** @} */
 
 #endif

@@ -13,7 +13,7 @@
 
 #endif
 
-/** @addtogroup NhECMAScriptStructs
+/** @addtogroup NhECMAScriptEnums
  *  @{
  */
 
@@ -35,9 +35,15 @@
         NH_ECMASCRIPT_INPUT_ELEMENT_TOKEN_RIGHT_BRACE_PUNCTUATOR,
         NH_ECMASCRIPT_INPUT_ELEMENT_TOKEN_TEMPLATE_SUBSTITUTION_TAIL,
     } NH_ECMASCRIPT_INPUT_ELEMENT;
-    
+
+/** @} */
+
+/** @addtogroup NhECMAScriptStructs
+ *  @{
+ */
+
     typedef struct Nh_ECMAScript_InputElement {
-        int type;
+        NH_ECMASCRIPT_INPUT_ELEMENT type;
         Nh_UTF8String String;
     } Nh_ECMAScript_InputElement;
 

@@ -1,9 +1,0 @@
-interface ObjectPrototype {
-  attribute Object constructor;
-  Boolean hasOwnProperty(any V);
-  Boolean isPrototypeOf(any V);
-  Boolean propertyIsEnumerable(any V);
-  any     toLocaleString(optional any reserved1, optional any reserved2);
-  any?    toString();
-  any     valueOf();
-};

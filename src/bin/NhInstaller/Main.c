@@ -34,16 +34,16 @@ static NH_BOOL RUN = NH_FALSE;
 static NH_BOOL BUILD_A_LIBRARY     = NH_FALSE;
 static NH_BOOL BUILD_ALL_LIBRARIES = NH_FALSE;
 
-static NH_BOOL LIBRARY_NETZHAUT         = NH_FALSE;
-static NH_BOOL LIBRARY_LOADER           = NH_FALSE;
-static NH_BOOL LIBRARY_CORE             = NH_FALSE;
-static NH_BOOL LIBRARY_EXTERNAL         = NH_FALSE;
-static NH_BOOL LIBRARY_IO               = NH_FALSE;
-static NH_BOOL LIBRARY_TTY              = NH_FALSE;
-static NH_BOOL LIBRARY_NETWORK          = NH_FALSE;
-static NH_BOOL LIBRARY_ECMASCRIPT       = NH_FALSE;
-static NH_BOOL LIBRARY_WEBIDL_GENERATOR = NH_FALSE;
-static NH_BOOL LIBRARY_WEBIDL_RUNTIME   = NH_FALSE;
+static NH_BOOL LIBRARY_NETZHAUT   = NH_FALSE;
+static NH_BOOL LIBRARY_LOADER     = NH_FALSE;
+static NH_BOOL LIBRARY_CORE       = NH_FALSE;
+static NH_BOOL LIBRARY_EXTERNAL   = NH_FALSE;
+static NH_BOOL LIBRARY_IO         = NH_FALSE;
+static NH_BOOL LIBRARY_TTY        = NH_FALSE;
+static NH_BOOL LIBRARY_NETWORK    = NH_FALSE;
+static NH_BOOL LIBRARY_HTML       = NH_FALSE;
+static NH_BOOL LIBRARY_ECMASCRIPT = NH_FALSE;
+static NH_BOOL LIBRARY_WEBIDL     = NH_FALSE;
 
 // bins
 static NH_BOOL BUILD_A_BINARY     = NH_FALSE;
@@ -89,15 +89,15 @@ NH_INSTALLER_BEGIN()
                 RUN = libs = NH_TRUE;
                 BUILD_ALL_LIBRARIES = NH_TRUE;
                 if (negate) {
-                    LIBRARY_NETZHAUT         = NH_TRUE;
-                    LIBRARY_LOADER           = NH_TRUE;
-                    LIBRARY_CORE             = NH_TRUE;
-                    LIBRARY_IO               = NH_TRUE;
-                    LIBRARY_TTY              = NH_TRUE;
-                    LIBRARY_NETWORK          = NH_TRUE;
-                    LIBRARY_ECMASCRIPT       = NH_TRUE;
-                    LIBRARY_WEBIDL_GENERATOR = NH_TRUE;
-                    LIBRARY_WEBIDL_RUNTIME   = NH_TRUE;
+                    LIBRARY_NETZHAUT   = NH_TRUE;
+                    LIBRARY_LOADER     = NH_TRUE;
+                    LIBRARY_CORE       = NH_TRUE;
+                    LIBRARY_IO         = NH_TRUE;
+                    LIBRARY_TTY        = NH_TRUE;
+                    LIBRARY_NETWORK    = NH_TRUE;
+                    LIBRARY_ECMASCRIPT = NH_TRUE;
+                    LIBRARY_HTML       = NH_TRUE;
+                    LIBRARY_WEBIDL     = NH_TRUE;
                 }
             }
             if (strstr(argv_pp[i], "b")) {
@@ -159,6 +159,7 @@ NH_INSTALLER_BEGIN()
             &&  strcmp(argv_pp[i], "io")
             &&  strcmp(argv_pp[i], "tty")
             &&  strcmp(argv_pp[i], "network")
+            &&  strcmp(argv_pp[i], "html")
             &&  strcmp(argv_pp[i], "webidl")
             &&  strcmp(argv_pp[i], "ecmascript")) {
                 Nh_Installer_noticef("Invalid option \"%s\"", argv_pp[i]);
@@ -167,26 +168,26 @@ NH_INSTALLER_BEGIN()
         }
         if (libs && !negate) 
         {
-            LIBRARY_NETZHAUT         = !strcmp(argv_pp[i], "netzhaut") || LIBRARY_NETZHAUT;
-            LIBRARY_LOADER           = !strcmp(argv_pp[i], "loader") || LIBRARY_LOADER;
-            LIBRARY_CORE             = !strcmp(argv_pp[i], "core") || LIBRARY_CORE;
-            LIBRARY_IO               = !strcmp(argv_pp[i], "io") || LIBRARY_IO;
-            LIBRARY_TTY              = !strcmp(argv_pp[i], "tty") || LIBRARY_TTY;
-            LIBRARY_ECMASCRIPT       = !strcmp(argv_pp[i], "ecmascript") || LIBRARY_ECMASCRIPT;
-            LIBRARY_NETWORK          = !strcmp(argv_pp[i], "network") || LIBRARY_NETWORK;
-            LIBRARY_WEBIDL_GENERATOR =
-            LIBRARY_WEBIDL_RUNTIME   = !strcmp(argv_pp[i], "webidl") || LIBRARY_WEBIDL_RUNTIME || LIBRARY_WEBIDL_GENERATOR;
+            LIBRARY_NETZHAUT   = !strcmp(argv_pp[i], "netzhaut") || LIBRARY_NETZHAUT;
+            LIBRARY_LOADER     = !strcmp(argv_pp[i], "loader") || LIBRARY_LOADER;
+            LIBRARY_CORE       = !strcmp(argv_pp[i], "core") || LIBRARY_CORE;
+            LIBRARY_IO         = !strcmp(argv_pp[i], "io") || LIBRARY_IO;
+            LIBRARY_TTY        = !strcmp(argv_pp[i], "tty") || LIBRARY_TTY;
+            LIBRARY_ECMASCRIPT = !strcmp(argv_pp[i], "ecmascript") || LIBRARY_ECMASCRIPT;
+            LIBRARY_HTML       = !strcmp(argv_pp[i], "html") || LIBRARY_HTML;
+            LIBRARY_NETWORK    = !strcmp(argv_pp[i], "network") || LIBRARY_NETWORK;
+            LIBRARY_WEBIDL     = !strcmp(argv_pp[i], "webidl") || LIBRARY_WEBIDL;
         }
         if (libs && negate) {
-            LIBRARY_NETZHAUT         = strcmp(argv_pp[i], "netzhaut") && LIBRARY_NETZHAUT;
-            LIBRARY_LOADER           = strcmp(argv_pp[i], "loader") && LIBRARY_LOADER;
-            LIBRARY_CORE             = strcmp(argv_pp[i], "core") && LIBRARY_CORE;
-            LIBRARY_IO               = strcmp(argv_pp[i], "io") && LIBRARY_IO;
-            LIBRARY_TTY              = strcmp(argv_pp[i], "tty") && LIBRARY_TTY;
-            LIBRARY_ECMASCRIPT       = strcmp(argv_pp[i], "ecmascript") && LIBRARY_ECMASCRIPT;
-            LIBRARY_NETWORK          = strcmp(argv_pp[i], "network") && LIBRARY_NETWORK;
-            LIBRARY_WEBIDL_GENERATOR =
-            LIBRARY_WEBIDL_RUNTIME   = strcmp(argv_pp[i], "webidl") && LIBRARY_WEBIDL_RUNTIME || LIBRARY_WEBIDL_GENERATOR;
+            LIBRARY_NETZHAUT   = strcmp(argv_pp[i], "netzhaut") && LIBRARY_NETZHAUT;
+            LIBRARY_LOADER     = strcmp(argv_pp[i], "loader") && LIBRARY_LOADER;
+            LIBRARY_CORE       = strcmp(argv_pp[i], "core") && LIBRARY_CORE;
+            LIBRARY_IO         = strcmp(argv_pp[i], "io") && LIBRARY_IO;
+            LIBRARY_TTY        = strcmp(argv_pp[i], "tty") && LIBRARY_TTY;
+            LIBRARY_ECMASCRIPT = strcmp(argv_pp[i], "ecmascript") && LIBRARY_ECMASCRIPT;
+            LIBRARY_HTML       = strcmp(argv_pp[i], "html") && LIBRARY_HTML;
+            LIBRARY_NETWORK    = strcmp(argv_pp[i], "network") && LIBRARY_NETWORK;
+            LIBRARY_WEBIDL     = strcmp(argv_pp[i], "webidl") && LIBRARY_WEBIDL;
         }
 
         if (bins)
@@ -215,18 +216,18 @@ NH_INSTALLER_BEGIN()
     if (!RUN) {NH_INSTALLER_QUIET = NH_TRUE;}
 
     BUILD_A_LIBRARY = 
-        LIBRARY_NETZHAUT || LIBRARY_LOADER || LIBRARY_CORE || LIBRARY_IO || LIBRARY_TTY || LIBRARY_NETWORK || LIBRARY_ECMASCRIPT || LIBRARY_WEBIDL_GENERATOR || LIBRARY_WEBIDL_RUNTIME;
+        LIBRARY_NETZHAUT || LIBRARY_LOADER || LIBRARY_CORE || LIBRARY_IO || LIBRARY_TTY || LIBRARY_NETWORK || LIBRARY_ECMASCRIPT || LIBRARY_HTML || LIBRARY_WEBIDL;
 
     if (!BUILD_A_LIBRARY && BUILD_ALL_LIBRARIES) {
-        LIBRARY_NETZHAUT         = NH_TRUE;
-        LIBRARY_LOADER           = NH_TRUE;
-        LIBRARY_CORE             = NH_TRUE;
-        LIBRARY_IO               = NH_TRUE;
-        LIBRARY_TTY              = NH_TRUE;
-        LIBRARY_NETWORK          = NH_TRUE;
-        LIBRARY_ECMASCRIPT       = NH_TRUE;
-        LIBRARY_WEBIDL_GENERATOR = NH_TRUE;
-        LIBRARY_WEBIDL_RUNTIME   = NH_TRUE;
+        LIBRARY_NETZHAUT   = NH_TRUE;
+        LIBRARY_LOADER     = NH_TRUE;
+        LIBRARY_CORE       = NH_TRUE;
+        LIBRARY_IO         = NH_TRUE;
+        LIBRARY_TTY        = NH_TRUE;
+        LIBRARY_NETWORK    = NH_TRUE;
+        LIBRARY_HTML       = NH_TRUE;
+        LIBRARY_ECMASCRIPT = NH_TRUE;
+        LIBRARY_WEBIDL     = NH_TRUE;
         BUILD_A_LIBRARY = NH_TRUE;
     }
 
@@ -287,12 +288,12 @@ NH_INSTALLER_BEGIN()
     if (LIBRARY_ECMASCRIPT) {
         NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhECMAScript", INSTALL_ALL_LIBRARIES))
     }
-//    if (LIBRARY_WEBIDL_GENERATOR) {
-//        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhWebIDLGenerator", INSTALL_ALL_LIBRARIES))
-//    }
-//    if (LIBRARY_WEBIDL_RUNTIME) {
-//        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhWebIDLRuntime", INSTALL_ALL_LIBRARIES))
-//    }
+    if (LIBRARY_HTML) {
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhHTML", INSTALL_ALL_LIBRARIES))
+    }
+    if (LIBRARY_WEBIDL) {
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhWebIDL", INSTALL_ALL_LIBRARIES))
+    }
 
     if (INSTALL_ALL_LIBRARIES) {
         Nh_Installer_operationf("INSTALL_ALL INCLUDES");

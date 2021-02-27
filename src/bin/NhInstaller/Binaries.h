@@ -30,6 +30,9 @@
     NH_INSTALLER_RESULT Nh_Installer_installNhTerminal(
     );
 
+    NH_INSTALLER_RESULT Nh_Installer_buildNhWebIDLSerializer(
+    );
+
     NH_INSTALLER_RESULT Nh_Installer_installLogo(
     );
 

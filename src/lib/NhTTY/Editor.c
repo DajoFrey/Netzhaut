@@ -147,7 +147,7 @@ NH_TTY_BEGIN()
         case 'n' : if (Editor_p->insertMode) {goto FILE_EDITOR_INPUT;}
         case CTRL_KEY('n') : ;
 
-            Nh_TTY_File *File_p = Nh_TTY_openFile(&Editor_p->FileEditor, NULL, NH_TRUE);
+            Nh_TTY_File *File_p = Nh_TTY_openFile(&Editor_p->FileEditor, NULL, NH_FALSE);
             NH_TTY_CHECK_NULL(File_p)
             NH_TTY_CHECK(Nh_TTY_insertNewFile(&Editor_p->TreeListing, File_p))
             Program_p->refresh = NH_TRUE;
@@ -249,7 +249,11 @@ NH_TTY_RESULT Nh_TTY_executeEditorCommand(
 {
 NH_TTY_BEGIN()
 
+    Nh_TTY_Editor *Editor_p = Program_p->handle_p;
+
     if (codepoint == 'e') {
+        Nh_TTY_File *File_p = Nh_getFromLinkedList(&Editor_p->FileEditor.Files, Editor_p->FileEditor.current);
+        Nh_TTY_executeTextFile(File_p->handle_p);
     }
 
 NH_TTY_DIAGNOSTIC_END(NH_TTY_ERROR_UNKNOWN_COMMAND)

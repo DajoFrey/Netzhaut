@@ -1,6 +1,7 @@
 var group__NhECMAScriptVars =
 [
     [ "NH_ECMASCRIPT_INDEXMAP", "group__NhECMAScriptVars.html#ga1538470260b7f5a0ae34bcef01cf804c", null ],
+    [ "NH_ECMASCRIPT_INDEXMAP", "group__NhECMAScriptVars.html#ga1538470260b7f5a0ae34bcef01cf804c", null ],
     [ "NH_ECMASCRIPT_INPUT_ELEMENTS_PP", "group__NhECMAScriptVars.html#gaa97549fcf8f14c50df9772f6c2b005fc", null ],
     [ "NH_ECMASCRIPT_ORDINARY_OBJECT_INTERNAL_METHODS", "group__NhECMAScriptVars.html#ga527efff004c5926d7a7335b8fbc3e14c", null ],
     [ "NH_ECMASCRIPT_ORDINARY_OBJECT_LOOKUP_P", "group__NhECMAScriptVars.html#ga8b1929422f5a3f1f53260c752c51f871", null ],

@@ -578,7 +578,7 @@ NH_TTY_DIAGNOSTIC_END(NH_TTY_SUCCESS)
 }
 
 static NH_TTY_RESULT Nh_TTY_renderTreeListingRow(
-    Nh_List *Nodes_p, Nh_TTY_TreeListingNode *Current_p, Nh_String *Data_p, int row, int cols)
+    Nh_List *Nodes_p, Nh_TTY_TreeListingNode *Current_p, Nh_String *Row_p, int row, int cols)
 {
 NH_TTY_BEGIN()
 
@@ -590,18 +590,18 @@ NH_TTY_BEGIN()
         NH_TTY_CHECK(Nh_TTY_renderTreeListingNode(Node_p, row_p))
 
         if (Current_p == Node_p) {
-            Nh_appendToString(Data_p, "\e[0m\e[1;7m", 10);
+            Nh_appendToString(Row_p, "\e[0m\e[1;7m", 10);
         }
-        if (Current_p == Node_p && Node_p->File_p != NULL && !Node_p->File_p->readOnly) {
-            Nh_appendToString(Data_p, "\e[0m\e[1;7m\e[1;5m", 16);
+        else if (Current_p == Node_p && Node_p->File_p != NULL && !Node_p->File_p->readOnly) {
+            Nh_appendToString(Row_p, "\e[0m\e[1;7m\e[1;5m", 16);
         }
         else if (Node_p->File_p != NULL && !Node_p->File_p->readOnly) {
-            Nh_appendToString(Data_p, "\e[1;5m", 6);
+            Nh_appendToString(Row_p, "\e[1;5m", 6);
         }
-        Nh_appendFormatToString(Data_p, row_p);
+        Nh_appendFormatToString(Row_p, row_p);
 
         for (int i = 0; i < cols - strlen(row_p); ++i) {
-            Nh_appendToString(Data_p, " ", 1);
+            Nh_appendToString(Row_p, " ", 1);
         }
     }
 
@@ -663,24 +663,24 @@ NH_TTY_DIAGNOSTIC_END(NH_TTY_SUCCESS)
 // DRAW ============================================================================================
 
 NH_TTY_RESULT Nh_TTY_drawTreeListingRow(
-    Nh_TTY_TreeListing *Listing_p, Nh_String *Data_p, NH_TTY_TILE_COLOR color, int row)
+    Nh_TTY_TreeListing *Listing_p, Nh_String *Row_p, NH_TTY_TILE_COLOR color, int row)
 {
 NH_TTY_BEGIN()
 
     row += Listing_p->rowOffset; 
-    Nh_appendToString(Data_p, NH_TTY_INVERSE_TILE_COLORS_PP[color], 7);
+    Nh_appendToString(Row_p, NH_TTY_INVERSE_TILE_COLORS_PP[color], 7);
 
     if (row < Listing_p->RenderLines.length) {
         Nh_String *RenderLine_p = &((Nh_String*)Listing_p->RenderLines.bytes_p)[row];
-        Nh_appendToString(Data_p, RenderLine_p->bytes_p, RenderLine_p->length);
+        Nh_appendToString(Row_p, RenderLine_p->bytes_p, RenderLine_p->length);
     }
     else {
         NH_BYTE whitespace_p[1024];
         memset(whitespace_p, 32, 1024);
-        Nh_appendToString(Data_p, whitespace_p, Listing_p->width);
+        Nh_appendToString(Row_p, whitespace_p, Listing_p->width);
     }
 
-    Nh_appendToString(Data_p, "\e[0m", 4);
+    Nh_appendToString(Row_p, "\e[0m", 4);
 
 NH_TTY_DIAGNOSTIC_END(NH_TTY_SUCCESS)
 }

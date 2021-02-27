@@ -27,6 +27,7 @@ The implementation of Netzhaut is split into multiple modules (libraries):
 - [NhLoader](group__API.html)
 - [NhCore](group__Core.html)
 - [NhTTY](group__CSS.html)
+- [NhHTML](TODO)
 - [NhECMAScript](TODO)
 
 \section SPECS SPECS
