@@ -83,13 +83,13 @@ typedef struct Nh_Vk_Texture Nh_Vk_Texture;
         Nh_Content *Content_p, Nh_Texture *Texture_p
     );
 
-    void Nh_getTextureScale(
-        Nh_Content *Content_p, Nh_HTML_PixelBox *Box_p, Nh_Texture *Texture_p, float scale_p[2]
-    );
-
-    void Nh_getScaledTextureRepeat(
-        Nh_Content *Content_p, Nh_HTML_PixelBox *Box_p, Nh_Texture *Texture_p, float repeat_p[2]
-    );
+//    void Nh_getTextureScale(
+//        Nh_Content *Content_p, Nh_HTML_PixelBox *Box_p, Nh_Texture *Texture_p, float scale_p[2]
+//    );
+//
+//    void Nh_getScaledTextureRepeat(
+//        Nh_Content *Content_p, Nh_HTML_PixelBox *Box_p, Nh_Texture *Texture_p, float repeat_p[2]
+//    );
 
 /** @} */
 

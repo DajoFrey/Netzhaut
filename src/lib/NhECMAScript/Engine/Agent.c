@@ -35,8 +35,6 @@ NH_ECMASCRIPT_BEGIN()
 
     Nh_ECMAScript_AgentArgs *Args_p = args_p;
 
-    Nh_ECMAScript_createIndexMap();
-
     Nh_ECMAScript_Agent *Agent_p = Nh_allocate(sizeof(Nh_ECMAScript_Agent));
     NH_ECMASCRIPT_CHECK_MEM(NULL, Agent_p)
 
@@ -75,5 +73,4 @@ Nh_ECMAScript_Agent *Nh_ECMAScript_getCurrentAgent()
 NH_ECMASCRIPT_BEGIN()
 NH_ECMASCRIPT_END(Nh_getThread()->CurrentWorkload_p->args_p)
 }
-
 

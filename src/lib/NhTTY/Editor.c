@@ -228,11 +228,8 @@ NH_TTY_BEGIN()
     if (File_p != NULL && File_p->type == NH_TTY_FILE_TEXT) 
     {
         Nh_TTY_TextFile *TextFile_p = File_p->handle_p;
-
-        if (!TextFile_p->ExecutionMenu.active) {
-            *x_p = TextFile_p->screenCursorX + TextFile_p->lineNumberOffset + x;
-            *y_p = TextFile_p->screenCursorY + 1;
-        }
+        *x_p = TextFile_p->screenCursorX + TextFile_p->lineNumberOffset + x;
+        *y_p = TextFile_p->screenCursorY + 1;
     }
     else {
         *x_p = -1;
@@ -251,9 +248,19 @@ NH_TTY_BEGIN()
 
     Nh_TTY_Editor *Editor_p = Program_p->handle_p;
 
+    Nh_SystemTime SystemTime = Nh_getSystemTime();
+    NH_BYTE logName_p[255] = {'\0'};
+    sprintf(logName_p, "NhTTY_%lu%lu", SystemTime.seconds, SystemTime.milliseconds);
+
     if (codepoint == 'e') {
         Nh_TTY_File *File_p = Nh_getFromLinkedList(&Editor_p->FileEditor.Files, Editor_p->FileEditor.current);
         Nh_TTY_executeTextFile(File_p->handle_p);
+    }
+    else if (codepoint == 'w') {
+        Nh_TTY_File *File_p = Nh_getFromLinkedList(&Editor_p->FileEditor.Files, Editor_p->FileEditor.current);
+        if (File_p != NULL) {
+            NH_TTY_CHECK(Nh_TTY_parseWebIDLTextFile(logName_p, File_p->handle_p))
+        }
     }
 
 NH_TTY_DIAGNOSTIC_END(NH_TTY_ERROR_UNKNOWN_COMMAND)

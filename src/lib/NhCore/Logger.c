@@ -188,6 +188,8 @@ NH_END(result)
 NH_RESULT _Nh_sendLogMessage(
     NH_BYTE *message_p)
 {
+    if (message_p == NULL) {return NH_ERROR_BAD_STATE;}
+
     // send to logger
     if (_Nh_updateLogger(message_p) != NH_SUCCESS) {return NH_ERROR_BAD_STATE;}
 
@@ -197,13 +199,19 @@ NH_RESULT _Nh_sendLogMessage(
     }
 
     // send to forks
-    NH_BYTE messageIPC_p[1024] = {'\0'};
-    sprintf(messageIPC_p, "NH_IPC_LOG%s", message_p);
-
-    for (int i = 0; i < NH_MAX_FORKS; ++i) {
-        if (NH_PROCESS_POOL.Forks_p[i].id != 0) {
-            _Nh_writeToProcess(&NH_PROCESS_POOL.Forks_p[i], messageIPC_p, strlen(messageIPC_p), NH_FALSE);
+    if (NH_PROCESS_POOL.forks > 0)
+    {
+        NH_BYTE *messageIPC_p = Nh_allocate(strlen(message_p) + 11);
+        if (messageIPC_p == NULL) {return NH_ERROR_BAD_STATE;}
+        sprintf(messageIPC_p, "NH_IPC_LOG%s", message_p);
+    
+        for (int i = 0; i < NH_MAX_FORKS; ++i) {
+            if (NH_PROCESS_POOL.Forks_p[i].id != 0) {
+                _Nh_writeToProcess(&NH_PROCESS_POOL.Forks_p[i], messageIPC_p, strlen(messageIPC_p), NH_FALSE);
+            }
         }
+    
+        Nh_free(messageIPC_p);
     }
 
     return NH_SUCCESS;

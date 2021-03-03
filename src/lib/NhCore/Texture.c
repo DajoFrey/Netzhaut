@@ -17,8 +17,7 @@
 #include "Config.h"
 #include "Font.h"
 
-#include "../Graphics/Vulkan/Header/Texture.h"
-#include "../HTML/Main/Header/Box.h"
+#include "../NhGraphics/Vulkan/Header/Texture.h"
 
 #include "Common/Macro.h"
 #include NH_FLOW
@@ -311,34 +310,34 @@ NH_BEGIN()
 NH_END(height)
 }
 
-void Nh_getTextureScale(
-    Nh_Content *Content_p, Nh_HTML_PixelBox *Box_p, Nh_Texture *Texture_p, float scale_p[2])
-{
-NH_BEGIN()
-    
-    scale_p[0] = ((float)Nh_getTextureWidth(Content_p, Texture_p)) / (float)Box_p->Size.width;
-    scale_p[1] = ((float)Nh_getTextureHeight(Content_p, Texture_p)) / (float)Box_p->Size.height;
-
-NH_SILENT_END()
-}
-
-void Nh_getScaledTextureRepeat(
-    Nh_Content *Content_p, Nh_HTML_PixelBox *Box_p, Nh_Texture *Texture_p, float repeat_p[2])
-{
-NH_BEGIN()
-    
-    float scale_p[2];
-    Nh_getTextureScale(Content_p, Box_p, Texture_p, scale_p);
-
-    if (scale_p[1] > scale_p[0]) {
-        repeat_p[0] = scale_p[1];
-        repeat_p[1] = 1.0f;
-    }
-    else {
-        repeat_p[0] = 1.0f;
-        repeat_p[1] = scale_p[0];
-    }
-
-NH_SILENT_END()
-}
+//void Nh_getTextureScale(
+//    Nh_Content *Content_p, Nh_HTML_PixelBox *Box_p, Nh_Texture *Texture_p, float scale_p[2])
+//{
+//NH_BEGIN()
+//    
+////    scale_p[0] = ((float)Nh_getTextureWidth(Content_p, Texture_p)) / (float)Box_p->Size.width;
+////    scale_p[1] = ((float)Nh_getTextureHeight(Content_p, Texture_p)) / (float)Box_p->Size.height;
+//
+//NH_SILENT_END()
+//}
+//
+//void Nh_getScaledTextureRepeat(
+//    Nh_Content *Content_p, Nh_HTML_PixelBox *Box_p, Nh_Texture *Texture_p, float repeat_p[2])
+//{
+//NH_BEGIN()
+//    
+//    float scale_p[2];
+//    Nh_getTextureScale(Content_p, Box_p, Texture_p, scale_p);
+//
+//    if (scale_p[1] > scale_p[0]) {
+//        repeat_p[0] = scale_p[1];
+//        repeat_p[1] = 1.0f;
+//    }
+//    else {
+//        repeat_p[0] = 1.0f;
+//        repeat_p[1] = scale_p[0];
+//    }
+//
+//NH_SILENT_END()
+//}
 

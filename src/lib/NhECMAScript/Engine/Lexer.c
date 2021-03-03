@@ -294,11 +294,80 @@ NH_ECMASCRIPT_BEGIN()
 NH_ECMASCRIPT_END(0)
 }
 
+static NH_BOOL Nh_ECMAScript_isHexDigit(
+    NH_UNICODE_CODEPOINT codepoint)
+{
+NH_ECMASCRIPT_BEGIN()
+
+    if (codepoint == '0'
+    ||  codepoint == '1'
+    ||  codepoint == '2'
+    ||  codepoint == '3'
+    ||  codepoint == '4'
+    ||  codepoint == '5'
+    ||  codepoint == '6'
+    ||  codepoint == '7'
+    ||  codepoint == '8'
+    ||  codepoint == '9'
+    ||  codepoint == 'a'
+    ||  codepoint == 'b'
+    ||  codepoint == 'c'
+    ||  codepoint == 'd'
+    ||  codepoint == 'e'
+    ||  codepoint == 'f'
+    ||  codepoint == 'A'
+    ||  codepoint == 'B'
+    ||  codepoint == 'C'
+    ||  codepoint == 'D'
+    ||  codepoint == 'E'
+    ||  codepoint == 'F') {NH_ECMASCRIPT_END(NH_TRUE)}
+
+NH_ECMASCRIPT_END(NH_FALSE)
+}
+
+static unsigned int Nh_ECMAScript_isHexDigits(
+    NH_UNICODE_CODEPOINT *codepoints_p, unsigned int length)
+{
+NH_ECMASCRIPT_BEGIN()
+
+    int digits = 0;
+
+    while (length >= 1 && Nh_ECMAScript_isHexDigit(codepoints_p[digits])) {
+        digits++;
+        length--;
+    }
+
+NH_ECMASCRIPT_END(digits)
+}
+
+static unsigned int Nh_ECMAScript_isHexIntegerLiteral(
+    NH_UNICODE_CODEPOINT *codepoints_p, unsigned int length)
+{
+NH_ECMASCRIPT_BEGIN()
+
+    int digits = 0;
+
+    if (length > 2 && codepoints_p[0] == '0' && (codepoints_p[1] == 'x' || codepoints_p[1] == 'X')) {
+        digits = Nh_ECMAScript_isHexDigits(&codepoints_p[2], length - 2);
+    }
+    if (digits > 0) {digits += 2;}
+
+NH_ECMASCRIPT_END(digits)
+}
+
 // https://tc39.es/ecma262/#sec-literals-numeric-literals
 static unsigned int Nh_ECMAScript_isNumericLiteral(
     NH_UNICODE_CODEPOINT *codepoints_p, unsigned int length, NH_ECMASCRIPT_INPUT_ELEMENT *type_p)
 {
 NH_ECMASCRIPT_BEGIN()
+
+// NonDecimalHexIntegerLiteral
+
+    int digits = Nh_ECMAScript_isHexIntegerLiteral(codepoints_p, length);
+    if (digits > 0) {
+        *type_p = NH_ECMASCRIPT_INPUT_ELEMENT_TOKEN_NON_DECIMAL_HEX_INTEGER_LITERAL;
+        NH_ECMASCRIPT_END(digits)
+    }
 
 // DecimalBigIntegerLiteral
     if (length > 1 && codepoints_p[0] == '0' && codepoints_p[1] == 'n') 
@@ -310,14 +379,14 @@ NH_ECMASCRIPT_BEGIN()
     if (Nh_ECMAScript_isDigit(codepoints_p[0], NH_FALSE) && length > 1) 
     {
         if (codepoints_p[1] == '_') {
-            int digits = Nh_ECMAScript_isDigits(&codepoints_p[2], length - 2);
+            digits = Nh_ECMAScript_isDigits(&codepoints_p[2], length - 2);
             if (digits > 0 && length > digits + 2 && codepoints_p[digits + 2] == 'n') {
                 *type_p = NH_ECMASCRIPT_INPUT_ELEMENT_TOKEN_DECIMAL_BIG_INTEGER_LITERAL;
                 NH_ECMASCRIPT_END(digits + 3)
             } 
         }
 
-        int digits = Nh_ECMAScript_isDigits(&codepoints_p[1], length - 1);
+        digits = Nh_ECMAScript_isDigits(&codepoints_p[1], length - 1);
         if (length > digits + 1 && codepoints_p[digits + 1] == 'n') {
             *type_p = NH_ECMASCRIPT_INPUT_ELEMENT_TOKEN_DECIMAL_BIG_INTEGER_LITERAL;
             NH_ECMASCRIPT_END(digits + 2)
@@ -327,7 +396,7 @@ NH_ECMASCRIPT_BEGIN()
 // DecimalLiteral
     if (codepoints_p[0] == '.')
     {
-        int digits = Nh_ECMAScript_isDigits(&codepoints_p[1], length - 1) + 1;
+        digits = Nh_ECMAScript_isDigits(&codepoints_p[1], length - 1) + 1;
         if (digits > 1) {
             digits += Nh_ECMAScript_isExponentPart(&codepoints_p[digits], length - digits);
             *type_p = NH_ECMASCRIPT_INPUT_ELEMENT_TOKEN_DECIMAL_LITERAL;
@@ -335,7 +404,7 @@ NH_ECMASCRIPT_BEGIN()
         }
     }
 
-    int digits = Nh_ECMAScript_isDecimalIntegerLiteral(codepoints_p, length);
+    digits = Nh_ECMAScript_isDecimalIntegerLiteral(codepoints_p, length);
     if (digits > 0) 
     {
         *type_p = NH_ECMASCRIPT_INPUT_ELEMENT_TOKEN_DECIMAL_LITERAL;
@@ -362,18 +431,18 @@ NH_ECMASCRIPT_BEGIN()
 
     if (codepoints_p[0] == '"') {
         int count = 1;
-        while (count < length && codepoints_p[count] != '"') {
-            ++count;
+        while (count < length) {
+            if (codepoints_p[count++] == '"') {break;}
         }
-        NH_ECMASCRIPT_END(count)
+        if (count > 1) {NH_ECMASCRIPT_END(count)}
     }
 
-    if (codepoints_p[0] == 39) { // 39 == '
+    if (codepoints_p[0] == 39) {
         int count = 1;
-        while (count < length && codepoints_p[count] != 39) {
-            ++count;
+        while (count < length) {
+            if (codepoints_p[count++] == 39) {break;}
         }
-        NH_ECMASCRIPT_END(count)
+        if (count > 1) {NH_ECMASCRIPT_END(count)}
     }
 
 NH_ECMASCRIPT_END(0)

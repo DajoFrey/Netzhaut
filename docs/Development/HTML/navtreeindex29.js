@@ -1,5 +1,9 @@
 var NAVTREEINDEX29 =
 {
+"structNh__TTY__Output.html#a9c3382d9c51b07fbde27eda507f4176e":[3,1,3,9,7],
+"structNh__TTY__Output.html#a9f6828afe873b7fa2dcddf363a98d823":[3,1,3,9,0],
+"structNh__TTY__Output.html#adcb39716a3cdfd818f1ceb979470f3cd":[3,1,3,9,3],
+"structNh__TTY__Program.html":[3,1,3,1],
 "structNh__TTY__Program.html#a06e41a03cc14206b25f2b8f5e30d2541":[3,1,3,1,3],
 "structNh__TTY__Program.html#a0c0eb78b5bc13f38b04f8a18cd9c1f64":[3,1,3,1,2],
 "structNh__TTY__Program.html#acfac40350b252a0e9f2717b122166eb0":[3,1,3,1,0],

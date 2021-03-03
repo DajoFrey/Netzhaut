@@ -80,6 +80,18 @@
 
 /** @} */
 
+/** @addtogroup NhCoreTypedefs
+ *  @{
+ */
+
+    typedef unsigned int (*Nh_runWorkloads_f)(
+    );
+
+    typedef NH_BOOL (*Nh_keepRunning_f)(
+    );
+
+/** @} */
+
 /** @addtogroup NhCoreFunctions
  *  @{
  */
@@ -94,6 +106,9 @@
     unsigned int Nh_runWorkloads(
     );
     
+    NH_BOOL Nh_keepRunning(
+    );
+
     void *Nh_activateWorkload(
         void *(*InitFunction_p)(void*), NH_SIGNAL (*Function_p)(void*), void *args_p, NH_BOOL crucial
     );

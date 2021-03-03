@@ -19,8 +19,4 @@
 
 #endif
 
-/** \defgroup WebIDL
- *  \brief WebIDL module.
- */
-
 #endif 

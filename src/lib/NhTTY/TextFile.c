@@ -27,6 +27,9 @@
 #include NH_TTY_FLOW
 #include NH_TTY_DEFAULT_CHECK
 
+#include "../NhWebIDL/Runtime/Parser.h"
+#include "../NhLoader/Loader.h"
+
 #include <stddef.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -101,9 +104,6 @@ NH_TTY_BEGIN()
     Nh_TTY_TextFile *TextFile_p = malloc(sizeof(Nh_TTY_TextFile));
     NH_TTY_CHECK_MEM(NULL, TextFile_p)
 
-    TextFile_p->ExecutionMenu.active = NH_FALSE;
-    TextFile_p->ExecutionMenu.index = 0;
-
     TextFile_p->textType  = 0;
     TextFile_p->fileCursorXTarget = 0;
     TextFile_p->fileCursorX   = 0;
@@ -174,21 +174,18 @@ NH_TTY_DIAGNOSTIC_END(NH_TTY_SUCCESS)
 
 // EXECUTE =========================================================================================
 
-NH_TTY_RESULT Nh_TTY_executeTextFile(
-    Nh_TTY_TextFile *TextFile_p)
+NH_TTY_RESULT Nh_TTY_parseWebIDLTextFile(
+    NH_BYTE *name_p, Nh_TTY_TextFile *TextFile_p)
 {
 NH_TTY_BEGIN()
 
-    Nh_String Bytes = Nh_initString(255);
-
-    if (TextFile_p->ExecutionMenu.index == 0) {
-        Nh_appendToString(&Bytes, "NH_IPC_ECMASCRIPT", 17);
-    }
+    Nh_UTF8String Bytes = Nh_initString(255);
 
     for (int i = 0; i < TextFile_p->Lines.size; ++i) 
     {
         if (i > 0) {Nh_appendToString(&Bytes, "\n", 1);}
         Nh_Array *UnicodeCodepoints_p = TextFile_p->Lines.handles_pp[i];
+
         for (int j = 0; j < UnicodeCodepoints_p->length; ++j) {
             NH_BYTE bytes_p[4] = {'\0'};
             size_t byteSize = Nh_encodeToUTF8(((NH_UNICODE_CODEPOINT*)UnicodeCodepoints_p->bytes_p)[j], bytes_p);
@@ -196,12 +193,47 @@ NH_TTY_BEGIN()
         }
     }
 
-    if (Nh_getFork()) {
-        Nh_writeToChannel(&Nh_getFork()->IPC.Out, Bytes.bytes_p, Bytes.length);
-    }
-    else {Nh_handleIPCReceive(Bytes.bytes_p);}
+    Nh_WebIDL_parseFragment_f parseFragment_f = NH_LOADER.loadFunction_f("NhWebIDL", 0, "Nh_WebIDL_parseFragment");
 
-// TODO free
+    if (parseFragment_f != NULL) 
+    {
+        Nh_WebIDL_FinalParseResult ParseResult = parseFragment_f(name_p, Bytes.bytes_p);
+        Nh_WebIDL_unparseFragment_f unparseFragment_f = NH_LOADER.loadFunction_f("NhWebIDL", 0, "Nh_WebIDL_unparseFragment");
+        if (unparseFragment_f != NULL) {unparseFragment_f(ParseResult);}
+        else {NH_TTY_DIAGNOSTIC_END(NH_TTY_ERROR_BAD_STATE)}
+    }
+    else {NH_TTY_DIAGNOSTIC_END(NH_TTY_ERROR_BAD_STATE)}
+
+    Nh_freeString(&Bytes);
+
+NH_TTY_DIAGNOSTIC_END(NH_TTY_SUCCESS)
+}
+
+NH_TTY_RESULT Nh_TTY_executeTextFile(
+    Nh_TTY_TextFile *TextFile_p)
+{
+NH_TTY_BEGIN()
+
+//    Nh_String Bytes = Nh_initString(255);
+//    Nh_appendToString(&Bytes, "NH_IPC_ECMASCRIPT", 17);
+//
+//    for (int i = 0; i < TextFile_p->Lines.size; ++i) 
+//    {
+//        if (i > 0) {Nh_appendToString(&Bytes, "\n", 1);}
+//        Nh_Array *UnicodeCodepoints_p = TextFile_p->Lines.handles_pp[i];
+//        for (int j = 0; j < UnicodeCodepoints_p->length; ++j) {
+//            NH_BYTE bytes_p[4] = {'\0'};
+//            size_t byteSize = Nh_encodeToUTF8(((NH_UNICODE_CODEPOINT*)UnicodeCodepoints_p->bytes_p)[j], bytes_p);
+//            Nh_appendToString(&Bytes, bytes_p, byteSize);
+//        }
+//    }
+//
+//    if (Nh_getFork()) {
+//        Nh_writeToChannel(&Nh_getFork()->IPC.Out, Bytes.bytes_p, Bytes.length);
+//    }
+//    else {Nh_handleIPCReceive(Bytes.bytes_p);}
+//
+//// TODO free
 
 NH_TTY_DIAGNOSTIC_END(NH_TTY_SUCCESS)
 }

@@ -1,4 +1,4 @@
-\page Architecture ARCHITECTURE 
+\page Architecture Architecture
 
 <div style="width:700px;">
 

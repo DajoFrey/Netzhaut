@@ -1,4 +1,4 @@
-\page Target TARGET
+\page Target Target 
 
 <div style="width:700px;">
 
@@ -8,7 +8,7 @@ Because the project is open to ideas and changes in general, some targets may ch
 drastically over time, though the overall principles will remain intact.
 These principles are to always strive for **quality**, **user friendliness** and **innovation**.
 
-\section INTERFACE INTERFACE
+\section Interface Interface
 
 **HACKABLE AND EXTENSIBLE**  
 Netzhaut tries to have as little as possible happen under the hood. What this means in practice, is that Netzhaut shifts functionality from C code to JS code wherever it makes sense.
@@ -22,7 +22,7 @@ Netzhaut extends the possibilities of JS by allowing the developer to query addi
 The extension of JS is of course a no-go if you want to fetch a web-page from an unknown source. For this use-case, Netzhaut can be configured to run in a secure mode.
 This strips away any potentially harmful JS features. In general, security is under review at all times.  
 
-\section INTERNAL INTERNAL
+\section Internal Internal
 
 **PERFORMANCE**  
 While performance may not be a priority, it for sure won't be neglected. If something needs to be addressed performance wise, it will be.
@@ -37,7 +37,7 @@ Tab threads create/handle all resources necessary for rendering.
 Netzhaut creates windows. These are you typical OS-provided window containers where you can render stuff into. These windows can contain any number of tabs. Tabs can be understood as your typical browser tab.
 So similiar to a browser tab, Netzhaut will render stuff into it, e.g. a HTML document. These tabs can be arranged at free will using a JS API.   
 
-\section RENDERING RENDERING
+\section Rendering Rendering
 
 **FLEXIBLE**  
 The engine is flexible in the way it handles its backend rendering dependencies and has a adaptive nature. To allow this, Netzhaut is able to use more than one possible backend for rendering. 
@@ -50,7 +50,7 @@ The rational behind this feature is to improve (third-party) API and platform in
 **VR SUPPORT**  
 Netzhaut shall support VR in some way. This hasn't been thought out yet. 
 
-\section BUILDING BUILDING
+\section Building Building
 
 **BUILD-SYSTEM**    
 Netzhaut uses its own build-system, focusing on a lightweight but powerfull solution.   
@@ -61,7 +61,7 @@ The project tries to avoid big dependencies and generally only downloads/install
 **CROSS-PLATFORM**  
 Building is supported on Linux and Windows. Support for MacOS is written in the stars somewhere and I'm not sure if it's gonna happen.
 
-\section DEBUGGING DEBUGGING
+\section Debugging Debugging
 
 **ESSENTIAL**  
 Debugging is an essential feature and is supported by most sub-systems. For performance reasons, developers need to explicitly specify a flag at build-time to use more advanced debugging routines.   

@@ -20,19 +20,6 @@
 
 #include "../NhNetwork/URL.h"
 
-#include "../CSS/Header/Sheet.h"
-#include "../HTML/Main/Header/Document.h"
-
-#include "../CSS/Header/Icons/Expand.h"
-#include "../CSS/Header/Icons/Disc.h"
-#include "../CSS/Header/Icons/Circle.h"
-#include "../CSS/Header/Icons/Square.h"
-
-#include "../CSS/Header/Sheets/Misc.h"
-#include "../CSS/Header/Sheets/SelectOption.h"
-#include "../CSS/Header/Sheets/Header.h"
-#include "../CSS/Header/Sheets/List.h"
-
 #include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -609,11 +596,11 @@ static char *Nh_getPayloadFromInternalURL(
 {
 NH_BEGIN()
 
-    switch (URL_p->type)
-    {
-        case NH_INTERNAL_URL_HTML_NODE_TEXT            : NH_END( ((Nh_HTML_Node*)URL_p->pointer)->text_p       )
-        case NH_INTERNAL_URL_HTML_NODE_ATTRIBUTE_VALUE : NH_END( ((Nh_HTML_Attribute*)URL_p->pointer)->value_p )
-    }
+//    switch (URL_p->type)
+//    {
+//        case NH_INTERNAL_URL_HTML_NODE_TEXT            : NH_END( ((Nh_HTML_Node*)URL_p->pointer)->text_p       )
+//        case NH_INTERNAL_URL_HTML_NODE_ATTRIBUTE_VALUE : NH_END( ((Nh_HTML_Attribute*)URL_p->pointer)->value_p )
+//    }
 
 NH_END(NULL)
 }

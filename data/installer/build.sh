@@ -16,6 +16,7 @@ $DIR/src/bin/NhInstaller/Libraries.c \
 $DIR/src/bin/NhInstaller/Objects.c \
 $DIR/src/bin/NhInstaller/Message.c \
 $DIR/src/bin/NhInstaller/Unicode.c \
+$DIR/src/bin/NhInstaller/WebIDL.c \
 $DIR/src/bin/NhInstaller/Common/Result.c \
 
 if [ $? = 0 ]; then

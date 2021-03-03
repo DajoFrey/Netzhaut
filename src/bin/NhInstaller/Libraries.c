@@ -14,7 +14,7 @@
 #include "Message.h"
 #include "Unicode.h"
 #include "Main.h"
-#include "Binaries.h"
+#include "WebIDL.h"
 
 #include "Common/Macro.h"
 
@@ -26,6 +26,7 @@
 #include "../../lib/NhCore/Common/About.h"
 #include "../../lib/NhTTY/Common/About.h"
 #include "../../lib/NhHTML/Common/About.h"
+#include "../../lib/NhWebIDL/Common/About.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -347,67 +348,8 @@ NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
 
 // BUILD NH_WEBIDL =================================================================================
 
-static NH_INSTALLER_RESULT Nh_Installer_executeNhWebIDLSerializer(
-    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p)
-{
-NH_INSTALLER_BEGIN()
-
-    chdir(projDir_p);
-
-    int status = system("./bin/NhWebIDLSerializer \
-        incl_out:src/lib/NhWebIDL/Runtime \
-        decl_out:src/lib/NhDOM/Interfaces \
-        src/lib/NhWebIDL/Interfaces/DOM/TreeWalker.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/Text.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/StaticRange.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/Slottable.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/ShadowRoot.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/Range.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/ProcessingInstruction.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/ParentNode.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/NonElementParentNode.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/NonDocumentTypeChildNode.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/NodeList.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/NodeIterator.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/NodeFilter.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/Node.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/NamedNodeMap.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/MutationRecord.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/MutationObserver.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/HTMLCollection.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/EventTarget.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/Event.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/Element.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/DocumentType.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/DocumentOrShadowRoot.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/DocumentFragment.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/Document.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/DOMTokenList.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/DOMImplementation.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/Comment.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/ChildNode.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/CharacterData.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/CDataSection.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/Attr.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/AbstractRange.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/AbortSignal.idl \
-        src/lib/NhWebIDL/Interfaces/DOM/AbortController.idl \
-        decl_out:src/lib/NhHTML/Interfaces \
-        src/lib/NhWebIDL/Interfaces/HTML/Document.idl \
-        src/lib/NhWebIDL/Interfaces/HTML/DocumentOrShadowRoot.idl \
-        src/lib/NhWebIDL/Interfaces/HTML/HTMLElement.idl \
-        src/lib/NhWebIDL/Interfaces/HTML/HTMLOrSVGElement.idl \
-    ");
-
-    if (WEXITSTATUS(status) || WIFSIGNALED(status)) {NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_ERROR_AR_EXECUTION_FAILED)}
-
-    chdir(wrkDir_p);
-
-NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
-}
-
 static NH_INSTALLER_RESULT Nh_Installer_buildNhWebIDL(
-    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p)
+    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p, NH_BOOL install)
 {
 NH_INSTALLER_BEGIN()
 
@@ -416,14 +358,20 @@ NH_INSTALLER_BEGIN()
     NH_BYTE objPath_p[2048] = {'\0'};
     sprintf(objPath_p, "%s%s", projDir_p, "/lib/OBJECTS/WEBIDL");
 
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_buildNhWebIDLSerializer())
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_executeNhWebIDLSerializer(wrkDir_p, projDir_p))
-exit(0);
+    chdir(projDir_p);
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_processWebIDLSpecs())
+    chdir(wrkDir_p);
 
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_createObjectsDir(wrkDir_p, projDir_p, "NhWebIDL"))
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_LIBRARY, Nh_Installer_createLibrary(
-        wrkDir_p, objPath_p, extra_p, "NhWebIDL", 0, 0, 0
+        wrkDir_p, objPath_p, extra_p, "NhWebIDL", NH_WEBIDL_MAJOR_VERSION, NH_WEBIDL_MINOR_VERSION, NH_WEBIDL_PATCH_VERSION
     ))
+
+    if (install) {
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_installLibrary(
+            "NhWebIDL", NH_WEBIDL_MAJOR_VERSION, NH_WEBIDL_MINOR_VERSION, NH_WEBIDL_PATCH_VERSION
+        ))
+    }
 
 NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
 }
@@ -559,14 +507,14 @@ NH_INSTALLER_BEGIN()
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_GET_PROJECT_DIRECTORY, Nh_Installer_getProjectDir(projDir_p, 2048))
 
     NH_BYTE external_p[1024] = {'\0'};
-    sprintf(external_p, "%s/src/lib/Graphics/Vulkan/Header/External", projDir_p);
+    sprintf(external_p, "%s/src/lib/NhGraphics/Vulkan/Header/External", projDir_p);
 
     chdir(projDir_p);
 
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_EXTERNAL_DIRECTORY, Nh_Installer_createDir(external_p))
 
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("external/DOWNLOADS/volk-master/volk.h", "src/lib/Graphics/Vulkan/Header/External", NH_FALSE, NH_FALSE, NH_FALSE))
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("external/DOWNLOADS/Vulkan-Headers-master/include/vulkan/*", "src/lib/Graphics/Vulkan/Header/External", NH_FALSE, NH_FALSE, NH_FALSE))
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("external/DOWNLOADS/volk-master/volk.h", "src/lib/NhGraphics/Vulkan/Header/External", NH_FALSE, NH_FALSE, NH_FALSE))
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("external/DOWNLOADS/Vulkan-Headers-master/include/vulkan/*", "src/lib/NhGraphics/Vulkan/Header/External", NH_FALSE, NH_FALSE, NH_FALSE))
 
     chdir(wrkDir_p);
 
@@ -658,7 +606,7 @@ NH_INSTALLER_BEGIN()
         NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhECMAScript(wrkDir_p, projDir_p, install))
     }
     else if (!strcmp(name_p, "NhWebIDL")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhWebIDL(wrkDir_p, projDir_p))
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhWebIDL(wrkDir_p, projDir_p, install))
     }
 
 NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)

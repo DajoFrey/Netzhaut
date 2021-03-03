@@ -191,6 +191,17 @@ NH_BEGIN()
 NH_SILENT_END()
 }
 
+// KEEP RUNNING? ===================================================================================
+
+NH_BOOL Nh_keepRunning()
+{
+NH_BEGIN()
+
+    Nh_checkForks();
+
+NH_END(Nh_activeWorkloads(NH_TRUE) > 0 || Nh_activeForks() > 0 ? NH_TRUE : NH_FALSE)
+}
+
 // ACTIVATE ========================================================================================
 
 static void Nh_assignToThread(

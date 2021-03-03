@@ -12,11 +12,11 @@
 #include "NhCore/Common/API.h"
 #include "NhCore/Common/Result.h"
 #include "NhLoader/Common/API.h"
+#include "NhLoader/Common/Result.h"
 
 #endif
 
-/** @addtogroup CFunctions Functions
- *  \ingroup CCore 
+/** @addtogroup NetzhautMacros 
  *  @{
  */
 
@@ -40,8 +40,7 @@
 
 /** @} */
 
-/** @addtogroup CFunctions Functions
- *  \ingroup CCore 
+/** @addtogroup NetzhautVars 
  *  @{
  */
 
@@ -49,16 +48,12 @@
 
 /** @} */
 
-/** @addtogroup CFunctions Functions
- *  \ingroup CCore 
+/** @addtogroup NetzhautFunctions
  *  @{
  */
 
-    NH_RESULT Nh_initLoader(
+    NH_LOADER_RESULT Nh_initialize(
          NH_LOADER_SCOPE loaderScope, NH_BYTE *loaderPath_p, NH_BOOL install
-    );
-
-    NH_RESULT Nh_init(
     );
 
     unsigned int Nh_run(
@@ -67,7 +62,7 @@
     NH_BOOL Nh_keepRunning(
     );
 
-    NH_RESULT Nh_release(
+    NH_LOADER_RESULT Nh_terminate(
     );
 
 /** @} */

@@ -162,7 +162,7 @@ NH_INSTALLER_BEGIN()
 
     NH_BYTE realout_p[1024] = {'\0'};
     realpath(out_p, realout_p);
-    Nh_Installer_messagef("CREATE FILE %s", realout_p);
+    Nh_Installer_messagef("CREATE OBJECT FILE %s", realout_p);
 
     NH_BYTE command_p[1024] = {'\0'};
 

@@ -777,7 +777,7 @@ main(argc, argv)
 
       if (fp != stdin)
 	{
-	  if (fprintf(fpo, "unsigned int %s", isdigit((int)argv[1][0]) ? "__" : "") < 0)
+	  if (fprintf(fpo, "const unsigned int %s", isdigit((int)argv[1][0]) ? "__" : "") < 0)
 	    die(3);
 // edit for Netzhaut usage ->
           if (name != NULL) {fprintf(fpo, name);}

@@ -58,23 +58,6 @@ NH_INSTALLER_BEGIN()
 NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
 }
 
-NH_INSTALLER_RESULT Nh_Installer_buildNhWebIDLSerializer()
-{
-NH_INSTALLER_BEGIN()
-
-    char projDir_p[2048] = {'\0'};
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_GET_PROJECT_DIRECTORY, Nh_Installer_getProjectDir(projDir_p, 2048))
-
-    // set -no-pie because of https://stackoverflow.com/questions/41398444/gcc-creates-mime-type-application-x-sharedlib-instead-of-application-x-applicati
-    static char command_p[2048] = {'\0'};
-    sprintf(command_p, "gcc -std=gnu99 -Wl,-rpath=%s/lib:/usr/local/lib -o%s/bin/NhWebIDLSerializer -no-pie -L%s/lib -lNhCore -lNhLoader %s/src/bin/NhWebIDLSerializer/Util.c %s/src/bin/NhWebIDLSerializer/Tokenizer.c %s/src/bin/NhWebIDLSerializer/Parser.c %s/src/bin/NhWebIDLSerializer/Serializer.c %s/src/bin/NhWebIDLSerializer/Main.c", projDir_p, projDir_p, projDir_p, projDir_p, projDir_p, projDir_p, projDir_p, projDir_p);
-
-    int status = system(command_p);
-    if (WEXITSTATUS(status) || WIFSIGNALED(status)) {NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_ERROR_GCC_EXECUTION_FAILED)}
-
-NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
-}
-
 // INSTALL BINARY ==================================================================================
 
 NH_INSTALLER_RESULT Nh_Installer_installNhTerminal()

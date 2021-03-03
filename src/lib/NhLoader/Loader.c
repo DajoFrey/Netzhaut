@@ -31,7 +31,20 @@
 
 Nh_Loader NH_LOADER;
 
-// MODIFIED ========================================================================================
+// MODULE ==========================================================================================
+
+static Nh_Loader_Module Nh_Loader_initModule()
+{
+NH_LOADER_BEGIN()
+
+    Nh_Loader_Module Module;
+    Module.lib_p = NULL;
+    Module.major = 0;
+    Module.name_p = NULL;
+    Module.lastModified_p = NULL;
+
+NH_LOADER_END(Module)
+}
 
 static Nh_Loader_Module *Nh_Loader_getModule(
     const NH_BYTE *name_p, int major)
@@ -45,6 +58,30 @@ NH_LOADER_BEGIN()
     }
 
 NH_LOADER_END(NULL)
+}
+
+// LOAD LIBRARY ====================================================================================
+
+typedef int (*initialize_f)();
+
+static NH_LOADER_RESULT Nh_Loader_callDefaultInitializer(
+    Nh_Loader_Module *Module_p)
+{
+NH_LOADER_BEGIN()
+
+    NH_BYTE functionName_p[255] = {'\0'};
+
+    if (strcmp(Module_p->name_p, "NhCore")) {
+        sprintf(functionName_p, "Nh_%s_initialize", Module_p->name_p + 2);
+    }
+    else {
+        sprintf(functionName_p, "Nh_initialize");
+    }
+
+    initialize_f initializer_f = NH_LOADER.loadFunction_f(Module_p->name_p, Module_p->major, functionName_p);
+    if (initializer_f != NULL) {initializer_f();}
+
+NH_LOADER_DIAGNOSTIC_END(NH_LOADER_SUCCESS)
 }
 
 static NH_LOADER_RESULT Nh_Loader_load(
@@ -64,31 +101,41 @@ NH_LOADER_BEGIN()
     NH_LOADER_CHECK_NULL(Module_p)
 
     Module_p->lib_p = lib_p;
-
     Module_p->lastModified_p = Nh_Loader_lastModified(lib_p);
+
     NH_LOADER_CHECK_MEM(Module_p->lastModified_p)
-
     Module_p->name_p = malloc(sizeof(NH_BYTE) * (strlen(name_p) + 1));
-    NH_LOADER_CHECK_MEM(Module_p->name_p)
 
+    NH_LOADER_CHECK_MEM(Module_p->name_p)
     strcpy(Module_p->name_p, name_p);
+
+    Nh_Loader_callDefaultInitializer(Module_p);
 
 NH_LOADER_DIAGNOSTIC_END(NH_LOADER_SUCCESS)
 }
 
 // UNLOAD LIBRARY ==================================================================================
 
-static Nh_Loader_Module Nh_Loader_initModule()
+typedef int (*terminate_f)();
+
+static NH_LOADER_RESULT Nh_Loader_callDefaultTerminator(
+    Nh_Loader_Module *Module_p)
 {
 NH_LOADER_BEGIN()
 
-    Nh_Loader_Module Module;
-    Module.lib_p = NULL;
-    Module.major = 0;
-    Module.name_p = NULL;
-    Module.lastModified_p = NULL;
+    NH_BYTE functionName_p[255] = {'\0'};
 
-NH_LOADER_END(Module)
+    if (strcmp(Module_p->name_p, "NhCore")) {
+        sprintf(functionName_p, "Nh_%s_terminate", Module_p->name_p + 2);
+    }
+    else {
+        sprintf(functionName_p, "Nh_terminate");
+    }
+
+    terminate_f terminator_f = NH_LOADER.loadFunction_f(Module_p->name_p, Module_p->major, functionName_p);
+    if (terminator_f != NULL) {terminator_f();}
+
+NH_LOADER_DIAGNOSTIC_END(NH_LOADER_SUCCESS)
 }
 
 static NH_LOADER_RESULT Nh_Loader_unload(
@@ -99,6 +146,7 @@ NH_LOADER_BEGIN()
     Nh_Loader_Module *Module_p = Nh_Loader_getModule(name_p, major);
     NH_LOADER_CHECK_NULL(Module_p)
 
+    NH_LOADER_CHECK(Nh_Loader_callDefaultTerminator(Module_p))
     NH_LOADER_CHECK(Nh_Loader_unloadLibrary(Module_p->lib_p))
 
     if (Module_p->name_p != NULL) {free(Module_p->name_p);}

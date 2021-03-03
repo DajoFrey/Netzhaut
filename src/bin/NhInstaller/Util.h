@@ -16,8 +16,7 @@
 
 #endif
 
-/** @addtogroup InstallerFunctions Functions
- *  \ingroup Installer
+/** @addtogroup NhInstallerFunctions
  *  @{
  */
 

@@ -13,7 +13,7 @@ var searchData=
   ['alwaysontop_46',['alwaysOnTop',['../structNh__Tab.html#ad67c86a8c4a699324bc79e9eec2b284a',1,'Nh_Tab']]],
   ['api_47',['API',['../structNh__GPU.html#a806f4aaf0a002634f6d23c2f94390d02',1,'Nh_GPU::API()'],['../structNh__Window.html#a209517d518cc6ca19a4019a7332566cc',1,'Nh_Window::API()']]],
   ['api_2eh_48',['API.h',['../NhCore_2Common_2API_8h.html',1,'(Global Namespace)'],['../NhTTY_2Common_2API_8h.html',1,'(Global Namespace)'],['../NhLoader_2Common_2API_8h.html',1,'(Global Namespace)']]],
-  ['architecture_49',['ARCHITECTURE',['../Architecture.html',1,'']]],
+  ['architecture_49',['Architecture',['../Architecture.html',1,'']]],
   ['architecture_2emd_50',['Architecture.md',['../Architecture_8md.html',1,'']]],
   ['arg_51',['arg',['../structNh__TTY__CSIEscape.html#a88bc6cebbfaaa7f4fbee36f2d651d297',1,'Nh_TTY_CSIEscape']]],
   ['args_52',['args',['../structNh__TTY__STREscape.html#a9f00665eac183f207c5955cc0cfae470',1,'Nh_TTY_STREscape']]],

@@ -11,7 +11,7 @@
 #include "Netzhaut.h"
 
 #include "../NhLoader/Loader.h"
-#include "../NhCore/Netzhaut.h"
+#include "../NhCore/Thread.h"
 
 #include <unistd.h>
 #include <dlfcn.h>
@@ -43,6 +43,15 @@ static void *Nh_openLoaderLib(
     }
 
     return dl_p;
+
+#endif
+}
+
+static void *Nh_closeLoaderLib()
+{
+#ifdef __unix__
+
+    dlclose(loader_p);
 
 #endif
 }
@@ -111,40 +120,34 @@ static void *Nh_loadLoaderFunction(
 #endif
 }
 
-// INIT LOADER =====================================================================================
+// INITIALIZE ======================================================================================
 
-NH_RESULT Nh_initLoader(
+NH_LOADER_RESULT Nh_initialize(
      NH_LOADER_SCOPE loaderScope, NH_BYTE *loaderPath_p, NH_BOOL install)
 {
+    if (loader_p != NULL || NH_LOADER_P != NULL) {return NH_LOADER_ERROR_BAD_STATE;}
+
     loader_p = Nh_openLoader(loaderScope);
 
     NH_BOOL fallback = !loader_p && loaderPath_p != NULL;
     if (fallback) {loader_p = Nh_openLoaderLib(loaderPath_p);}
 
-    if (!loader_p) {return NH_ERROR_BAD_STATE;}
+    if (!loader_p) {return NH_LOADER_ERROR_BAD_STATE;}
 
     Nh_Loader_initLoader_f initLoader_f = Nh_loadLoaderFunction("Nh_Loader_initLoader");
     NH_LOADER_P = !initLoader_f ? NULL : initLoader_f(loaderScope, fallback, install);
 
-    if (!NH_LOADER_P) {return NH_ERROR_BAD_STATE;}
+    if (!NH_LOADER_P) {return NH_LOADER_ERROR_BAD_STATE;}
 
-    return NH_SUCCESS;
+    return NH_LOADER_P->load_f("NhCore", 0);
 }
  
-// INIT ============================================================================================
-
-NH_RESULT Nh_init()
-{
-    Nh_init_f init_f = !NH_LOADER_P ? NULL : NH_LOADER_P->loadFunction_f("NhCore", 0, "Nh_init");
-    return init_f ? init_f() : NH_ERROR_BAD_STATE;
-}
-
 // RUN =============================================================================================
 
 unsigned int Nh_run()
 {
-    Nh_run_f run_f = !NH_LOADER_P ? NULL : NH_LOADER_P->loadFunction_f("NhCore", 0, "Nh_run");
-    return run_f ? run_f() : 0;
+    Nh_runWorkloads_f runWorkloads_f = !NH_LOADER_P ? NULL : NH_LOADER_P->loadFunction_f("NhCore", 0, "Nh_runWorkloads");
+    return runWorkloads_f ? runWorkloads_f() : 0;
 }
 
 // IS RUNNING ======================================================================================
@@ -155,11 +158,18 @@ NH_BOOL Nh_keepRunning()
     return keepRunning_f ? keepRunning_f() : NH_FALSE;
 }
 
-// RELEASE =========================================================================================
+// TERMINATE =======================================================================================
 
-NH_RESULT Nh_release()
+NH_LOADER_RESULT Nh_terminate()
 {
-    Nh_release_f release_f = !NH_LOADER_P ? NULL : NH_LOADER_P->loadFunction_f("NhCore", 0, "Nh_release");
-    return release_f ? release_f() : NH_ERROR_BAD_STATE;
+    if (!NH_LOADER_P) {return NH_LOADER_ERROR_BAD_STATE;}
+
+    NH_LOADER_RESULT result = NH_LOADER_P->unload_f("NhCore", 0);
+    if (result != NH_LOADER_SUCCESS) {return result;}
+
+    Nh_closeLoaderLib();
+    NH_LOADER_P = NULL;
+
+    return NH_LOADER_SUCCESS;
 }
 

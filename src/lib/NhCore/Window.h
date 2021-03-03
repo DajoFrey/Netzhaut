@@ -15,7 +15,7 @@
 
 #include "Common/API.h"
 
-#include "../Graphics/Vulkan/Header/Vulkan.h"
+#include "../NhGraphics/Vulkan/Header/Vulkan.h"
 #include "../NhIO/Window.h"
 
 #endif

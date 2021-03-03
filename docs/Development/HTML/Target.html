@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NETZHAUT DEV DOCS: TARGET</title>
+<title>Netzhaut Dev Docs: Target</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -34,7 +34,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="LogoSmall.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NETZHAUT DEV DOCS
+   <div id="projectname">Netzhaut Dev Docs
    </div>
   </td>
 <td style="padding-left: 10px;"/>
@@ -97,11 +97,11 @@ $(document).ready(function(){initNavTree('Target.html',''); initResizable(); });
 
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">TARGET </div>  </div>
+<div class="title">Target </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><div style="width:700px;"></div><div style="width:700px;">This target document is supposed to be development guideline as well as (planned-)feature overview. It's updated/revised quite frequently. Because the project is open to ideas and changes in general, some targets may change drastically over time, though the overall principles will remain intact. These principles are to always strive for <b>quality</b>, <b>user friendliness</b> and <b>innovation</b>.</div><div style="width:700px;"></div><h1><a class="anchor" id="INTERFACE"></a>
-INTERFACE</h1>
+<div class="textblock"><div style="width:700px;"></div><div style="width:700px;">This target document is supposed to be development guideline as well as (planned-)feature overview. It's updated/revised quite frequently. Because the project is open to ideas and changes in general, some targets may change drastically over time, though the overall principles will remain intact. These principles are to always strive for <b>quality</b>, <b>user friendliness</b> and <b>innovation</b>.</div><div style="width:700px;"></div><h1><a class="anchor" id="Interface"></a>
+Interface</h1>
 <div style="width:700px;"> <b>HACKABLE AND EXTENSIBLE</b> <br  />
  Netzhaut tries to have as little as possible happen under the hood. What this means in practice, is that Netzhaut shifts functionality from C code to JS code wherever it makes sense. The solution is slower than the compiled alternative, but ultimately much easier to work with from a dev standpoint. For example, this way users can provide custom scripts to change functionalities which otherwise would not be changeable. <br  />
  <br  />
@@ -110,8 +110,8 @@ INTERFACE</h1>
  <br  />
  <b>SECURITY</b> <br  />
  The extension of JS is of course a no-go if you want to fetch a web-page from an unknown source. For this use-case, Netzhaut can be configured to run in a secure mode. This strips away any potentially harmful JS features. In general, security is under review at all times. <br  />
-</div><div style="width:700px;"></div><h1><a class="anchor" id="INTERNAL"></a>
-INTERNAL</h1>
+</div><div style="width:700px;"></div><h1><a class="anchor" id="Internal"></a>
+Internal</h1>
 <div style="width:700px;"> <b>PERFORMANCE</b> <br  />
  While performance may not be a priority, it for sure won't be neglected. If something needs to be addressed performance wise, it will be. Generally, if code could run faster another way and it won't deteriorate code readability, it needs to be changed. If however it would make the code less readable, the change is up for debate. <br  />
  <br  />
@@ -120,8 +120,8 @@ INTERNAL</h1>
  <br  />
  <b>WINDOWS AND TABS</b> <br  />
  Netzhaut creates windows. These are you typical OS-provided window containers where you can render stuff into. These windows can contain any number of tabs. Tabs can be understood as your typical browser tab. So similiar to a browser tab, Netzhaut will render stuff into it, e.g. a HTML document. These tabs can be arranged at free will using a JS API. <br  />
-</div><div style="width:700px;"></div><h1><a class="anchor" id="RENDERING"></a>
-RENDERING</h1>
+</div><div style="width:700px;"></div><h1><a class="anchor" id="Rendering"></a>
+Rendering</h1>
 <div style="width:700px;"> <b>FLEXIBLE</b> <br  />
  The engine is flexible in the way it handles its backend rendering dependencies and has a adaptive nature. To allow this, Netzhaut is able to use more than one possible backend for rendering. Right now only rendering using Vulkan is supported, but OpenGL is planned as well. <br  />
  <br  />
@@ -129,8 +129,8 @@ RENDERING</h1>
  Rendering (most) web pages is not very resource intensive, so software rendering could be an option. Maybe this will be implemented somewhere along the road. The rational behind this feature is to improve (third-party) API and platform independence. <br  />
  <br  />
  <b>VR SUPPORT</b> <br  />
- Netzhaut shall support VR in some way. This hasn't been thought out yet.</div><div style="width:700px;"></div><h1><a class="anchor" id="BUILDING"></a>
-BUILDING</h1>
+ Netzhaut shall support VR in some way. This hasn't been thought out yet.</div><div style="width:700px;"></div><h1><a class="anchor" id="Building"></a>
+Building</h1>
 <div style="width:700px;"> <b>BUILD-SYSTEM</b> <br  />
  Netzhaut uses its own build-system, focusing on a lightweight but powerfull solution. <br  />
  <br  />
@@ -138,8 +138,8 @@ BUILDING</h1>
  The project tries to avoid big dependencies and generally only downloads/installs external sources when the target doesn't provide them by itself. <br  />
  <br  />
  <b>CROSS-PLATFORM</b> <br  />
- Building is supported on Linux and Windows. Support for MacOS is written in the stars somewhere and I'm not sure if it's gonna happen.</div><div style="width:700px;"></div><h1><a class="anchor" id="DEBUGGING"></a>
-DEBUGGING</h1>
+ Building is supported on Linux and Windows. Support for MacOS is written in the stars somewhere and I'm not sure if it's gonna happen.</div><div style="width:700px;"></div><h1><a class="anchor" id="Debugging"></a>
+Debugging</h1>
 <div style="width:700px;"> <b>ESSENTIAL</b> <br  />
  Debugging is an essential feature and is supported by most sub-systems. For performance reasons, developers need to explicitly specify a flag at build-time to use more advanced debugging routines. <br  />
  <br  />

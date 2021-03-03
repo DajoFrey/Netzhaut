@@ -11,10 +11,12 @@
 
 #include "Result.h"
 
+#include "../Runtime/Tokenizer.h"
+#include "../Runtime/Parser.h"
+
 #endif
 
-/** @addtogroup WebIDLFunctions Functions
- *  \ingroup WebIDL
+/** @addtogroup NhWebIDLFunctions
  *  @{
  */
 
@@ -28,6 +30,14 @@
     
     NH_WEBIDL_RESULT _Nh_WebIDL_logDiagnosticEnd(
         const char *file_p, const char *function_p, NH_WEBIDL_RESULT result, int line
+    );
+
+    NH_WEBIDL_RESULT Nh_WebIDL_logTokenizer(
+        NH_BYTE *fragmentName_p, Nh_Array *Tokens_p, NH_BOOL dirty
+    );
+
+    NH_WEBIDL_RESULT Nh_WebIDL_logParseTree(
+        NH_BYTE *fragmentName_p, Nh_WebIDL_ParseNode *ParseNode_p
     );
 
 /** @} */

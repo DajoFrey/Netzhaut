@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NETZHAUT DEV DOCS: Globals</title>
+<title>Netzhaut Dev Docs: Globals</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -34,7 +34,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="LogoSmall.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NETZHAUT DEV DOCS
+   <div id="projectname">Netzhaut Dev Docs
    </div>
   </td>
 <td style="padding-left: 10px;"/>
@@ -2199,6 +2199,9 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 <li>NH_HOSTNAME_LENGTH
 : <a class="el" href="group__NhCoreMacros.html#gaf30b37079d663cb59a104bd7e8a8e951">System.h</a>
 </li>
+<li>Nh_HTML_createIndexMap()
+: <a class="el" href="group__NhHTMLFunctions.html#gaf104f01d244f3810564ea9089d40a5dc">IndexMap.h</a>
+</li>
 <li>NH_HTML_ERROR_BAD_STATE
 : <a class="el" href="group__NhHTMLEnums.html#gga84e1b4de60e74bff00ea42e21a22addba3d1165d6b239dc7d515b0f81628ec5d7">Result.h</a>
 </li>
@@ -2207,6 +2210,12 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 </li>
 <li>NH_HTML_ERROR_NULL_POINTER
 : <a class="el" href="group__NhHTMLEnums.html#gga84e1b4de60e74bff00ea42e21a22addbab40dcd3aba537c3e5c7c7282daf52417">Result.h</a>
+</li>
+<li>Nh_HTML_freeIndexMap()
+: <a class="el" href="group__NhHTMLFunctions.html#gae455dd1980f34221ca575359e6d1401c">IndexMap.h</a>
+</li>
+<li>NH_HTML_INDEXMAP
+: <a class="el" href="group__NhHTMLVars.html#ga72a7b363ea9c1a00f5001b54d38063e9">IndexMap.h</a>
 </li>
 <li>NH_HTML_MAJOR_VERSION
 : <a class="el" href="group__NhHTMLChangelog.html#ga2a948ac8dc2dcc1c70dafa3057c71386">About.h</a>
@@ -2579,12 +2588,12 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="group__NhLoaderTypedefs.html#gaf0d77ae84b394a6713b73088717ed144">Loader.h</a>
 </li>
 <li>Nh_Loader_unloadLibrary()
-: <a class="el" href="group__NhLoaderFunctions.html#ga17be548d07fb10b72cde60b1e44f8392">Library.c</a>
-, <a class="el" href="group__NhLoaderFunctions.html#ga17be548d07fb10b72cde60b1e44f8392">Library.h</a>
+: <a class="el" href="group__NhLoaderFunctions.html#ga17be548d07fb10b72cde60b1e44f8392">Library.h</a>
+, <a class="el" href="group__NhLoaderFunctions.html#ga17be548d07fb10b72cde60b1e44f8392">Library.c</a>
 </li>
 <li>Nh_loadFont()
-: <a class="el" href="group__NhCoreFunctions.html#ga5bf1db0b6d26014575c3075721d3df10">Font.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#ga5bf1db0b6d26014575c3075721d3df10">Font.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#ga5bf1db0b6d26014575c3075721d3df10">Font.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#ga5bf1db0b6d26014575c3075721d3df10">Font.h</a>
 </li>
 <li>NH_LOG_CALLBACKS
 : <a class="el" href="NhCore_2Logger_8c.html#a4b328be60b6abeb4fc05a30c3000fc9f">Logger.c</a>
@@ -7908,8 +7917,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="group__NhCoreEnums.html#ggae0b2efa3c723c1ac9cf24b25d5aa251ca670757112070f4ab8f531215ba6dc7c4">MediaType.h</a>
 </li>
 <li>NH_MEDIA_TYPE_TEMPLATES_PP
-: <a class="el" href="group__NhCoreVars.html#gae5f810b9422bfa2d6736583de8d27961">MediaType.c</a>
-, <a class="el" href="group__NhCoreVars.html#gae5f810b9422bfa2d6736583de8d27961">MediaType.h</a>
+: <a class="el" href="group__NhCoreVars.html#gae5f810b9422bfa2d6736583de8d27961">MediaType.h</a>
+, <a class="el" href="group__NhCoreVars.html#gae5f810b9422bfa2d6736583de8d27961">MediaType.c</a>
 </li>
 <li>NH_MEDIA_TYPE_TEMPLATES_PP_COUNT
 : <a class="el" href="group__NhCoreVars.html#gac1890431029d94926a5209ce008b8123">MediaType.h</a>
@@ -8159,8 +8168,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="group__NhCoreChangelog.html#gaa401327e0879a5aefc4f940baae376aa">About.h</a>
 </li>
 <li>Nh_norm2D()
-: <a class="el" href="group__NhCoreFunctions.html#ga0d0f1cfed9cf79f0a6e9da50d670dbf9">Math.c</a>
-, <a class="el" href="group__NhCoreFunctions.html#ga0d0f1cfed9cf79f0a6e9da50d670dbf9">Math.h</a>
+: <a class="el" href="group__NhCoreFunctions.html#ga0d0f1cfed9cf79f0a6e9da50d670dbf9">Math.h</a>
+, <a class="el" href="group__NhCoreFunctions.html#ga0d0f1cfed9cf79f0a6e9da50d670dbf9">Math.c</a>
 </li>
 <li>NH_OFF
 : <a class="el" href="group__NhCoreEnums.html#gga8419da5d2763904acff8a81d19a81a7bad6dfe37c1c1ff2a55571e4391216d615">API.h</a>
@@ -8173,20 +8182,20 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhCoreFunctions.html#gac6472d12ccd08b6bbe4ff5271a605939">Channel.c</a>
 </li>
 <li>Nh_openContent()
-: <a class="el" href="group__NhCoreFunctions.html#ga894b2411c26243accd295c2b5e6f22cc">Content.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#ga894b2411c26243accd295c2b5e6f22cc">Content.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#ga894b2411c26243accd295c2b5e6f22cc">Content.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#ga894b2411c26243accd295c2b5e6f22cc">Content.h</a>
 </li>
 <li>Nh_openTab()
-: <a class="el" href="group__NhCoreFunctions.html#gad43036f98e523db8a9af313514ed8ca1">Tab.c</a>
-, <a class="el" href="group__NhCoreFunctions.html#gad43036f98e523db8a9af313514ed8ca1">Tab.h</a>
+: <a class="el" href="group__NhCoreFunctions.html#gad43036f98e523db8a9af313514ed8ca1">Tab.h</a>
+, <a class="el" href="group__NhCoreFunctions.html#gad43036f98e523db8a9af313514ed8ca1">Tab.c</a>
 </li>
 <li>Nh_openTabContent()
 : <a class="el" href="group__NhCoreFunctions.html#gaf9aeb4a0a8f607bfafee63430eb1fc53">Tab.c</a>
 , <a class="el" href="group__NhCoreFunctions.html#gaf9aeb4a0a8f607bfafee63430eb1fc53">Tab.h</a>
 </li>
 <li>Nh_openWindow()
-: <a class="el" href="group__NhCoreFunctions.html#gaa83e9eb56b361bc812fe29a368d7ec1d">Window.c</a>
-, <a class="el" href="group__NhCoreFunctions.html#gaa83e9eb56b361bc812fe29a368d7ec1d">Window.h</a>
+: <a class="el" href="group__NhCoreFunctions.html#gaa83e9eb56b361bc812fe29a368d7ec1d">Window.h</a>
+, <a class="el" href="group__NhCoreFunctions.html#gaa83e9eb56b361bc812fe29a368d7ec1d">Window.c</a>
 </li>
 <li>NH_PATCH_VERSION
 : <a class="el" href="group__NhCoreChangelog.html#gaacf252a3819972e048e7ae31cf9c6d75">About.h</a>
@@ -8205,8 +8214,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="group__NhCoreMacros.html#ga3605f81069c5025554d8b0d2c8264f53">API.h</a>
 </li>
 <li>Nh_pointInBox()
-: <a class="el" href="group__NhCoreFunctions.html#ga8acd24211a1dd01b4501817d3fe31fee">Math.c</a>
-, <a class="el" href="group__NhCoreFunctions.html#ga8acd24211a1dd01b4501817d3fe31fee">Math.h</a>
+: <a class="el" href="group__NhCoreFunctions.html#ga8acd24211a1dd01b4501817d3fe31fee">Math.h</a>
+, <a class="el" href="group__NhCoreFunctions.html#ga8acd24211a1dd01b4501817d3fe31fee">Math.c</a>
 </li>
 <li>Nh_popStack()
 : <a class="el" href="group__NhCoreFunctions.html#gaa7017d040f8d28acbb99f380f0f97c20">Stack.h</a>
@@ -8225,20 +8234,20 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhCoreVars.html#ga6908a621731e2e465a8bcdcae9f77d00">Process.c</a>
 </li>
 <li>Nh_pushStack()
-: <a class="el" href="group__NhCoreFunctions.html#gac290477b140de345129f37b7cba11dad">Stack.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#gac290477b140de345129f37b7cba11dad">Stack.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#gac290477b140de345129f37b7cba11dad">Stack.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#gac290477b140de345129f37b7cba11dad">Stack.h</a>
 </li>
 <li>Nh_radiansToDegrees()
-: <a class="el" href="group__NhCoreFunctions.html#gaebfdf35ba2114a7051d9e49ecec89dc8">Math.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#gaebfdf35ba2114a7051d9e49ecec89dc8">Math.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#gaebfdf35ba2114a7051d9e49ecec89dc8">Math.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#gaebfdf35ba2114a7051d9e49ecec89dc8">Math.h</a>
 </li>
 <li>Nh_readFromChannel()
 : <a class="el" href="group__NhCoreFunctions.html#ga56dd36788f8cee9a87ed373e3634d89f">Channel.h</a>
 , <a class="el" href="group__NhCoreFunctions.html#ga56dd36788f8cee9a87ed373e3634d89f">Channel.c</a>
 </li>
 <li>Nh_release()
-: <a class="el" href="group__NhCoreFunctions.html#ga97b39ffc622edc4903301a5c2e9c8409">Netzhaut.c</a>
-, <a class="el" href="group__NhCoreFunctions.html#ga97b39ffc622edc4903301a5c2e9c8409">Netzhaut.h</a>
+: <a class="el" href="group__NhCoreFunctions.html#ga97b39ffc622edc4903301a5c2e9c8409">Netzhaut.h</a>
+, <a class="el" href="group__NhCoreFunctions.html#ga97b39ffc622edc4903301a5c2e9c8409">Netzhaut.c</a>
 </li>
 <li>Nh_release_f
 : <a class="el" href="group__NhCoreTypedefs.html#ga3690d173c395443cf50dbfd5654b76f0">Netzhaut.h</a>
@@ -8248,16 +8257,16 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhCoreFunctions.html#ga0599dee4b657403eb229aa6e29d30f66">Content.c</a>
 </li>
 <li>Nh_removeFromArray()
-: <a class="el" href="group__NhCoreFunctions.html#ga460e086ecc746a73942c9909d4f10f9d">Array.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#ga460e086ecc746a73942c9909d4f10f9d">Array.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#ga460e086ecc746a73942c9909d4f10f9d">Array.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#ga460e086ecc746a73942c9909d4f10f9d">Array.h</a>
 </li>
 <li>Nh_removeFromLinkedList()
 : <a class="el" href="group__NhCoreFunctions.html#ga39eb38532cca912a12b8048c7715ebe0">LinkedList.c</a>
 , <a class="el" href="group__NhCoreFunctions.html#ga39eb38532cca912a12b8048c7715ebe0">LinkedList.h</a>
 </li>
 <li>Nh_removeFromLinkedList2()
-: <a class="el" href="group__NhCoreFunctions.html#ga683c18888d42328dc6e303d000476681">LinkedList.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#ga683c18888d42328dc6e303d000476681">LinkedList.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#ga683c18888d42328dc6e303d000476681">LinkedList.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#ga683c18888d42328dc6e303d000476681">LinkedList.h</a>
 </li>
 <li>Nh_removeFromList()
 : <a class="el" href="group__NhCoreFunctions.html#gaa4feeeca234be6b07402286ac500dfe1">List.c</a>
@@ -8272,8 +8281,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhCoreFunctions.html#ga1a3cb56bba1589d1bc79d581349a1c02">Array.h</a>
 </li>
 <li>Nh_removeTailFromString()
-: <a class="el" href="group__NhCoreFunctions.html#ga2b62b3bb4377077554d4a1f0b82acbad">String.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#ga2b62b3bb4377077554d4a1f0b82acbad">String.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#ga2b62b3bb4377077554d4a1f0b82acbad">String.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#ga2b62b3bb4377077554d4a1f0b82acbad">String.h</a>
 </li>
 <li>Nh_removeTailFromUnicodeString()
 : <a class="el" href="group__NhCoreFunctions.html#ga62bfc43308a218ade8e56b354942f835">Unicode.c</a>
@@ -8291,8 +8300,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhCoreFunctions.html#gafeaf5c4c9eaac9e8f619a848cb9ad55c">Content.c</a>
 </li>
 <li>Nh_resizeTab()
-: <a class="el" href="group__NhCoreFunctions.html#ga348cbadaf00da46236929950d2b3ab19">Tab.c</a>
-, <a class="el" href="group__NhCoreFunctions.html#ga348cbadaf00da46236929950d2b3ab19">Tab.h</a>
+: <a class="el" href="group__NhCoreFunctions.html#ga348cbadaf00da46236929950d2b3ab19">Tab.h</a>
+, <a class="el" href="group__NhCoreFunctions.html#ga348cbadaf00da46236929950d2b3ab19">Tab.c</a>
 </li>
 <li>NH_RESULT
 : <a class="el" href="group__NhCoreEnums.html#ga69553903dccbc47bc4a7b65724517c61">Result.h</a>
@@ -8302,8 +8311,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhCoreVars.html#ga4afb124a98c519338b36ca43f65b1dbc">Result.h</a>
 </li>
 <li>NH_RESULTS_PP_COUNT
-: <a class="el" href="group__NhCoreVars.html#gac58b0e1ebfd379df37659826dd7c5cbe">Result.h</a>
-, <a class="el" href="group__NhCoreVars.html#gac58b0e1ebfd379df37659826dd7c5cbe">Result.c</a>
+: <a class="el" href="group__NhCoreVars.html#gac58b0e1ebfd379df37659826dd7c5cbe">Result.c</a>
+, <a class="el" href="group__NhCoreVars.html#gac58b0e1ebfd379df37659826dd7c5cbe">Result.h</a>
 </li>
 <li>Nh_run()
 : <a class="el" href="group__NhCoreFunctions.html#gae1f8831e7dd6974e1bc44bf6d8200e71">Netzhaut.h</a>
@@ -8327,56 +8336,56 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="Window_8c.html#a554c99bd2f6feb32c0ae460030a5d294">Window.c</a>
 </li>
 <li>Nh_runWorkload()
-: <a class="el" href="group__NhCoreFunctions.html#gaaeaa48ec709b396198a5c85345ea1e3b">Thread.c</a>
-, <a class="el" href="group__NhCoreFunctions.html#gaaeaa48ec709b396198a5c85345ea1e3b">Thread.h</a>
+: <a class="el" href="group__NhCoreFunctions.html#gaaeaa48ec709b396198a5c85345ea1e3b">Thread.h</a>
+, <a class="el" href="group__NhCoreFunctions.html#gaaeaa48ec709b396198a5c85345ea1e3b">Thread.c</a>
 </li>
 <li>Nh_runWorkloads()
 : <a class="el" href="group__NhCoreFunctions.html#ga81a6e5ffa46e061ba53016262def5bc8">Thread.h</a>
 , <a class="el" href="group__NhCoreFunctions.html#ga81a6e5ffa46e061ba53016262def5bc8">Thread.c</a>
 </li>
 <li>Nh_scrollTriangles()
-: <a class="el" href="group__NhCoreFunctions.html#gafb23f2f8094b2f007ce333bdf92edacb">Math.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#gafb23f2f8094b2f007ce333bdf92edacb">Math.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#gafb23f2f8094b2f007ce333bdf92edacb">Math.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#gafb23f2f8094b2f007ce333bdf92edacb">Math.h</a>
 </li>
 <li>Nh_scrollVertices()
 : <a class="el" href="group__NhCoreFunctions.html#ga1f764649b75cb5f7630b651b9f5d960e">Math.h</a>
 , <a class="el" href="group__NhCoreFunctions.html#ga1f764649b75cb5f7630b651b9f5d960e">Math.c</a>
 </li>
 <li>Nh_sendLogMessage()
-: <a class="el" href="group__NhCoreFunctions.html#gad63b894ba542b3d96077324d7cdab717">Logger.c</a>
-, <a class="el" href="group__NhCoreFunctions.html#gad63b894ba542b3d96077324d7cdab717">Logger.h</a>
+: <a class="el" href="group__NhCoreFunctions.html#gad63b894ba542b3d96077324d7cdab717">Logger.h</a>
+, <a class="el" href="group__NhCoreFunctions.html#gad63b894ba542b3d96077324d7cdab717">Logger.c</a>
 </li>
 <li>Nh_setEnabledFlag()
-: <a class="el" href="group__NhCoreFunctions.html#gadffa482a5f5eec28f7e55b7448506382">Config.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#gadffa482a5f5eec28f7e55b7448506382">Config.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#gadffa482a5f5eec28f7e55b7448506382">Config.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#gadffa482a5f5eec28f7e55b7448506382">Config.h</a>
 </li>
 <li>Nh_setInLinkedList()
-: <a class="el" href="group__NhCoreFunctions.html#ga2e95e4b8e677e6a019b9744be926ed68">LinkedList.c</a>
-, <a class="el" href="group__NhCoreFunctions.html#ga2e95e4b8e677e6a019b9744be926ed68">LinkedList.h</a>
+: <a class="el" href="group__NhCoreFunctions.html#ga2e95e4b8e677e6a019b9744be926ed68">LinkedList.h</a>
+, <a class="el" href="group__NhCoreFunctions.html#ga2e95e4b8e677e6a019b9744be926ed68">LinkedList.c</a>
 </li>
 <li>Nh_setLogFlag()
-: <a class="el" href="group__NhCoreFunctions.html#ga419e7189540e7b1bfd2a270006bc6e28">Config.c</a>
-, <a class="el" href="group__NhCoreFunctions.html#ga419e7189540e7b1bfd2a270006bc6e28">Config.h</a>
+: <a class="el" href="group__NhCoreFunctions.html#ga419e7189540e7b1bfd2a270006bc6e28">Config.h</a>
+, <a class="el" href="group__NhCoreFunctions.html#ga419e7189540e7b1bfd2a270006bc6e28">Config.c</a>
 </li>
 <li>Nh_setLogFlowFlag()
 : <a class="el" href="group__NhCoreFunctions.html#gadaa59ecc58aa0fb079a7d060045c51a8">Config.c</a>
 , <a class="el" href="group__NhCoreFunctions.html#gadaa59ecc58aa0fb079a7d060045c51a8">Config.h</a>
 </li>
 <li>Nh_setVulkanCallback()
-: <a class="el" href="group__NhCoreFunctions.html#gaa0e853e21a9261a41f016070e1849509">Callbacks.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#gaa0e853e21a9261a41f016070e1849509">Callbacks.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#gaa0e853e21a9261a41f016070e1849509">Callbacks.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#gaa0e853e21a9261a41f016070e1849509">Callbacks.h</a>
 </li>
 <li>Nh_setWindowBackgroundColor()
-: <a class="el" href="group__NhCoreFunctions.html#ga50f1d0b49cbb41158c2eb6efdd642bd4">Window.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#ga50f1d0b49cbb41158c2eb6efdd642bd4">Window.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#ga50f1d0b49cbb41158c2eb6efdd642bd4">Window.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#ga50f1d0b49cbb41158c2eb6efdd642bd4">Window.h</a>
 </li>
 <li>Nh_setWindowTitle()
 : <a class="el" href="group__NhCoreFunctions.html#ga197d9f831ac50ffb251dfee5f612d898">Window.h</a>
 , <a class="el" href="group__NhCoreFunctions.html#ga197d9f831ac50ffb251dfee5f612d898">Window.c</a>
 </li>
 <li>Nh_showContent()
-: <a class="el" href="group__NhCoreFunctions.html#ga54dff425d8ff484a339a393c5747c125">Content.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#ga54dff425d8ff484a339a393c5747c125">Content.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#ga54dff425d8ff484a339a393c5747c125">Content.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#ga54dff425d8ff484a339a393c5747c125">Content.h</a>
 </li>
 <li>NH_SIGNAL
 : <a class="el" href="group__NhCoreEnums.html#ga28e42e4741d8cc397fa6540cd142da9b">API.h</a>
@@ -8421,8 +8430,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="group__NhCoreEnums.html#gga28e42e4741d8cc397fa6540cd142da9baa1703bb651e1b57200cbbf3f8323b7ff">API.h</a>
 </li>
 <li>Nh_sleepMs()
-: <a class="el" href="group__NhCoreFunctions.html#gacb79f4563288a734a8e7bfb1443bcadf">Thread.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#gacb79f4563288a734a8e7bfb1443bcadf">Thread.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#gacb79f4563288a734a8e7bfb1443bcadf">Thread.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#gacb79f4563288a734a8e7bfb1443bcadf">Thread.h</a>
 </li>
 <li>Nh_Stack
 : <a class="el" href="group__NhCoreTypedefs.html#ga8c6b82373b146aa9001299ec0af86ee8">Stack.h</a>
@@ -8435,8 +8444,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhCoreFunctions.html#ga51813864bb638e1882eecd58599e8702">URI.c</a>
 </li>
 <li>Nh_subtract2D()
-: <a class="el" href="group__NhCoreFunctions.html#gaca62551345dab87e833b358f53a6a73d">Math.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#gaca62551345dab87e833b358f53a6a73d">Math.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#gaca62551345dab87e833b358f53a6a73d">Math.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#gaca62551345dab87e833b358f53a6a73d">Math.h</a>
 </li>
 <li>NH_SUCCESS
 : <a class="el" href="group__NhCoreEnums.html#gga69553903dccbc47bc4a7b65724517c61ae9fff781cc6dc5200a1cc8546e6fae9b">Result.h</a>
@@ -8445,8 +8454,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="group__NhCoreEnums.html#ga8419da5d2763904acff8a81d19a81a7b">API.h</a>
 </li>
 <li>Nh_syncRecordCommandBufferBegin()
-: <a class="el" href="group__NhCoreFunctions.html#gae2272765ec92ce6fda962f617ab678d0">Sync.c</a>
-, <a class="el" href="group__NhCoreFunctions.html#gae2272765ec92ce6fda962f617ab678d0">Sync.h</a>
+: <a class="el" href="group__NhCoreFunctions.html#gae2272765ec92ce6fda962f617ab678d0">Sync.h</a>
+, <a class="el" href="group__NhCoreFunctions.html#gae2272765ec92ce6fda962f617ab678d0">Sync.c</a>
 </li>
 <li>Nh_syncRecordCommandBufferEnd()
 : <a class="el" href="group__NhCoreFunctions.html#ga80bf68b868329d9ed607a7e9a3c92b64">Sync.c</a>
@@ -8461,8 +8470,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhCoreFunctions.html#gae41b2f2c8d3652736861fce772c3734f">Sync.h</a>
 </li>
 <li>Nh_syncResizeBegin()
-: <a class="el" href="group__NhCoreFunctions.html#gad13d257ae46448772528b41e5763b04e">Sync.c</a>
-, <a class="el" href="group__NhCoreFunctions.html#gad13d257ae46448772528b41e5763b04e">Sync.h</a>
+: <a class="el" href="group__NhCoreFunctions.html#gad13d257ae46448772528b41e5763b04e">Sync.h</a>
+, <a class="el" href="group__NhCoreFunctions.html#gad13d257ae46448772528b41e5763b04e">Sync.c</a>
 </li>
 <li>Nh_syncResizeEnd()
 : <a class="el" href="group__NhCoreFunctions.html#gab98f265d641d04e0d2149f5ab0ccbeae">Sync.c</a>
@@ -8477,8 +8486,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhCoreFunctions.html#gad86fa729f20bda2ac4081979285074e1">Sync.h</a>
 </li>
 <li>NH_SYSTEM
-: <a class="el" href="group__NhCoreVars.html#gafdb380a0da2d59731651fd2912795162">System.c</a>
-, <a class="el" href="group__NhCoreVars.html#gafdb380a0da2d59731651fd2912795162">System.h</a>
+: <a class="el" href="group__NhCoreVars.html#gafdb380a0da2d59731651fd2912795162">System.h</a>
+, <a class="el" href="group__NhCoreVars.html#gafdb380a0da2d59731651fd2912795162">System.c</a>
 </li>
 <li>NH_TAB_STATE
 : <a class="el" href="group__NhCoreEnums.html#gaa335055df9c39f0510115ecc046704e8">Tab.h</a>
@@ -8518,8 +8527,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="group__NhTTYTypedefs.html#ga40b3a0562f9a0cc0c0762580cf49896e">Program.h</a>
 </li>
 <li>Nh_TTY_addRow()
-: <a class="el" href="group__NhTTYFunctions.html#ga82a2225fe70e09473d2396166319445e">Row.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga82a2225fe70e09473d2396166319445e">Row.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga82a2225fe70e09473d2396166319445e">Row.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga82a2225fe70e09473d2396166319445e">Row.c</a>
 </li>
 <li>Nh_TTY_addTile()
 : <a class="el" href="group__NhTTYFunctions.html#gabdb52698677569ff891381aba04b3959">Tile.h</a>
@@ -8534,12 +8543,12 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhTTYFunctions.html#ga27e8635345fc7a16bd5605a5a3f39cf3">FileEditor.h</a>
 </li>
 <li>Nh_TTY_closeTextFile()
-: <a class="el" href="group__NhTTYFunctions.html#ga2ddec94c8b82ef774ea4025921a1af37">TextFile.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga2ddec94c8b82ef774ea4025921a1af37">TextFile.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga2ddec94c8b82ef774ea4025921a1af37">TextFile.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga2ddec94c8b82ef774ea4025921a1af37">TextFile.h</a>
 </li>
 <li>Nh_TTY_compareMessage()
-: <a class="el" href="group__NhTTYFunctions.html#ga81235693c58db5d7c72410a2d31d1c28">Console.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga81235693c58db5d7c72410a2d31d1c28">Console.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga81235693c58db5d7c72410a2d31d1c28">Console.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga81235693c58db5d7c72410a2d31d1c28">Console.h</a>
 </li>
 <li>Nh_TTY_compareMessage2()
 : <a class="el" href="group__NhTTYFunctions.html#gabfb9cf9407567ab0f12ab2ad646ee35b">Console.c</a>
@@ -8553,12 +8562,12 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhTTYFunctions.html#ga6b3727f9b51a3550aca6fb25a58b0dad">SyntaxHighlights.c</a>
 </li>
 <li>Nh_TTY_createProgramInstances()
-: <a class="el" href="group__NhTTYFunctions.html#gae78e1e7909d8d7c1efe1576b4a84905b">Program.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#gae78e1e7909d8d7c1efe1576b4a84905b">Program.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#gae78e1e7909d8d7c1efe1576b4a84905b">Program.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#gae78e1e7909d8d7c1efe1576b4a84905b">Program.c</a>
 </li>
 <li>Nh_TTY_cSyntaxHighlights()
-: <a class="el" href="group__NhTTYFunctions.html#ga2bb39db98230ad92c5af748cb0794add">SyntaxHighlights.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga2bb39db98230ad92c5af748cb0794add">SyntaxHighlights.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga2bb39db98230ad92c5af748cb0794add">SyntaxHighlights.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga2bb39db98230ad92c5af748cb0794add">SyntaxHighlights.h</a>
 </li>
 <li>Nh_TTY_destroyAllRows()
 : <a class="el" href="group__NhTTYFunctions.html#ga677f6f072c4c722a2af5af31edd839b7">Row.c</a>
@@ -8572,12 +8581,12 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="group__NhTTYTypedefs.html#ga418ba5cef70a9578be19390a4abf6c25">API.h</a>
 </li>
 <li>Nh_TTY_drawConsoleRow()
-: <a class="el" href="group__NhTTYFunctions.html#ga40f6d2bbef643f640c3981fb99edcd71">Console.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga40f6d2bbef643f640c3981fb99edcd71">Console.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga40f6d2bbef643f640c3981fb99edcd71">Console.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga40f6d2bbef643f640c3981fb99edcd71">Console.h</a>
 </li>
 <li>Nh_TTY_drawEditorRow()
-: <a class="el" href="group__NhTTYFunctions.html#gaa7ae79b3eb7dcbe088885f87e59b8119">Editor.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#gaa7ae79b3eb7dcbe088885f87e59b8119">Editor.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#gaa7ae79b3eb7dcbe088885f87e59b8119">Editor.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#gaa7ae79b3eb7dcbe088885f87e59b8119">Editor.h</a>
 </li>
 <li>Nh_TTY_drawFileEditorRow()
 : <a class="el" href="group__NhTTYFunctions.html#gab49d256ccbb0781b43fefd0d46d9cc25">FileEditor.h</a>
@@ -8596,20 +8605,20 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhTTYFunctions.html#gae2ba8bd01f0b9608c64fd5f158bb9b34">Shell.c</a>
 </li>
 <li>Nh_TTY_drawTabRow()
-: <a class="el" href="group__NhTTYFunctions.html#ga452d343fe07f023df361498d808359fa">Tab.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga452d343fe07f023df361498d808359fa">Tab.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga452d343fe07f023df361498d808359fa">Tab.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga452d343fe07f023df361498d808359fa">Tab.c</a>
 </li>
 <li>Nh_TTY_drawTextFileLine()
-: <a class="el" href="group__NhTTYFunctions.html#ga6cefac9e6e6962775ed8e31caf50561f">TextFile.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga6cefac9e6e6962775ed8e31caf50561f">TextFile.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga6cefac9e6e6962775ed8e31caf50561f">TextFile.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga6cefac9e6e6962775ed8e31caf50561f">TextFile.h</a>
 </li>
 <li>Nh_TTY_drawTileRow()
 : <a class="el" href="group__NhTTYFunctions.html#gaf6aff85e09f1a3bbbeed924ba2341269">Tile.h</a>
 , <a class="el" href="group__NhTTYFunctions.html#gaf6aff85e09f1a3bbbeed924ba2341269">Tile.c</a>
 </li>
 <li>Nh_TTY_drawTreeListingRow()
-: <a class="el" href="group__NhTTYFunctions.html#gaf4b4837a83ca0e015e8b79fc05e64481">TreeListing.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#gaf4b4837a83ca0e015e8b79fc05e64481">TreeListing.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#gaf4b4837a83ca0e015e8b79fc05e64481">TreeListing.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#gaf4b4837a83ca0e015e8b79fc05e64481">TreeListing.h</a>
 </li>
 <li>NH_TTY_ENCODING
 : <a class="el" href="group__NhTTYEnums.html#ga75d96bcde427c45f444037f4909a2f7a">Output.h</a>
@@ -8666,12 +8675,12 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="group__NhTTYEnums.html#gga1cfb87495eee703fdbc01966b371dab4ae949d507defe10a87e491088f9571e39">Output.h</a>
 </li>
 <li>Nh_TTY_executeEditorCommand()
-: <a class="el" href="group__NhTTYFunctions.html#ga5b23aa05461280948b92609ce21dbfcf">Editor.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga5b23aa05461280948b92609ce21dbfcf">Editor.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga5b23aa05461280948b92609ce21dbfcf">Editor.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga5b23aa05461280948b92609ce21dbfcf">Editor.h</a>
 </li>
 <li>Nh_TTY_executeTextFile()
-: <a class="el" href="group__NhTTYFunctions.html#ga644a0d397d0253dbad4cd929bb13cafb">TextFile.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga644a0d397d0253dbad4cd929bb13cafb">TextFile.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga644a0d397d0253dbad4cd929bb13cafb">TextFile.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga644a0d397d0253dbad4cd929bb13cafb">TextFile.c</a>
 </li>
 <li>NH_TTY_FILE
 : <a class="el" href="group__NhTTYEnums.html#gac620116d873b7c5a4681caf3d5ea7f8a">FileEditor.h</a>
@@ -8683,39 +8692,39 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="TreeListing_8c.html#aa4f97c33f1b9b7b5d50db1233b049c6a">TreeListing.c</a>
 </li>
 <li>Nh_TTY_getCurrentProgram()
-: <a class="el" href="group__NhTTYFunctions.html#gacf98b642862f56577d0856978f47e313">Console.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#gacf98b642862f56577d0856978f47e313">Console.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#gacf98b642862f56577d0856978f47e313">Console.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#gacf98b642862f56577d0856978f47e313">Console.c</a>
 </li>
 <li>Nh_TTY_getCursorPosition_f
 : <a class="el" href="group__NhTTYTypedefs.html#ga7a8c1231a058b6c78c958ed644f2ce88">API.h</a>
 </li>
 <li>Nh_TTY_getEditorCursor()
-: <a class="el" href="group__NhTTYFunctions.html#gaf3ad286f3b4bb220235e879c79ead514">Editor.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#gaf3ad286f3b4bb220235e879c79ead514">Editor.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#gaf3ad286f3b4bb220235e879c79ead514">Editor.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#gaf3ad286f3b4bb220235e879c79ead514">Editor.h</a>
 </li>
 <li>Nh_TTY_getInsertTileIndex()
 : <a class="el" href="group__NhTTYFunctions.html#ga38d3caf82a8dfe654934c1fbe9b5c29f">Tile.c</a>
 , <a class="el" href="group__NhTTYFunctions.html#ga38d3caf82a8dfe654934c1fbe9b5c29f">Tile.h</a>
 </li>
 <li>Nh_TTY_getMaxCols()
-: <a class="el" href="group__NhTTYFunctions.html#ga27c81e11a546d0d08c610933570d4a12">Output.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga27c81e11a546d0d08c610933570d4a12">Output.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga27c81e11a546d0d08c610933570d4a12">Output.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga27c81e11a546d0d08c610933570d4a12">Output.h</a>
 </li>
 <li>Nh_TTY_getMessage()
-: <a class="el" href="group__NhTTYFunctions.html#ga1e43c0c3080ed5ff39b8cbf493401a66">Messages.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga1e43c0c3080ed5ff39b8cbf493401a66">Messages.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga1e43c0c3080ed5ff39b8cbf493401a66">Messages.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga1e43c0c3080ed5ff39b8cbf493401a66">Messages.h</a>
 </li>
 <li>Nh_TTY_getRenderSizes()
-: <a class="el" href="group__NhTTYFunctions.html#ga8d530e50a29840253fed0b4415414814">Row.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga8d530e50a29840253fed0b4415414814">Row.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga8d530e50a29840253fed0b4415414814">Row.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga8d530e50a29840253fed0b4415414814">Row.h</a>
 </li>
 <li>Nh_TTY_getTerminal()
 : <a class="el" href="group__NhTTYFunctions.html#ga29643f7ce6536a5cba36af7333c48a4b">Terminal.c</a>
 , <a class="el" href="group__NhTTYFunctions.html#ga29643f7ce6536a5cba36af7333c48a4b">Terminal.h</a>
 </li>
 <li>Nh_TTY_getTextType()
-: <a class="el" href="group__NhTTYFunctions.html#ga1adbd43684a6cf9ad1591e4805c6f191">SyntaxHighlights.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga1adbd43684a6cf9ad1591e4805c6f191">SyntaxHighlights.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga1adbd43684a6cf9ad1591e4805c6f191">SyntaxHighlights.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga1adbd43684a6cf9ad1591e4805c6f191">SyntaxHighlights.c</a>
 </li>
 <li>Nh_TTY_getTileColor()
 : <a class="el" href="group__NhTTYFunctions.html#gad56bfc2b3ac56ee52bd0134ec8ad9c65">Tile.h</a>
@@ -8726,39 +8735,39 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhTTYFunctions.html#ga9f8654bdc3d71af3daa054df73e25aae">Tile.c</a>
 </li>
 <li>Nh_TTY_getTileColorFromProgHandle()
-: <a class="el" href="group__NhTTYFunctions.html#ga6c1618645ca236c490e1e51023bc8a44">Tile.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga6c1618645ca236c490e1e51023bc8a44">Tile.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga6c1618645ca236c490e1e51023bc8a44">Tile.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga6c1618645ca236c490e1e51023bc8a44">Tile.c</a>
 </li>
 <li>Nh_TTY_getTileFromNumber()
-: <a class="el" href="group__NhTTYFunctions.html#gae52efebdb0bad0d6865842c769d12d30">Tile.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#gae52efebdb0bad0d6865842c769d12d30">Tile.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#gae52efebdb0bad0d6865842c769d12d30">Tile.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#gae52efebdb0bad0d6865842c769d12d30">Tile.c</a>
 </li>
 <li>Nh_TTY_getTileNumber()
-: <a class="el" href="group__NhTTYFunctions.html#ga41457e3a66fa2aff4e3d48602b660227">Tile.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga41457e3a66fa2aff4e3d48602b660227">Tile.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga41457e3a66fa2aff4e3d48602b660227">Tile.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga41457e3a66fa2aff4e3d48602b660227">Tile.h</a>
 </li>
 <li>Nh_TTY_getTiles()
-: <a class="el" href="group__NhTTYFunctions.html#ga52c543e712700c1f432705e5fcac4f39">Tile.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga52c543e712700c1f432705e5fcac4f39">Tile.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga52c543e712700c1f432705e5fcac4f39">Tile.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga52c543e712700c1f432705e5fcac4f39">Tile.h</a>
 </li>
 <li>Nh_TTY_handleConsoleInput()
-: <a class="el" href="group__NhTTYFunctions.html#gaa74ae83b4de557c14589862fa2cdfe87">Console.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#gaa74ae83b4de557c14589862fa2cdfe87">Console.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#gaa74ae83b4de557c14589862fa2cdfe87">Console.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#gaa74ae83b4de557c14589862fa2cdfe87">Console.c</a>
 </li>
 <li>Nh_TTY_handleConsoleInput_f
 : <a class="el" href="group__NhTTYTypedefs.html#gacb07b97fd2b774f2d76dfe4dd572a5c2">API.h</a>
 </li>
 <li>Nh_TTY_handleCurrentTileInput()
-: <a class="el" href="group__NhTTYFunctions.html#ga7a690b9234e2fcd32b7812d27dce8142">Tile.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga7a690b9234e2fcd32b7812d27dce8142">Tile.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga7a690b9234e2fcd32b7812d27dce8142">Tile.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga7a690b9234e2fcd32b7812d27dce8142">Tile.h</a>
 </li>
 <li>Nh_TTY_handleEditorInput()
 : <a class="el" href="group__NhTTYFunctions.html#gaf8de0d3ebd18cab60aeca0d2b13986ce">Editor.c</a>
 , <a class="el" href="group__NhTTYFunctions.html#gaf8de0d3ebd18cab60aeca0d2b13986ce">Editor.h</a>
 </li>
 <li>Nh_TTY_handleFileEditorInput()
-: <a class="el" href="group__NhTTYFunctions.html#ga4a75a2b5005bcbe69e70a0915df604b7">FileEditor.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga4a75a2b5005bcbe69e70a0915df604b7">FileEditor.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga4a75a2b5005bcbe69e70a0915df604b7">FileEditor.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga4a75a2b5005bcbe69e70a0915df604b7">FileEditor.c</a>
 </li>
 <li>Nh_TTY_handleFirstCodepoint()
 : <a class="el" href="Console_8c.html#a2ebed6a5a0dee35b2b760208cda8dad2">Console.c</a>
@@ -8775,16 +8784,16 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhTTYFunctions.html#ga31d9467d2291e7340892091a2ecbbb94">Logger.h</a>
 </li>
 <li>Nh_TTY_handleTabInput()
-: <a class="el" href="group__NhTTYFunctions.html#ga8dfa00ef0bddaf322671da455b9a6cc2">Tab.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga8dfa00ef0bddaf322671da455b9a6cc2">Tab.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga8dfa00ef0bddaf322671da455b9a6cc2">Tab.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga8dfa00ef0bddaf322671da455b9a6cc2">Tab.c</a>
 </li>
 <li>Nh_TTY_handleTextFileInput()
-: <a class="el" href="group__NhTTYFunctions.html#ga9f21f5a05a0ef7873fb065798436dafa">TextFile.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga9f21f5a05a0ef7873fb065798436dafa">TextFile.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga9f21f5a05a0ef7873fb065798436dafa">TextFile.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga9f21f5a05a0ef7873fb065798436dafa">TextFile.h</a>
 </li>
 <li>Nh_TTY_handleTileInput()
-: <a class="el" href="group__NhTTYFunctions.html#ga1065aec2257381aae9b063b021fcdd1a">Tile.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga1065aec2257381aae9b063b021fcdd1a">Tile.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga1065aec2257381aae9b063b021fcdd1a">Tile.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga1065aec2257381aae9b063b021fcdd1a">Tile.h</a>
 </li>
 <li>Nh_TTY_handleTreeListingInput()
 : <a class="el" href="group__NhTTYFunctions.html#ga9d2e2b86edfa35364381b47c0a212d88">TreeListing.h</a>
@@ -8804,8 +8813,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="Console_8c.html#ad615f982fda844675b0fef5272eeef01">Console.c</a>
 </li>
 <li>Nh_TTY_initEditor()
-: <a class="el" href="group__NhTTYFunctions.html#ga6fc49d78c299341359ebef78e0b295da">Editor.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga6fc49d78c299341359ebef78e0b295da">Editor.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga6fc49d78c299341359ebef78e0b295da">Editor.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga6fc49d78c299341359ebef78e0b295da">Editor.c</a>
 </li>
 <li>Nh_TTY_initFileEditor()
 : <a class="el" href="group__NhTTYFunctions.html#ga7118be7046cee8233cf967fc9dfa64a2">FileEditor.h</a>
@@ -8824,8 +8833,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhTTYFunctions.html#ga0fad9bf96f2ec246fd42d498f359b806">Output.h</a>
 </li>
 <li>Nh_TTY_initShell()
-: <a class="el" href="group__NhTTYFunctions.html#gaca49ea74de97fe7b8448d1df7e6e415f">Shell.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#gaca49ea74de97fe7b8448d1df7e6e415f">Shell.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#gaca49ea74de97fe7b8448d1df7e6e415f">Shell.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#gaca49ea74de97fe7b8448d1df7e6e415f">Shell.h</a>
 </li>
 <li>Nh_TTY_initTab()
 : <a class="el" href="group__NhTTYFunctions.html#gadd35663366dfce6e95e87e7ecd7d1eba">Tab.h</a>
@@ -8835,8 +8844,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="Terminal_8c.html#a27a6c3a38fff2bb574342afc5cd6423a">Terminal.c</a>
 </li>
 <li>Nh_TTY_initTile()
-: <a class="el" href="group__NhTTYFunctions.html#ga9997de40df23baa7e98c0bc860cca4af">Tile.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga9997de40df23baa7e98c0bc860cca4af">Tile.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga9997de40df23baa7e98c0bc860cca4af">Tile.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga9997de40df23baa7e98c0bc860cca4af">Tile.h</a>
 </li>
 <li>Nh_TTY_initTreeListing()
 : <a class="el" href="group__NhTTYFunctions.html#ga7ec792143ce8bd84e7749fa8820ccd18">TreeListing.h</a>
@@ -8859,8 +8868,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhTTYFunctions.html#gad74757b8e4978009b2f96aee8b00f535">TreeListing.c</a>
 </li>
 <li>NH_TTY_INVERSE_TILE_COLORS_PP
-: <a class="el" href="group__NhTTYVars.html#ga41ad9cb46459f8f8b69026f3531e0556">Tile.h</a>
-, <a class="el" href="group__NhTTYVars.html#ga41ad9cb46459f8f8b69026f3531e0556">Tile.c</a>
+: <a class="el" href="group__NhTTYVars.html#ga41ad9cb46459f8f8b69026f3531e0556">Tile.c</a>
+, <a class="el" href="group__NhTTYVars.html#ga41ad9cb46459f8f8b69026f3531e0556">Tile.h</a>
 </li>
 <li>NH_TTY_MAJOR_VERSION
 : <a class="el" href="group__NhTTYChangelog.html#gaef90683c06982eae207817bdc43ddf9c">About.h</a>
@@ -8956,16 +8965,16 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="group__NhTTYChangelog.html#gaa4dd9862053bd6b1a7809b5a26debaf7">About.h</a>
 </li>
 <li>Nh_TTY_moveInsertTile()
-: <a class="el" href="group__NhTTYFunctions.html#ga46c93e2c42c5a5b01d776807ab09e8da">Tile.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga46c93e2c42c5a5b01d776807ab09e8da">Tile.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga46c93e2c42c5a5b01d776807ab09e8da">Tile.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga46c93e2c42c5a5b01d776807ab09e8da">Tile.c</a>
 </li>
 <li>Nh_TTY_openFile()
-: <a class="el" href="group__NhTTYFunctions.html#gae1aed3f3589a09167018059c7c2de477">FileEditor.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#gae1aed3f3589a09167018059c7c2de477">FileEditor.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#gae1aed3f3589a09167018059c7c2de477">FileEditor.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#gae1aed3f3589a09167018059c7c2de477">FileEditor.h</a>
 </li>
 <li>Nh_TTY_openTerminal()
-: <a class="el" href="group__NhTTYFunctions.html#ga932b0fa31a7a83b6dfe90094e67e1ffe">Terminal.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga932b0fa31a7a83b6dfe90094e67e1ffe">Terminal.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga932b0fa31a7a83b6dfe90094e67e1ffe">Terminal.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga932b0fa31a7a83b6dfe90094e67e1ffe">Terminal.c</a>
 </li>
 <li>Nh_TTY_openTerminal_f
 : <a class="el" href="group__NhTTYTypedefs.html#ga9ff4945f06764a3d0c4a5be0c779aca6">Terminal.h</a>
@@ -8981,31 +8990,31 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="group__NhTTYMacros.html#gab6e0462518c157ca66e715282c6fb51b">Tile.h</a>
 </li>
 <li>Nh_TTY_refreshCursor()
-: <a class="el" href="group__NhTTYFunctions.html#ga764ab695ff8dd09179d9eee1d60ecc7d">Draw.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga764ab695ff8dd09179d9eee1d60ecc7d">Draw.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga764ab695ff8dd09179d9eee1d60ecc7d">Draw.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga764ab695ff8dd09179d9eee1d60ecc7d">Draw.h</a>
 </li>
 <li>Nh_TTY_refreshScreen()
-: <a class="el" href="group__NhTTYFunctions.html#gacedd6f846ec59719253785a84b67f594">Draw.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#gacedd6f846ec59719253785a84b67f594">Draw.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#gacedd6f846ec59719253785a84b67f594">Draw.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#gacedd6f846ec59719253785a84b67f594">Draw.h</a>
 </li>
 <li>Nh_TTY_removeFromRow()
 : <a class="el" href="group__NhTTYFunctions.html#ga9478d98b8b3fb301199b88fcb8e3c560">Row.h</a>
 , <a class="el" href="group__NhTTYFunctions.html#ga9478d98b8b3fb301199b88fcb8e3c560">Row.c</a>
 </li>
 <li>Nh_TTY_renderTextFile()
-: <a class="el" href="group__NhTTYFunctions.html#ga387e09067a5fbd5c5def3a7957e3aa7f">TextFile.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga387e09067a5fbd5c5def3a7957e3aa7f">TextFile.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga387e09067a5fbd5c5def3a7957e3aa7f">TextFile.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga387e09067a5fbd5c5def3a7957e3aa7f">TextFile.c</a>
 </li>
 <li>Nh_TTY_resizeShell()
-: <a class="el" href="group__NhTTYFunctions.html#ga2f3ad4045152b4f3251a2f0fc22143c8">Shell.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga2f3ad4045152b4f3251a2f0fc22143c8">Shell.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga2f3ad4045152b4f3251a2f0fc22143c8">Shell.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga2f3ad4045152b4f3251a2f0fc22143c8">Shell.c</a>
 </li>
 <li>NH_TTY_RESULT
 : <a class="el" href="group__NhTTYEnums.html#ga1e8b6ea94cb80a0f6ccae9464486dd8a">Result.h</a>
 </li>
 <li>NH_TTY_RESULTS_PP
-: <a class="el" href="group__NhTTYVars.html#gad76ad5f373de8a2a963c6333e2546b99">Result.h</a>
-, <a class="el" href="group__NhTTYVars.html#gad76ad5f373de8a2a963c6333e2546b99">Result.c</a>
+: <a class="el" href="group__NhTTYVars.html#gad76ad5f373de8a2a963c6333e2546b99">Result.c</a>
+, <a class="el" href="group__NhTTYVars.html#gad76ad5f373de8a2a963c6333e2546b99">Result.h</a>
 </li>
 <li>NH_TTY_RESULTS_PP_COUNT
 : <a class="el" href="group__NhTTYVars.html#ga47667c2cbd2aa062a47e6ed196e4ed3b">Result.h</a>
@@ -9059,8 +9068,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="group__NhTTYEnums.html#gga1e8b6ea94cb80a0f6ccae9464486dd8aac139d8e17d59160a6430b556d8959e97">Result.h</a>
 </li>
 <li>Nh_TTY_tabBusy()
-: <a class="el" href="group__NhTTYFunctions.html#gad9e2393144d6c7af80c6c3da2f35750b">Tab.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#gad9e2393144d6c7af80c6c3da2f35750b">Tab.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#gad9e2393144d6c7af80c6c3da2f35750b">Tab.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#gad9e2393144d6c7af80c6c3da2f35750b">Tab.c</a>
 </li>
 <li>NH_TTY_TEXT
 : <a class="el" href="group__NhTTYEnums.html#gaca9b738888edda9f90380b44e8488993">SyntaxHighlights.h</a>
@@ -9111,47 +9120,47 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="group__NhTTYMacros.html#ga3fa63aa54fb91605dd5348cdf10d9a14">Tile.h</a>
 </li>
 <li>Nh_TTY_toggleConsole()
-: <a class="el" href="group__NhTTYFunctions.html#ga58fb93b46b15e49bdb4689219819784e">Console.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga58fb93b46b15e49bdb4689219819784e">Console.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga58fb93b46b15e49bdb4689219819784e">Console.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga58fb93b46b15e49bdb4689219819784e">Console.c</a>
 </li>
 <li>Nh_TTY_update_f
 : <a class="el" href="group__NhTTYTypedefs.html#ga9074a3cef178d01c94f48104db4c8cca">API.h</a>
 </li>
 <li>Nh_TTY_updateEditor()
-: <a class="el" href="group__NhTTYFunctions.html#ga05efd7cac8fc7003c7d3b244916d30de">Editor.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga05efd7cac8fc7003c7d3b244916d30de">Editor.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga05efd7cac8fc7003c7d3b244916d30de">Editor.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga05efd7cac8fc7003c7d3b244916d30de">Editor.h</a>
 </li>
 <li>Nh_TTY_updateIdle()
 : <a class="el" href="group__NhTTYFunctions.html#ga692e41a8450727fcd0a834afcb98556f">Idle.c</a>
 , <a class="el" href="group__NhTTYFunctions.html#ga692e41a8450727fcd0a834afcb98556f">Idle.h</a>
 </li>
 <li>Nh_TTY_updateLogger()
-: <a class="el" href="group__NhTTYFunctions.html#ga1d9a54a32a160403778147acd28976b5">Logger.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga1d9a54a32a160403778147acd28976b5">Logger.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga1d9a54a32a160403778147acd28976b5">Logger.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga1d9a54a32a160403778147acd28976b5">Logger.c</a>
 </li>
 <li>Nh_TTY_updateShell()
-: <a class="el" href="group__NhTTYFunctions.html#gaf5d9b4dda92711826ee78817dbb20629">Shell.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#gaf5d9b4dda92711826ee78817dbb20629">Shell.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#gaf5d9b4dda92711826ee78817dbb20629">Shell.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#gaf5d9b4dda92711826ee78817dbb20629">Shell.c</a>
 </li>
 <li>Nh_TTY_updateTab()
 : <a class="el" href="group__NhTTYFunctions.html#ga022b50f269cf2f0c9561852c90fe0af8">Tab.h</a>
 , <a class="el" href="group__NhTTYFunctions.html#ga022b50f269cf2f0c9561852c90fe0af8">Tab.c</a>
 </li>
 <li>Nh_TTY_updateTile()
-: <a class="el" href="group__NhTTYFunctions.html#ga8d6b070c8121d90c9d2857d67514d707">Tile.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga8d6b070c8121d90c9d2857d67514d707">Tile.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga8d6b070c8121d90c9d2857d67514d707">Tile.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga8d6b070c8121d90c9d2857d67514d707">Tile.c</a>
 </li>
 <li>Nh_TTY_updateTileSize()
-: <a class="el" href="group__NhTTYFunctions.html#gaedf270629058c5869e2d43520406877d">Tile.c</a>
-, <a class="el" href="group__NhTTYFunctions.html#gaedf270629058c5869e2d43520406877d">Tile.h</a>
+: <a class="el" href="group__NhTTYFunctions.html#gaedf270629058c5869e2d43520406877d">Tile.h</a>
+, <a class="el" href="group__NhTTYFunctions.html#gaedf270629058c5869e2d43520406877d">Tile.c</a>
 </li>
 <li>Nh_TTY_updateTreeListing()
-: <a class="el" href="group__NhTTYFunctions.html#ga2e0ca281ffea6e2e1884cf5d0405b8aa">TreeListing.h</a>
-, <a class="el" href="group__NhTTYFunctions.html#ga2e0ca281ffea6e2e1884cf5d0405b8aa">TreeListing.c</a>
+: <a class="el" href="group__NhTTYFunctions.html#ga2e0ca281ffea6e2e1884cf5d0405b8aa">TreeListing.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#ga2e0ca281ffea6e2e1884cf5d0405b8aa">TreeListing.h</a>
 </li>
 <li>Nh_TTY_write()
-: <a class="el" href="group__NhTTYFunctions.html#gae3a9c2687cd16ca32a0a08d539bbfd28">Terminal.h</a>
-, <a class="el" href="Terminal_8c.html#a8efb6570787857f8a6b2c0970d6ef045">Terminal.c</a>
+: <a class="el" href="Terminal_8c.html#a8efb6570787857f8a6b2c0970d6ef045">Terminal.c</a>
+, <a class="el" href="group__NhTTYFunctions.html#gae3a9c2687cd16ca32a0a08d539bbfd28">Terminal.h</a>
 </li>
 <li>Nh_TTY_writeToOutput()
 : <a class="el" href="group__NhTTYFunctions.html#gacb1cd615ca32224a3c7bae95445d9e23">Output.c</a>
@@ -9202,8 +9211,8 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 : <a class="el" href="group__NhCoreMacros.html#gaa0ca4b8950ceec7e70d4581c516bdabc">API.h</a>
 </li>
 <li>Nh_updateContent()
-: <a class="el" href="group__NhCoreFunctions.html#gaf2368e3af21c58c2875fea8717c6ed6c">Content.c</a>
-, <a class="el" href="group__NhCoreFunctions.html#gaf2368e3af21c58c2875fea8717c6ed6c">Content.h</a>
+: <a class="el" href="group__NhCoreFunctions.html#gaf2368e3af21c58c2875fea8717c6ed6c">Content.h</a>
+, <a class="el" href="group__NhCoreFunctions.html#gaf2368e3af21c58c2875fea8717c6ed6c">Content.c</a>
 </li>
 <li>Nh_updateTexture()
 : <a class="el" href="group__NhCoreFunctions.html#gad0e49eec8d580a460b98f76abdd7b3dd">Texture.c</a>
@@ -9253,15 +9262,15 @@ $(document).ready(function(){initNavTree('globals_n.html',''); initResizable(); 
 , <a class="el" href="group__NhCoreFunctions.html#ga308212f65e58c22960aa12310c68d756">Unicode.c</a>
 </li>
 <li>Nh_verticesToArray()
-: <a class="el" href="group__NhCoreFunctions.html#ga46e28edf3a2ee4a1917980345487fab2">Math.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#ga46e28edf3a2ee4a1917980345487fab2">Math.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#ga46e28edf3a2ee4a1917980345487fab2">Math.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#ga46e28edf3a2ee4a1917980345487fab2">Math.h</a>
 </li>
 <li>Nh_VulkanCallback
 : <a class="el" href="group__NhCoreTypedefs.html#ga63814a4a0db7a981205f7d66fb36fbf7">Callbacks.h</a>
 </li>
 <li>Nh_writeCharsToFile()
-: <a class="el" href="group__NhCoreFunctions.html#gaaa9731ab2e4e01af10b43e2325a64375">File.h</a>
-, <a class="el" href="group__NhCoreFunctions.html#gaaa9731ab2e4e01af10b43e2325a64375">File.c</a>
+: <a class="el" href="group__NhCoreFunctions.html#gaaa9731ab2e4e01af10b43e2325a64375">File.c</a>
+, <a class="el" href="group__NhCoreFunctions.html#gaaa9731ab2e4e01af10b43e2325a64375">File.h</a>
 </li>
 <li>Nh_writeToChannel()
 : <a class="el" href="group__NhCoreFunctions.html#ga83d47229666581d54a3a223af8124252">Channel.c</a>

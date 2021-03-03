@@ -24,26 +24,26 @@
 */
 var NAVTREE =
 [
-  [ "NETZHAUT DEV DOCS", "index.html", [
-    [ "MAIN", "Main.html", [
-      [ "CONTENT", "Main.html#CONTENT", null ],
-      [ "CONTRIBUTE", "Main.html#CONTRIBUTE", null ],
-      [ "MODULES", "Main.html#MODULES", null ],
-      [ "SPECS", "Main.html#SPECS", null ],
-      [ "ABOUT", "Main.html#ABOUT", null ]
+  [ "Netzhaut Dev Docs", "index.html", [
+    [ "Main", "Main.html", [
+      [ "Content", "Main.html#Content", null ],
+      [ "Contribute", "Main.html#Contribute", null ],
+      [ "Modules", "Main.html#Modules", null ],
+      [ "Specs", "Main.html#Specs", null ],
+      [ "About", "Main.html#About", null ]
     ] ],
-    [ "TARGET", "Target.html", [
-      [ "INTERFACE", "Target.html#INTERFACE", null ],
-      [ "INTERNAL", "Target.html#INTERNAL", null ],
-      [ "RENDERING", "Target.html#RENDERING", null ],
-      [ "BUILDING", "Target.html#BUILDING", null ],
-      [ "DEBUGGING", "Target.html#DEBUGGING", null ]
+    [ "Target", "Target.html", [
+      [ "Interface", "Target.html#Interface", null ],
+      [ "Internal", "Target.html#Internal", null ],
+      [ "Rendering", "Target.html#Rendering", null ],
+      [ "Building", "Target.html#Building", null ],
+      [ "Debugging", "Target.html#Debugging", null ]
     ] ],
-    [ "ARCHITECTURE", "Architecture.html", [
+    [ "Architecture", "Architecture.html", [
       [ "TODO", "Architecture.html#TODO", null ]
     ] ],
-    [ "MODULES", "modules.html", "modules" ],
-    [ "FILES", "files.html", [
+    [ "Modules", "modules.html", "modules" ],
+    [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "Globals", "globals.html", [
         [ "All", "globals.html", "globals_dup" ],
@@ -83,13 +83,13 @@ var NAVTREEINDEX =
 "group__NhCoreFunctions.html#gaec56a3412056a0a4b9489367a13bf19c",
 "group__NhECMAScriptEnums.html#gga7ba2de68dcf318b809653945eac2e18aa021b42bff6d9639a6fa17b333d0206cf",
 "group__NhECMAScriptEnums.html#ggaac282ea1266c01394787093045a7e855ae12bd8e7359f29625e1d163de31e0f6e",
-"group__NhECMAScriptFunctions.html#ga437c1ce27dd5cc2d52d48f831be0fc06",
-"group__NhECMAScriptFunctions.html#gae30095f44bca6d295d05247467b16dce",
-"group__NhLoaderEnums.html#ga1a5bd4322ba76a6a93862eb1d694bb9f",
-"group__NhTTYFunctions.html#ga387e09067a5fbd5c5def3a7957e3aa7f",
-"group__NhTTYVars.html",
-"structNh__ECMAScript__ObjectEnvironment.html#ab2835fca2b1e2475f2cd761e3119b91e",
-"structNh__TTY__Program.html#a06e41a03cc14206b25f2b8f5e30d2541"
+"group__NhECMAScriptFunctions.html#ga46e38fd5b605ce120695586f128e16c0",
+"group__NhECMAScriptFunctions.html#gae422d7c177abd265d709fc20a5db7cb9",
+"group__NhLoaderEnums.html",
+"group__NhTTYFunctions.html#ga31d9467d2291e7340892091a2ecbbb94",
+"group__NhTTYTypedefs.html#gacb07b97fd2b774f2d76dfe4dd572a5c2",
+"structNh__ECMAScript__ObjectEnvironment.html",
+"structNh__TTY__Output.html#a9c3382d9c51b07fbde27eda507f4176e"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

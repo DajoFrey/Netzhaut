@@ -14,20 +14,19 @@
 
 #endif
 
-/** @addtogroup WebIDLStructs Structs
- *  \ingroup WebIDL
+/** @addtogroup NhWebIDLStructs
  *  @{
  */
 
     typedef struct Nh_WebIDL_IndexMap {
         Nh_HashMap FragmentNames;
         Nh_HashMap FragmentFunctionNames;
+        Nh_HashMap ParseNodeNames;
     } Nh_WebIDL_IndexMap;
 
 /** @} */
 
-/** @addtogroup WebIDLData Data
- *  \ingroup WebIDL
+/** @addtogroup NhWebIDLVars
  *  @{
  */
 
@@ -35,8 +34,7 @@
 
 /** @} */
 
-/** @addtogroup WebIDLFunctions Functions
- *  \ingroup WebIDL
+/** @addtogroup NhWebIDLFunctions
  *  @{
  */
 

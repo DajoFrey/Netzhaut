@@ -25,14 +25,8 @@
  *  @{
  */
 
-    typedef struct Nh_TTY_TextFileExecutionMenu {
-        NH_BOOL active;
-        int index;
-    } Nh_TTY_TextFileExecutionMenu;
-
     typedef struct Nh_TTY_TextFile {
         NH_TTY_TEXT textType;
-        Nh_TTY_TextFileExecutionMenu ExecutionMenu;
         int lineNumberOffset;
         int fileCursorXTarget;
         int fileCursorX;
@@ -63,6 +57,10 @@
 
     NH_TTY_RESULT Nh_TTY_executeTextFile(
         Nh_TTY_TextFile *TextFile_p
+    );
+
+    NH_TTY_RESULT Nh_TTY_parseWebIDLTextFile(
+        NH_BYTE *name_p, Nh_TTY_TextFile *TextFile_p
     );
 
     NH_TTY_RESULT Nh_TTY_handleTextFileInput(

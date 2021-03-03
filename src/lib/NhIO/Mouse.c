@@ -14,9 +14,6 @@
 #include "../NhCore/String.h"
 #include "../NhCore/Memory.h"
 
-#include "../HTML/Main/Header/Document.h"
-#include "../HTML/Main/Header/Box.h"
-
 #include "Common/Macro.h"
 #include NH_IO_FLOW
 #include NH_IO_DEFAULT_CHECK

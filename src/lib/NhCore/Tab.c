@@ -19,8 +19,8 @@
 #include "../NhIO/Mouse.h"
 #include "../NhIO/Keyboard.h"
 
-#include "../Graphics/Main/Header/Record.h"
-#include "../Graphics/Vulkan/Header/Vulkan.h"
+#include "../NhGraphics/Main/Header/Record.h"
+#include "../NhGraphics/Vulkan/Header/Vulkan.h"
 
 #include "Common/Macro.h"
 #include NH_FLOW

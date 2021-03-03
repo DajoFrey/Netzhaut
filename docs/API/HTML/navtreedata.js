@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "NETZHAUT API DOCS", "index.html", [
+  [ "Netzhaut API Docs", "index.html", [
     [ "Main Page", "index.html", null ]
   ] ]
 ];
