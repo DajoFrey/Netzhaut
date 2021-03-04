@@ -423,7 +423,7 @@ NH_INSTALLER_BEGIN()
     NH_BYTE fragmentName_p[1024] = {'\0'};
     Nh_Installer_getFragmentName(filePath_p, fragmentName_p);
 
-    NH_INSTALLER_CHECK(Nh_Installer_generateOperationsFile(fragmentName_p, operationsOut_p, &totalOperations_pp[totalOperationCount - count], count))
+//    NH_INSTALLER_CHECK(Nh_Installer_generateOperationsFile(fragmentName_p, operationsOut_p, &totalOperations_pp[totalOperationCount - count], count))
     NH_INSTALLER_CHECK(Nh_Installer_generateHexDumpFile(filePath_p, fragmentName_p))
     NH_INSTALLER_CHECK(Nh_Installer_createIncludeFile("src/lib/NhWebIDL/Runtime"))
 

@@ -81,7 +81,7 @@ NH_TTY_BEGIN()
     if (!Node_p->open) {NH_TTY_SILENT_END()}
 
     for (int i = 0; i < Node_p->Children.size; ++i) {
-        Nh_TTY_getNodeList(List_p, Node_p->Children.handles_pp[i]);
+        Nh_TTY_getNodeList(List_p, Node_p->Children.pp[i]);
     }
 
 NH_TTY_SILENT_END()
@@ -96,7 +96,7 @@ NH_TTY_BEGIN()
     Nh_List Nodes = Nh_initList(128);
     Nh_TTY_getNodeList(&Nodes, Listing_p->Root_p);
 
-    Nh_TTY_TreeListingNode *Current_p = Nodes.handles_pp[Listing_p->treeCurrent];
+    Nh_TTY_TreeListingNode *Current_p = Nodes.pp[Listing_p->treeCurrent];
 
     Nh_freeList(&Nodes, NH_FALSE);
 
@@ -109,7 +109,7 @@ static void Nh_TTY_closeNode(
 NH_TTY_BEGIN()
 
     for (int i = 0; i < Node_p->Children.size; ++i) {
-        Nh_TTY_TreeListingNode *Child_p = Node_p->Children.handles_pp[i];
+        Nh_TTY_TreeListingNode *Child_p = Node_p->Children.pp[i];
         free(Child_p->path_p);
         Nh_TTY_closeNode(Child_p);
     }
@@ -385,10 +385,10 @@ NH_TTY_BEGIN()
 
         NH_BOOL isChild = NH_FALSE;
         for (int i = 0; i < Listing_p->Root_p->Children.size; ++i) {
-            if (!strcmp(((Nh_TTY_TreeListingNode*)Listing_p->Root_p->Children.handles_pp[i])->path_p, OldRoot_p->path_p)) {
-                Nh_free(((Nh_TTY_TreeListingNode*)Listing_p->Root_p->Children.handles_pp[i])->path_p);
-                Nh_free(Listing_p->Root_p->Children.handles_pp[i]);
-                Listing_p->Root_p->Children.handles_pp[i] = OldRoot_p;
+            if (!strcmp(((Nh_TTY_TreeListingNode*)Listing_p->Root_p->Children.pp[i])->path_p, OldRoot_p->path_p)) {
+                Nh_free(((Nh_TTY_TreeListingNode*)Listing_p->Root_p->Children.pp[i])->path_p);
+                Nh_free(Listing_p->Root_p->Children.pp[i]);
+                Listing_p->Root_p->Children.pp[i] = OldRoot_p;
                 isChild = NH_TRUE;
                 break;
             }
@@ -620,7 +620,7 @@ NH_TTY_BEGIN()
     NH_BYTE row_p[1024] = {'\0'};
 
     for (int i = 0; i < Nodes.size; ++i) {
-        NH_TTY_CHECK(Nh_TTY_renderTreeListingNode(Nodes.handles_pp[i], row_p))
+        NH_TTY_CHECK(Nh_TTY_renderTreeListingNode(Nodes.pp[i], row_p))
         if (strlen(row_p) > width) {width = strlen(row_p);}
         memset(row_p, 0, 1024);
     }
@@ -696,7 +696,7 @@ NH_TTY_BEGIN()
     Nh_TTY_getNodeList(&Nodes, Listing_p->Root_p);
 
     for (int i = 0; i < Nodes.size; ++i) {
-        if (((Nh_TTY_TreeListingNode*)Nodes.handles_pp[i])->File_p == File_p) {
+        if (((Nh_TTY_TreeListingNode*)Nodes.pp[i])->File_p == File_p) {
             if (Listing_p->treeCurrent < i) {
                 int diff = i - Listing_p->treeCurrent;
                 while (diff-- > 0) {

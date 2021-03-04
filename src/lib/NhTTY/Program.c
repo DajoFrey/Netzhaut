@@ -104,9 +104,9 @@ NH_TTY_BEGIN()
 
     Nh_List Tiles = Nh_TTY_getTiles(((Nh_TTY_Terminal*)Terminal_p)->Tab_p->RootTile_p);
     for (int i = 0; i < Tiles.size; ++i) {
-        Nh_TTY_Tile *Tile_p = Tiles.handles_pp[i];
+        Nh_TTY_Tile *Tile_p = Tiles.pp[i];
         NH_TTY_CHECK(NH_TTY_ERROR_BAD_STATE, Nh_TTY_appendProgramInstance(
-            Tile_p->Console.Programs_p, Prototypes_p->handles_pp[Prototypes_p->size - 1]
+            Tile_p->Console.Programs_p, Prototypes_p->pp[Prototypes_p->size - 1]
         ))
     }
     Nh_freeList(&Tiles, NH_FALSE);
@@ -128,7 +128,7 @@ NH_TTY_BEGIN()
 
     for (int i = 0; i < Prototypes_p->size; ++i) 
     {
-        Nh_TTY_ProgramPrototype *Prototype_p = Prototypes_p->handles_pp[i];
+        Nh_TTY_ProgramPrototype *Prototype_p = Prototypes_p->pp[i];
         NH_TTY_CHECK(NULL, Nh_TTY_appendProgramInstance(Programs_p, Prototype_p))
     }
 

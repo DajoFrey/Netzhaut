@@ -61,7 +61,7 @@ NH_ECMASCRIPT_BEGIN()
 
     for (int i = 0; i < This_p->Properties.size; ++i) 
     {
-        Nh_ECMAScript_Property *CheckProperty_p = This_p->Properties.handles_pp[i];
+        Nh_ECMAScript_Property *CheckProperty_p = This_p->Properties.pp[i];
         if (Nh_ECMAScript_equalPropertyKeys(CheckProperty_p->Key, PropertyKey)) {
             Property_p = CheckProperty_p;
             break;

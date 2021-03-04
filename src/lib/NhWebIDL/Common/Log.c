@@ -106,12 +106,12 @@ NH_WEBIDL_BEGIN()
     Nh_sendLogMessage(message_p);
 
     branch_p[depth] = NH_TRUE;
-    if (Parent_p != NULL && ParseNode_p == Parent_p->Children.handles_pp[Parent_p->Children.size - 1]) {
+    if (Parent_p != NULL && ParseNode_p == Parent_p->Children.pp[Parent_p->Children.size - 1]) {
         branch_p[depth - 1] = NH_FALSE;
     }
 
     for (int i = 0; i < ParseNode_p->Children.size; ++i) {
-        Nh_WebIDL_logParseTreeRecursively(fragmentName_p, ParseNode_p->Children.handles_pp[i], ParseNode_p, depth + 1, branch_p);
+        Nh_WebIDL_logParseTreeRecursively(fragmentName_p, ParseNode_p->Children.pp[i], ParseNode_p, depth + 1, branch_p);
     }
 
 NH_WEBIDL_DIAGNOSTIC_END(NH_WEBIDL_SUCCESS)

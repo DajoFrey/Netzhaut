@@ -29,7 +29,7 @@ typedef struct Nh_WebIDL_Object {
 // CREATE ==========================================================================================
 
 Nh_WebIDL_Object *Nh_WebIDL_createObject(
-    NH_BYTE *spec_p, NH_BYTE *class_p)
+    NH_BYTE *spec_p, NH_BYTE *class_p, ...)
 {
 NH_WEBIDL_BEGIN()
 

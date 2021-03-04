@@ -40,7 +40,7 @@ NH_TTY_BEGIN()
 
     for (int i = 0; i < LoggerNode_p->Children.size; ++i) 
     {
-        Nh_LoggerNode *NextLoggerNode_p = LoggerNode_p->Children.handles_pp[i];
+        Nh_LoggerNode *NextLoggerNode_p = LoggerNode_p->Children.pp[i];
         Nh_TTY_LoggerNode *NextInstanceNode_p = Nh_getFromList(&InstanceNode_p->Children, i);
 
         if (NextInstanceNode_p == NULL) 
@@ -77,8 +77,8 @@ NH_TTY_BEGIN()
 
     for (int i = 0; i < Node_p->Children.size; ++i) 
     {
-        Nh_appendToList(List_p, Node_p->Children.handles_pp[i]);
-        Nh_TTY_getLoggerNodes(Node_p->Children.handles_pp[i], List_p);
+        Nh_appendToList(List_p, Node_p->Children.pp[i]);
+        Nh_TTY_getLoggerNodes(Node_p->Children.pp[i], List_p);
     }
 
 NH_TTY_SILENT_END()
@@ -137,7 +137,7 @@ NH_TTY_BEGIN()
     Nh_TTY_updateLoggerNode(&NH_LOGGER.Root, &Logger_p->Root);
 
     if (init && Logger_p->Root.Children.size > 0) {
-        ((Nh_TTY_LoggerNode*)Logger_p->Root.Children.handles_pp[0])->isCurrent = NH_TRUE;
+        ((Nh_TTY_LoggerNode*)Logger_p->Root.Children.pp[0])->isCurrent = NH_TRUE;
     }
 
     Logger_p->listingWidth = Nh_TTY_getCategoryListingWidth(Logger_p);
@@ -188,8 +188,8 @@ NH_TTY_BEGIN()
     Nh_TTY_getLoggerNodes(&Logger_p->Root, &Nodes);
 
     for (int i = 0; i < Nodes.size; ++i) {
-        if (((Nh_TTY_LoggerNode*)Nodes.handles_pp[i])->isSelected) {
-            Nh_appendToList(&SelectedNodes, Nodes.handles_pp[i]);
+        if (((Nh_TTY_LoggerNode*)Nodes.pp[i])->isSelected) {
+            Nh_appendToList(&SelectedNodes, Nodes.pp[i]);
         }
     }
 
@@ -205,7 +205,7 @@ NH_TTY_BEGIN()
 
     Nh_List SelectedNodes = Nh_TTY_getSelectedLoggerNodes(Logger_p);
     for (int i = 0; i < SelectedNodes.size; ++i) {
-        ((Nh_TTY_LoggerNode*)SelectedNodes.handles_pp[i])->hasFocus = NH_FALSE;
+        ((Nh_TTY_LoggerNode*)SelectedNodes.pp[i])->hasFocus = NH_FALSE;
     }
     Nh_freeList(&SelectedNodes, NH_FALSE);
 
@@ -221,8 +221,8 @@ NH_TTY_BEGIN()
     if (SelectedNodes.size <= 0) {NH_TTY_END(NULL)}
 
     int focus;
-    for (focus = 0; focus < SelectedNodes.size && !((Nh_TTY_LoggerNode*)SelectedNodes.handles_pp[focus])->hasFocus; ++focus);
-    Nh_TTY_LoggerNode *Focus_p = SelectedNodes.handles_pp[focus];
+    for (focus = 0; focus < SelectedNodes.size && !((Nh_TTY_LoggerNode*)SelectedNodes.pp[focus])->hasFocus; ++focus);
+    Nh_TTY_LoggerNode *Focus_p = SelectedNodes.pp[focus];
 
     Nh_freeList(&SelectedNodes, NH_FALSE);
 
@@ -242,7 +242,7 @@ NH_TTY_BEGIN()
         for (int i = 0; Node_p->isOpen && i < Node_p->Children.size; ++i) 
         {
             Nh_TTY_LoggerNode *Result_p = 
-                Nh_TTY_getCurrentLoggerNode(Node_p->Children.handles_pp[i]);
+                Nh_TTY_getCurrentLoggerNode(Node_p->Children.pp[i]);
             if (Result_p != NULL) {NH_TTY_END(Result_p)}
         }
     }
@@ -258,20 +258,20 @@ NH_TTY_BEGIN()
     Nh_List Nodes = Nh_initList(16);
     Nh_TTY_getLoggerNodes(&Logger_p->Root, &Nodes);
     int index;
-    for (index = 0; index < Nodes.size && Nodes.handles_pp[index] != Current_p; ++index);
+    for (index = 0; index < Nodes.size && Nodes.pp[index] != Current_p; ++index);
 
     switch (key) 
     {
         case 'w' :
             if (index > 0) {
                 Current_p->isCurrent = NH_FALSE;
-                ((Nh_TTY_LoggerNode*)Nodes.handles_pp[index - 1])->isCurrent = NH_TRUE;
+                ((Nh_TTY_LoggerNode*)Nodes.pp[index - 1])->isCurrent = NH_TRUE;
             }
             break;
         case 's' :
             if (Nodes.size > index + 1) {
                 Current_p->isCurrent = NH_FALSE;
-                ((Nh_TTY_LoggerNode*)Nodes.handles_pp[index + 1])->isCurrent = NH_TRUE;
+                ((Nh_TTY_LoggerNode*)Nodes.pp[index + 1])->isCurrent = NH_TRUE;
             }
             break;
     }
@@ -291,14 +291,14 @@ NH_TTY_BEGIN()
     if (SelectedNodes.size > 1 && Selected_p->hasFocus) 
     {
         int index;
-        for (index = 0; index < SelectedNodes.size && SelectedNodes.handles_pp[index] != Selected_p; ++index);
+        for (index = 0; index < SelectedNodes.size && SelectedNodes.pp[index] != Selected_p; ++index);
 
-        if (index == 0) {((Nh_TTY_LoggerNode*)SelectedNodes.handles_pp[SelectedNodes.size - 1])->hasFocus = NH_TRUE;}
+        if (index == 0) {((Nh_TTY_LoggerNode*)SelectedNodes.pp[SelectedNodes.size - 1])->hasFocus = NH_TRUE;}
         else if (index == SelectedNodes.size - 1) {
-            ((Nh_TTY_LoggerNode*)SelectedNodes.handles_pp[0])->hasFocus = NH_TRUE;
+            ((Nh_TTY_LoggerNode*)SelectedNodes.pp[0])->hasFocus = NH_TRUE;
         }
         else {
-            ((Nh_TTY_LoggerNode*)SelectedNodes.handles_pp[index - 1])->hasFocus = NH_TRUE;
+            ((Nh_TTY_LoggerNode*)SelectedNodes.pp[index - 1])->hasFocus = NH_TRUE;
         }
     }
 
@@ -319,20 +319,20 @@ NH_TTY_BEGIN()
     if (SelectedNodes.size <= 1) {NH_TTY_SILENT_END()}
 
     int focus;
-    for (focus = 0; focus < SelectedNodes.size && !((Nh_TTY_LoggerNode*)SelectedNodes.handles_pp[focus])->hasFocus; ++focus);
+    for (focus = 0; focus < SelectedNodes.size && !((Nh_TTY_LoggerNode*)SelectedNodes.pp[focus])->hasFocus; ++focus);
 
     switch (c) 
     {
         case 'f' :
             if (focus > 0) {
-                ((Nh_TTY_LoggerNode*)SelectedNodes.handles_pp[focus])->hasFocus = NH_FALSE;
-                ((Nh_TTY_LoggerNode*)SelectedNodes.handles_pp[focus - 1])->hasFocus = NH_TRUE;
+                ((Nh_TTY_LoggerNode*)SelectedNodes.pp[focus])->hasFocus = NH_FALSE;
+                ((Nh_TTY_LoggerNode*)SelectedNodes.pp[focus - 1])->hasFocus = NH_TRUE;
             }
             break;
         case 'g' :
             if (focus < SelectedNodes.size - 1) {
-                ((Nh_TTY_LoggerNode*)SelectedNodes.handles_pp[focus])->hasFocus = NH_FALSE;
-                ((Nh_TTY_LoggerNode*)SelectedNodes.handles_pp[focus + 1])->hasFocus = NH_TRUE;
+                ((Nh_TTY_LoggerNode*)SelectedNodes.pp[focus])->hasFocus = NH_FALSE;
+                ((Nh_TTY_LoggerNode*)SelectedNodes.pp[focus + 1])->hasFocus = NH_TRUE;
             }
             break;
     }
@@ -393,7 +393,7 @@ NH_TTY_BEGIN()
             {
                 for (int i = 0; i < Current_p->Parent_p->Children.size; ++i) 
                 {
-                    Nh_TTY_LoggerNode *Sibling_p = Current_p->Parent_p->Children.handles_pp[i];
+                    Nh_TTY_LoggerNode *Sibling_p = Current_p->Parent_p->Children.pp[i];
                     if (Sibling_p->isSelected) {
                         Nh_TTY_unselectLoggerNode(Logger_p, Sibling_p);
                     } 
@@ -496,7 +496,7 @@ NH_TTY_BEGIN()
 
     for (int i = 0; i < SelectedNodes.size; ++i)
     {
-        Nh_TTY_LoggerNode *SelectedNode_p = SelectedNodes.handles_pp[i]; 
+        Nh_TTY_LoggerNode *SelectedNode_p = SelectedNodes.pp[i]; 
 
         if (row == rows - 1) {
             Nh_TTY_drawBottomBar(SelectedNode_p, Data_p, cols);

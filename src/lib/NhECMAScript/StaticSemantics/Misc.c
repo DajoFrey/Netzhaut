@@ -38,7 +38,7 @@ NH_ECMASCRIPT_BEGIN()
 //        case NH_ECMASCRIPT_PARSE_NODE_ASYNC_GENERATOR_EXPRESSION :
 //        case NH_ECMASCRIPT_PARSE_NODE_ASYNC_FUNCTION_EXPRESSION :
 //        case NH_ECMASCRIPT_PARSE_NODE_CLASS_EXPRESSION :
-//            if (((Nh_ECMAScript_ParseNode*)Node_p->Children.handles_pp[0])->type == NH_ECMASCRIPT_PARSE_NODE_BINDING_IDENTIFIER) {
+//            if (((Nh_ECMAScript_ParseNode*)Node_p->Children.pp[0])->type == NH_ECMASCRIPT_PARSE_NODE_BINDING_IDENTIFIER) {
 //                NH_ECMASCRIPT_END(NH_TRUE)
 //            }
 //            break;
@@ -61,8 +61,8 @@ NH_ECMASCRIPT_BEGIN()
 //            break;
 //
 //        case NH_ECMASCRIPT_PARSE_NODE_ASSIGNMENT_EXPRESSION :
-//            if (((Nh_ECMAScript_ParseNode*)Node_p->Children.handles_pp[0])->type == NH_ECMASCRIPT_PARSE_NODE_ARROW_FUNCTION
-//            ||  ((Nh_ECMAScript_ParseNode*)Node_p->Children.handles_pp[0])->type == NH_ECMASCRIPT_PARSE_NODE_ASYNC_ARROW_FUNCTION) {
+//            if (((Nh_ECMAScript_ParseNode*)Node_p->Children.pp[0])->type == NH_ECMASCRIPT_PARSE_NODE_ARROW_FUNCTION
+//            ||  ((Nh_ECMAScript_ParseNode*)Node_p->Children.pp[0])->type == NH_ECMASCRIPT_PARSE_NODE_ASYNC_ARROW_FUNCTION) {
 //                NH_ECMASCRIPT_END(NH_TRUE)
 //            }
 //            break;
@@ -105,7 +105,7 @@ NH_ECMASCRIPT_BEGIN()
 //        case NH_ECMASCRIPT_PARSE_NODE_BINDING_IDENTIFIER :
 //        case NH_ECMASCRIPT_PARSE_NODE_LABEL_IDENTIFIER :
 //            if (Node_p->Value_p != NULL) {NH_ECMASCRIPT_END(&Node_p->Value_p->String)}
-//            NH_ECMASCRIPT_END(Nh_ECMAScript_getStringValue(Node_p->Children.handles_pp[0]))
+//            NH_ECMASCRIPT_END(Nh_ECMAScript_getStringValue(Node_p->Children.pp[0]))
 //
 //        case NH_ECMASCRIPT_PARSE_NODE_IDENTIFIER :
 //            NH_ECMASCRIPT_END(&Node_p->Value_p->String)
@@ -124,7 +124,7 @@ NH_ECMASCRIPT_BEGIN()
 //    switch (Node_p->type)
 //    {
 //        case NH_ECMASCRIPT_PARSE_NODE_LEXICAL_DECLARATION :
-//            NH_ECMASCRIPT_END(Nh_ECMAScript_isConstantDeclaration(Node_p->Children.handles_pp[0]))
+//            NH_ECMASCRIPT_END(Nh_ECMAScript_isConstantDeclaration(Node_p->Children.pp[0]))
 //
 //        case NH_ECMASCRIPT_PARSE_NODE_LET_OR_CONST :
 //            if (!strcmp(Node_p->Value_p->String.bytes_p, "let")) {

@@ -13,11 +13,15 @@
 
 #endif
 
-/** @addtogroup NhWebIDLTypedefs
+/** @addtogroup NhWebIDLStructs
  *  @{
  */
 
-    typedef struct Nh_WebIDL_Object Nh_WebIDL_Object;
+    typedef struct Nh_WebIDL_Object {
+//        Nh_WebIDL_Interface *Interface_p;
+        Nh_WebIDL_Object *Inherit_p;
+        Nh_List Attributes;
+    } Nh_WebIDL_Object;
 
 /** @} */
 
@@ -26,7 +30,7 @@
  */
 
     Nh_WebIDL_Object *Nh_WebIDL_createObject(
-        NH_BYTE *spec_p, NH_BYTE *class_p
+        NH_BYTE *spec_p, NH_BYTE *interface_p, ...
     );
 
 //    Nh_WebIDL_Any Nh_WebIDL_callOperation(

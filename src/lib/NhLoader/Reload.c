@@ -156,7 +156,7 @@ NH_LOADER_END(name_p)
 //        NH_LOADER_CHECK(Nh_load(libName_p, NH_FALSE))
 //
 //        for (int i = 0; i < Functions.size; ++i) {
-//            NH_LOADER_CHECK(((Nh_startProcess_f)Nh_loadFunction(libName_p, Functions.handles_pp[i]))(0, NULL))
+//            NH_LOADER_CHECK(((Nh_startProcess_f)Nh_loadFunction(libName_p, Functions.pp[i]))(0, NULL))
 //        }
 //    
 //        Nh_freeList(&Functions, NH_TRUE);

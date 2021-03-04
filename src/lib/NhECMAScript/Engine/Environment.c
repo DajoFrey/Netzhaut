@@ -51,7 +51,7 @@ static NH_BOOL Nh_ECMAScript_declarativeEnvironmentHasBinding(
 NH_ECMASCRIPT_BEGIN()
 
     for (int i = 0; i < DeclarativeEnvironment_p->Bindings.size; ++i) {
-        Nh_ECMAScript_Binding *Binding_p = DeclarativeEnvironment_p->Bindings.handles_pp[i];
+        Nh_ECMAScript_Binding *Binding_p = DeclarativeEnvironment_p->Bindings.pp[i];
         if (!strcmp(Binding_p->Name_p->bytes_p, Name_p->bytes_p)) {NH_ECMASCRIPT_END(NH_TRUE)}
     }
 
@@ -107,7 +107,7 @@ NH_ECMASCRIPT_BEGIN()
 
     Nh_ECMAScript_Binding *Binding_p = NULL;
     for (int i = 0; i < DeclarativeEnvironment_p->Bindings.size; ++i) {
-        Binding_p = DeclarativeEnvironment_p->Bindings.handles_pp[i];
+        Binding_p = DeclarativeEnvironment_p->Bindings.pp[i];
         if (!strcmp(Binding_p->Name_p->bytes_p, Name_p->bytes_p)) {break;}
     }
 
@@ -299,7 +299,7 @@ NH_ECMASCRIPT_BEGIN()
     
     NH_BOOL containsName = NH_FALSE;
     for (int i = 0; i < VarDeclaredNames_p->size; ++i) {
-        if (!strcmp(Name_p->bytes_p, ((Nh_UTF8String*)VarDeclaredNames_p->handles_pp[i])->bytes_p)) {
+        if (!strcmp(Name_p->bytes_p, ((Nh_UTF8String*)VarDeclaredNames_p->pp[i])->bytes_p)) {
             containsName = NH_TRUE;
             break;
         }
@@ -316,7 +316,7 @@ NH_BOOL Nh_ECMAScript_hasVarDeclaration(
 NH_ECMASCRIPT_BEGIN()
 
     for (int i = 0; i < GlobalEnvironment_p->VarNames.size; ++i) {
-        if (!strcmp(((Nh_UTF8String*)GlobalEnvironment_p->VarNames.handles_pp[i])->bytes_p, Name_p->bytes_p)) {
+        if (!strcmp(((Nh_UTF8String*)GlobalEnvironment_p->VarNames.pp[i])->bytes_p, Name_p->bytes_p)) {
             NH_ECMASCRIPT_END(NH_TRUE)
         }
     }

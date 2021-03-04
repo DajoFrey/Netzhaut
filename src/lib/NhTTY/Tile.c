@@ -342,7 +342,7 @@ NH_TTY_BEGIN()
 
     int i = 0;
     for (i = 0; i < Tiles.size; ++i) {
-        if (Tiles.handles_pp[i] == Tile_p) {break;}
+        if (Tiles.pp[i] == Tile_p) {break;}
     }
 
     color = Nh_TTY_computeTileColor(i);
@@ -363,7 +363,7 @@ NH_TTY_BEGIN()
 
     int index = -1;
     for (int i = 0; i < Tiles.size; ++i) {
-        Nh_TTY_Tile *Tile_p = Tiles.handles_pp[i];
+        Nh_TTY_Tile *Tile_p = Tiles.pp[i];
         for (int j = 0; Tile_p->Console.Programs_p != NULL && j < Tile_p->Console.Programs_p->length; ++j) {
             if (((Nh_TTY_Program*)Tile_p->Console.Programs_p->bytes_p)[j].handle_p == prog_p) {
                 index = i;
@@ -391,7 +391,7 @@ NH_TTY_BEGIN()
 
     int index = -1;
     for (int i = 0; i < Tiles.size; ++i) {
-        if (&((Nh_TTY_Tile*)Tiles.handles_pp[i])->Console == Console_p) {
+        if (&((Nh_TTY_Tile*)Tiles.pp[i])->Console == Console_p) {
             index = i;
             break;
         }

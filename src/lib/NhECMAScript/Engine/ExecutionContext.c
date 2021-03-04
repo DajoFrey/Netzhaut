@@ -49,7 +49,7 @@ NH_ECMASCRIPT_BEGIN()
     if (Agent_p->ExecutionContextStack.size == 0) {NH_ECMASCRIPT_END(NULL)}
 
     for (int i = Agent_p->ExecutionContextStack.size - 1; i >= 0; ++i) {
-        Nh_ECMAScript_ExecutionContext *ExecutionContext_p = Agent_p->ExecutionContextStack.handles_pp[i];
+        Nh_ECMAScript_ExecutionContext *ExecutionContext_p = Agent_p->ExecutionContextStack.pp[i];
         if (ExecutionContext_p->ScriptOrModule.handle_p != NULL) {
             NH_ECMASCRIPT_END(&ExecutionContext_p->ScriptOrModule)
         }

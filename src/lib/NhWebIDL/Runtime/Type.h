@@ -9,7 +9,9 @@
  * Published under LGPLv3
  */
 
-#include "../Common/Result.h"
+#include "Object.h"
+
+#include "../../NhCore/Unicode.h"
 
 #endif
 
@@ -43,9 +45,39 @@
 
 /** @} */
 
+/** @addtogroup NhWebIDLTypedefs
+ *  @{
+ */
+
+    typedef char NH_WEBIDL_BYTE;
+    typedef unsigned char NH_WEBIDL_OCTET;
+    typedef short NH_WEBIDL_SHORT;
+    typedef unsigned short NH_WEBIDL_UNSIGNED_SHORT;
+    typedef long NH_WEBIDL_LONG;
+    typedef unsigned long NH_WEBIDL_UNSIGNED_LONG;
+    typedef long long NH_WEBIDL_LONG_LONG;
+    typedef unsigned long long NH_WEBIDL_UNSIGNED_LONG_LONG;
+    typedef float NH_WEBIDL_FLOAT;
+    typedef float NH_WEBIDL_UNRESTRICTED_FLOAT;
+    typedef double NH_WEBIDL_DOUBLE;
+    typedef double NH_WEBIDL_UNRESTRICTED_DOUBLE;
+    typedef unsigned long NH_WEBIDL_UNSIGNED_LONG;
+    typedef long long NH_WEBIDL_LONG_LONG;
+    typedef unsigned long long NH_WEBIDL_UNSIGNED_LONG_LONG;
+
+    typedef Nh_UTF8String Nh_WebIDL_DOMString;
+    typedef Nh_String Nh_WebIDL_ByteString;
+    typedef Nh_UnicodeString Nh_WebIDL_USVString;
+
+/** @} */
+
 /** @addtogroup NhWebIDLStructs
  *  @{
  */
+
+    typedef struct Nh_WebIDL_BigInteger {
+        int TODO;
+    } Nh_WebIDL_BigInteger;
 
     typedef struct Nh_WebIDL_Any {
         NH_WEBIDL_TYPE type;
@@ -54,8 +86,7 @@
 
 /** @} */
 
-/** @addtogroup WebIDLStructs Structs
- *  \ingroup WebIDL
+/** @addtogroup NhWebIDLFunctions Functions
  *  @{
  */
 

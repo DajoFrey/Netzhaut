@@ -100,7 +100,7 @@ NH_ECMASCRIPT_BEGIN()
 
     Nh_pushStack(&Nh_ECMAScript_getCurrentAgent()->ExecutionContextStack, ScriptContext_p);
 
-    Nh_ECMAScript_ParseNode *ScriptBody_p = Script_p->ECMAScriptCode_p->Children.handles_pp[0];
+    Nh_ECMAScript_ParseNode *ScriptBody_p = Script_p->ECMAScriptCode_p->Children.pp[0];
     Nh_ECMAScript_Completion Result = Nh_ECMAScript_globalDeclarationInstantiation(ScriptBody_p, GlobalEnvironment_p);
 
     if (Result.type == NH_ECMASCRIPT_COMPLETION_NORMAL) {

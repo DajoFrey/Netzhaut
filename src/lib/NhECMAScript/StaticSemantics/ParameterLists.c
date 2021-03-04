@@ -31,11 +31,11 @@ NH_ECMASCRIPT_BEGIN()
     switch (Node_p->type)
     {
         case NH_ECMASCRIPT_PARSE_NODE_FORMAL_PARAMETER :
-            NH_ECMASCRIPT_END(Nh_ECMAScript_hasInitializer(Node_p->Children.handles_pp[0]))
+            NH_ECMASCRIPT_END(Nh_ECMAScript_hasInitializer(Node_p->Children.pp[0]))
 
         case NH_ECMASCRIPT_PARSE_NODE_BINDING_ELEMENT :
             if (Node_p->Children.size == 1) {
-                if (((Nh_ECMAScript_ParseNode*)Node_p->Children.handles_pp[0])->type == NH_ECMASCRIPT_PARSE_NODE_BINDING_PATTERN) {
+                if (((Nh_ECMAScript_ParseNode*)Node_p->Children.pp[0])->type == NH_ECMASCRIPT_PARSE_NODE_BINDING_PATTERN) {
                     NH_ECMASCRIPT_END(NH_FALSE)
                 }
             }
@@ -51,9 +51,9 @@ NH_ECMASCRIPT_BEGIN()
 
         case NH_ECMASCRIPT_PARSE_NODE_FORMAL_PARAMETER_LIST :
         {
-            NH_BOOL hasInitializer = Nh_ECMAScript_hasInitializer(Node_p->Children.handles_pp[0]);
+            NH_BOOL hasInitializer = Nh_ECMAScript_hasInitializer(Node_p->Children.pp[0]);
             if (!hasInitializer && Node_p->Children.size == 2) {
-                hasInitializer = Nh_ECMAScript_hasInitializer(Node_p->Children.handles_pp[1]);
+                hasInitializer = Nh_ECMAScript_hasInitializer(Node_p->Children.pp[1]);
             }
             NH_ECMASCRIPT_END(hasInitializer)
         }
@@ -73,18 +73,18 @@ NH_ECMASCRIPT_BEGIN()
     {
         case NH_ECMASCRIPT_PARSE_NODE_FORMAL_PARAMETERS :
             if (Node_p->Children.size == 2) {
-                NH_ECMASCRIPT_END(Nh_ECMAScript_getExpectedArgumentCount(Node_p->Children.handles_pp[0])) 
+                NH_ECMASCRIPT_END(Nh_ECMAScript_getExpectedArgumentCount(Node_p->Children.pp[0])) 
             }
             break;
 
         case NH_ECMASCRIPT_PARSE_NODE_FORMAL_PARAMETER_LIST :
             if (Node_p->Children.size == 1) {
-                if (Nh_ECMAScript_hasInitializer(Node_p->Children.handles_pp[0])) {NH_ECMASCRIPT_END(0)}
+                if (Nh_ECMAScript_hasInitializer(Node_p->Children.pp[0])) {NH_ECMASCRIPT_END(0)}
                 NH_ECMASCRIPT_END(1)
             }
             else {
-                int count = Nh_ECMAScript_getExpectedArgumentCount(Node_p->Children.handles_pp[0]);
-                if (Nh_ECMAScript_hasInitializer(Node_p->Children.handles_pp[0]) || Nh_ECMAScript_hasInitializer(Node_p->Children.handles_pp[1])) {
+                int count = Nh_ECMAScript_getExpectedArgumentCount(Node_p->Children.pp[0]);
+                if (Nh_ECMAScript_hasInitializer(Node_p->Children.pp[0]) || Nh_ECMAScript_hasInitializer(Node_p->Children.pp[1])) {
                     NH_ECMASCRIPT_END(count)
                 }
                 NH_ECMASCRIPT_END(count + 1)

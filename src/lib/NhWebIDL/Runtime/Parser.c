@@ -3318,7 +3318,7 @@ static void Nh_WebIDL_unparseParseNode(
 NH_WEBIDL_BEGIN()
 
     for (int i = 0; i < Node_p->Children.size; ++i) {
-        Nh_WebIDL_unparseParseNode(Node_p->Children.handles_pp[i]);
+        Nh_WebIDL_unparseParseNode(Node_p->Children.pp[i]);
     }
 
     Nh_freeList(&Node_p->Children, NH_FALSE);

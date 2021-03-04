@@ -17,14 +17,6 @@
  *  @{
  */
 
-    Nh_WebIDL_Result Nh_DOM_NodeList_append(
-        Nh_WebIDL_Object *This_p, Nh_List Arguments
-    );
-
-    Nh_WebIDL_Result Nh_DOM_NodeList_remove(
-        Nh_WebIDL_Object *This_p, Nh_List Arguments
-    );
-
     Nh_WebIDL_Result Nh_DOM_NodeList_item(
         Nh_WebIDL_Object *This_p, Nh_List Arguments
     );

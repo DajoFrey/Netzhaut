@@ -70,7 +70,7 @@ static NH_BYTE *_Nh_processCategory(
         _Nh_getLogMessageCategory(message_p, category_p);
 
         for (int i = 0; i < Node_p->Children.size; ++i) {
-            Nh_LoggerNode *Child_p = Node_p->Children.handles_pp[i];
+            Nh_LoggerNode *Child_p = Node_p->Children.pp[i];
             if (!strcmp(Child_p->category_p, category_p)) {Next_p = Child_p; break;}
         }
 
@@ -145,8 +145,8 @@ static NH_RESULT _Nh_handlePayload(
     for (int i = 0; i < payloadLength; ++i) {payload_p[i] = message_p[i];}
 
     if (Options.replace >= 0 && Node_p->Messages.size > Options.replace) {
-        Nh_free(Node_p->Messages.handles_pp[Options.replace]);
-        Node_p->Messages.handles_pp[Options.replace] = payload_p;
+        Nh_free(Node_p->Messages.pp[Options.replace]);
+        Node_p->Messages.pp[Options.replace] = payload_p;
     }
     else {Nh_appendToList(&Node_p->Messages, payload_p);}
 

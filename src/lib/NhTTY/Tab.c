@@ -73,7 +73,7 @@ NH_TTY_BEGIN()
 
     for (int i = 0; i < Tiles.size; ++i) 
     {
-        Nh_TTY_Tile *Tile_p = Tiles.handles_pp[i];
+        Nh_TTY_Tile *Tile_p = Tiles.pp[i];
         NH_TTY_CHECK(Nh_TTY_updateTile(Tile_p))
 
         if (Tile_p->refresh) {
@@ -117,7 +117,7 @@ NH_TTY_BEGIN()
 //    Nh_List Tiles = Nh_TTY_getTiles(Tab_p->RootTile_p);
 //
 //    for (int i = 0; i < Tiles.size; ++i) {
-//        if (Nh_TTY_programBusy(((Nh_TTY_Tile*)Tiles.handles_pp[i])->Console.Programs_p)) {
+//        if (Nh_TTY_programBusy(((Nh_TTY_Tile*)Tiles.pp[i])->Console.Programs_p)) {
 //            busy = NH_TRUE;
 //            break;
 //        }
@@ -149,7 +149,7 @@ NH_TTY_BEGIN()
 
     for (int i = 0; i < Tiles.size; ++i)
     {
-        Nh_TTY_Tile *Tile_p = Tiles.handles_pp[i];
+        Nh_TTY_Tile *Tile_p = Tiles.pp[i];
 
         if (Tile_p != Tab_p->Tile_p)
         {
@@ -187,7 +187,7 @@ NH_TTY_BEGIN()
 
     for (int i = 0; i < Tiles.size; ++i) 
     {
-        Nh_TTY_Tile *Tile_p = Tiles.handles_pp[i];
+        Nh_TTY_Tile *Tile_p = Tiles.pp[i];
         NH_TTY_CHECK(Nh_TTY_setMessage(&Tile_p->Console, NULL, 0))
         Tile_p->refresh = NH_TRUE;
     }

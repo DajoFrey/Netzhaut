@@ -25,7 +25,7 @@
         int chunkSize;   
         int chunkCount;
         int size;
-        void **handles_pp;
+        void **pp;
     } Nh_List;
 
 /** @} */

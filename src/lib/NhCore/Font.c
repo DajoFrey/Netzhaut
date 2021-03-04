@@ -62,7 +62,7 @@ void Nh_destroyFontManager()
 NH_BEGIN()
 
     for (int i = 0; i < FontManager.Fonts.size; ++i) {
-        Nh_Font *Font_p = FontManager.Fonts.handles_pp[i];
+        Nh_Font *Font_p = FontManager.Fonts.pp[i];
         Nh_freeURI(&Font_p->URI);
         Nh_free(Font_p->familyName_p);
         Nh_free(Font_p->styleName_p);
@@ -71,7 +71,7 @@ NH_BEGIN()
     }
 
     for (int i = 0; i < FontManager.Prototypes.size; ++i) {
-        Nh_Font *Prototype_p = FontManager.Prototypes.handles_pp[i];
+        Nh_Font *Prototype_p = FontManager.Prototypes.pp[i];
         Nh_free(Prototype_p->familyName_p);
         Nh_free(Prototype_p->styleName_p);
     }
@@ -316,7 +316,7 @@ NH_BEGIN()
 
     for (int i = 0; i < FontManager.Fonts.size; ++i) 
     {
-        Nh_Font *Font_p = FontManager.Fonts.handles_pp[i];
+        Nh_Font *Font_p = FontManager.Fonts.pp[i];
        
         if (!strcmp(Font_p->familyName_p, Prototype_p->familyName_p)
         &&  !strcmp(Font_p->styleName_p,  Prototype_p->styleName_p ))
@@ -335,7 +335,7 @@ NH_BEGIN()
 
     for (int i = 0; i < FontManager.Fonts.size; ++i) 
     {
-        Nh_Font *Font_p = FontManager.Fonts.handles_pp[i];
+        Nh_Font *Font_p = FontManager.Fonts.pp[i];
         if (!strcmp(Font_p->familyName_p, familyName_p)) {NH_END(Font_p)}
     }
 
@@ -349,7 +349,7 @@ NH_BEGIN()
 
     for (int i = 0; i < FontManager.Fonts.size; ++i) 
     {
-        Nh_Font *Font_p = FontManager.Fonts.handles_pp[i];
+        Nh_Font *Font_p = FontManager.Fonts.pp[i];
         if (!strcmp(Font_p->styleName_p, styleName_p)) {NH_END(Font_p)}
     }
 
@@ -363,7 +363,7 @@ NH_BEGIN()
 
     for (int i = 0; i < FontManager.Fonts.size; ++i) 
     {
-        Nh_Font *Font_p = FontManager.Fonts.handles_pp[i];
+        Nh_Font *Font_p = FontManager.Fonts.pp[i];
         if (Nh_equivalentURI(URI_p, &Font_p->URI)) {NH_END(Font_p)}
     }
 
@@ -378,7 +378,7 @@ NH_BEGIN()
     {
         for (int i = 0; i < FontManager.Prototypes.size; ++i) 
         {
-            Nh_Font *Prototype_p = FontManager.Prototypes.handles_pp[i];
+            Nh_Font *Prototype_p = FontManager.Prototypes.pp[i];
             Nh_Font *Font_p = Nh_getFontFromPrototype(Prototype_p); 
             if (Font_p != NULL) {
                 FontManager.Default_p = Font_p;

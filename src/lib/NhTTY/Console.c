@@ -289,7 +289,7 @@ NH_TTY_BEGIN()
     Nh_List Matches = Nh_initList(16);
 
     for (int name = 0; name < Prototypes_p->size; ++name) {
-        Nh_UnicodeString *Name_p = &((Nh_TTY_ProgramPrototype*)Prototypes_p->handles_pp[name])->Name;
+        Nh_UnicodeString *Name_p = &((Nh_TTY_ProgramPrototype*)Prototypes_p->pp[name])->Name;
         if (index < Name_p->length) {
             if (((NH_UNICODE_CODEPOINT*)Name_p->bytes_p)[index] == codepoint) {
                 Nh_appendToList(&Matches, Name_p); 
@@ -309,7 +309,7 @@ NH_TTY_BEGIN()
 
     int index = -1;
     for (int i = 0; i < Prototypes_p->size; ++i) {
-        if (&((Nh_TTY_ProgramPrototype*)Prototypes_p->handles_pp[i])->Name == Name_p) {
+        if (&((Nh_TTY_ProgramPrototype*)Prototypes_p->pp[i])->Name == Name_p) {
             index = i;
             break;
         }
@@ -343,7 +343,7 @@ NH_TTY_BEGIN()
         NH_TTY_END(NH_TTY_SUCCESS)
     } 
     if (Matches.size == 1) {
-        NH_TTY_CHECK(Nh_TTY_switchProgram(Console_p, Prototypes_p, Matches.handles_pp[0]))
+        NH_TTY_CHECK(Nh_TTY_switchProgram(Console_p, Prototypes_p, Matches.pp[0]))
         Nh_freeList(&Matches, NH_FALSE);
         NH_TTY_END(NH_TTY_SUCCESS)  
     }
@@ -359,7 +359,7 @@ NH_TTY_BEGIN()
     }
 
     if (Matches.size == 1) {
-        NH_TTY_CHECK(Nh_TTY_switchProgram(Console_p, Prototypes_p, Matches.handles_pp[0]))
+        NH_TTY_CHECK(Nh_TTY_switchProgram(Console_p, Prototypes_p, Matches.pp[0]))
     }
 
     Nh_freeList(&Matches, NH_FALSE);

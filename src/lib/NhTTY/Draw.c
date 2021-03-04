@@ -126,7 +126,7 @@ NH_TTY_BEGIN()
         while (col < Terminal_p->screenCols) {
             for (int tile = 0; tile < Tiles.size; ++tile)
             {
-                Nh_TTY_Tile *Tile_p = Tiles.handles_pp[tile];
+                Nh_TTY_Tile *Tile_p = Tiles.pp[tile];
                 if (Tile_p->Children.count > 0) {continue;}
 
                 Tile_p->refresh = NH_FALSE;

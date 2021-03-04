@@ -32,7 +32,7 @@ NH_BEGIN()
     List.chunkSize  = chunkSize;
     List.chunkCount = 0;
     List.size       = 0;
-    List.handles_pp = NULL;
+    List.pp = NULL;
 
 NH_END(List)
 }
@@ -42,18 +42,18 @@ NH_RESULT _Nh_appendToList(
 {
     if (List_p->size >= List_p->chunkSize * List_p->chunkCount) 
     {
-        if (List_p->handles_pp == NULL) {
-            List_p->handles_pp = Nh_allocate(sizeof(void*) * List_p->chunkSize);
-            if (List_p->handles_pp == NULL) {return NH_ERROR_BAD_STATE;}
+        if (List_p->pp == NULL) {
+            List_p->pp = Nh_allocate(sizeof(void*) * List_p->chunkSize);
+            if (List_p->pp == NULL) {return NH_ERROR_BAD_STATE;}
         }
         else {
-            List_p->handles_pp = realloc(List_p->handles_pp, sizeof(void*) * List_p->chunkSize * (List_p->chunkCount + 1));
-            if (List_p->handles_pp == NULL) {return NH_ERROR_BAD_STATE;}
+            List_p->pp = realloc(List_p->pp, sizeof(void*) * List_p->chunkSize * (List_p->chunkCount + 1));
+            if (List_p->pp == NULL) {return NH_ERROR_BAD_STATE;}
         }
         List_p->chunkCount++;
     }
 
-    List_p->handles_pp[List_p->size] = handle_p;
+    List_p->pp[List_p->size] = handle_p;
     List_p->size++;
 
     return NH_SUCCESS;
@@ -72,7 +72,7 @@ NH_RESULT Nh_appendItemsToList(
 NH_BEGIN()
 
     for (int i = 0; i < Append_p->size; ++i) {
-        NH_CHECK(Nh_appendToList(List_p, Append_p->handles_pp[i]))
+        NH_CHECK(Nh_appendToList(List_p, Append_p->pp[i]))
     }
 
 NH_DIAGNOSTIC_END(NH_SUCCESS)
@@ -91,13 +91,13 @@ NH_BEGIN()
     }
     if (index < 0) {index = 0;}
 
-    NH_CHECK(Nh_appendToList(List_p, List_p->handles_pp[List_p->size - 1]))
+    NH_CHECK(Nh_appendToList(List_p, List_p->pp[List_p->size - 1]))
 
     for (int i = List_p->size - 1; i > index; --i) {
-        List_p->handles_pp[i] = List_p->handles_pp[i - 1];
+        List_p->pp[i] = List_p->pp[i - 1];
     }
 
-    List_p->handles_pp[index] = handle_p;
+    List_p->pp[index] = handle_p;
 
 NH_DIAGNOSTIC_END(NH_SUCCESS)
 }
@@ -118,7 +118,7 @@ NH_BEGIN()
         NH_END(NULL)
     }
 
-NH_END(List_p->handles_pp[index])
+NH_END(List_p->pp[index])
 }
 
 void _Nh_freeList(
@@ -128,14 +128,14 @@ NH_BEGIN()
 
     if (freeHandles) {
         for (int i = 0; i < List_p->size; ++i) {
-            _Nh_free(List_p->handles_pp[i]);
+            _Nh_free(List_p->pp[i]);
         }
     }
-    _Nh_free(List_p->handles_pp);
+    _Nh_free(List_p->pp);
 
     List_p->chunkCount = 0;
     List_p->size       = 0;
-    List_p->handles_pp = NULL;
+    List_p->pp = NULL;
 
 NH_SILENT_END()
 }
@@ -157,23 +157,23 @@ NH_RESULT _Nh_removeFromList(
     if (index >= List_p->size) {index = List_p->size - 1;}
 
     if (freeHandle) {
-        _Nh_free(List_p->handles_pp[index]);
+        _Nh_free(List_p->pp[index]);
     }
 
     for (int i = index; i < List_p->size - 1; ++i) {
-        List_p->handles_pp[i] = List_p->handles_pp[i + 1];
+        List_p->pp[i] = List_p->pp[i + 1];
     }
 
     List_p->size--;
 
     if (List_p->size == 0) {
-        Nh_free(List_p->handles_pp);
-        List_p->handles_pp = NULL;
+        Nh_free(List_p->pp);
+        List_p->pp = NULL;
         List_p->chunkCount = 0;
     }
     else if (List_p->size == List_p->chunkSize * (List_p->chunkCount - 1)) {
-        List_p->handles_pp = realloc(List_p->handles_pp, sizeof(void*) * List_p->size);
-        if (List_p->handles_pp == NULL) {return NH_ERROR_BAD_STATE;}
+        List_p->pp = realloc(List_p->pp, sizeof(void*) * List_p->size);
+        if (List_p->pp == NULL) {return NH_ERROR_BAD_STATE;}
         List_p->chunkCount--;
     }
 
@@ -194,7 +194,7 @@ NH_BEGIN()
 
     int index = -1;
     for (int i = 0; i < List_p->size; ++i) {
-        if (List_p->handles_pp[i] == handle_p) {index = i; break;}
+        if (List_p->pp[i] == handle_p) {index = i; break;}
     }
 
     if (index > -1) {
