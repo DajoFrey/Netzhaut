@@ -1,0 +1,4 @@
+[Exposed=Window]
+class DocumentFragment : Node {
+  constructor();
+};

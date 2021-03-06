@@ -42,8 +42,9 @@ static NH_BOOL LIBRARY_IO         = NH_FALSE;
 static NH_BOOL LIBRARY_TTY        = NH_FALSE;
 static NH_BOOL LIBRARY_NETWORK    = NH_FALSE;
 static NH_BOOL LIBRARY_HTML       = NH_FALSE;
+static NH_BOOL LIBRARY_DOM        = NH_FALSE;
 static NH_BOOL LIBRARY_ECMASCRIPT = NH_FALSE;
-static NH_BOOL LIBRARY_WEBIDL     = NH_FALSE;
+static NH_BOOL LIBRARY_WEB     = NH_FALSE;
 
 // bins
 static NH_BOOL BUILD_A_BINARY     = NH_FALSE;
@@ -97,7 +98,7 @@ NH_INSTALLER_BEGIN()
                     LIBRARY_NETWORK    = NH_TRUE;
                     LIBRARY_ECMASCRIPT = NH_TRUE;
                     LIBRARY_HTML       = NH_TRUE;
-                    LIBRARY_WEBIDL     = NH_TRUE;
+                    LIBRARY_WEB     = NH_TRUE;
                 }
             }
             if (strstr(argv_pp[i], "b")) {
@@ -160,7 +161,8 @@ NH_INSTALLER_BEGIN()
             &&  strcmp(argv_pp[i], "tty")
             &&  strcmp(argv_pp[i], "network")
             &&  strcmp(argv_pp[i], "html")
-            &&  strcmp(argv_pp[i], "webidl")
+            &&  strcmp(argv_pp[i], "dom")
+            &&  strcmp(argv_pp[i], "web")
             &&  strcmp(argv_pp[i], "ecmascript")) {
                 Nh_Installer_noticef("Invalid option \"%s\"", argv_pp[i]);
                 NH_INSTALLER_END(NH_INSTALLER_ERROR_INVALID_OPTION)
@@ -175,8 +177,9 @@ NH_INSTALLER_BEGIN()
             LIBRARY_TTY        = !strcmp(argv_pp[i], "tty") || LIBRARY_TTY;
             LIBRARY_ECMASCRIPT = !strcmp(argv_pp[i], "ecmascript") || LIBRARY_ECMASCRIPT;
             LIBRARY_HTML       = !strcmp(argv_pp[i], "html") || LIBRARY_HTML;
+            LIBRARY_DOM        = !strcmp(argv_pp[i], "dom") || LIBRARY_DOM;
             LIBRARY_NETWORK    = !strcmp(argv_pp[i], "network") || LIBRARY_NETWORK;
-            LIBRARY_WEBIDL     = !strcmp(argv_pp[i], "webidl") || LIBRARY_WEBIDL;
+            LIBRARY_WEB     = !strcmp(argv_pp[i], "web") || LIBRARY_WEB;
         }
         if (libs && negate) {
             LIBRARY_NETZHAUT   = strcmp(argv_pp[i], "netzhaut") && LIBRARY_NETZHAUT;
@@ -186,8 +189,9 @@ NH_INSTALLER_BEGIN()
             LIBRARY_TTY        = strcmp(argv_pp[i], "tty") && LIBRARY_TTY;
             LIBRARY_ECMASCRIPT = strcmp(argv_pp[i], "ecmascript") && LIBRARY_ECMASCRIPT;
             LIBRARY_HTML       = strcmp(argv_pp[i], "html") && LIBRARY_HTML;
+            LIBRARY_DOM        = strcmp(argv_pp[i], "dom") && LIBRARY_DOM;
             LIBRARY_NETWORK    = strcmp(argv_pp[i], "network") && LIBRARY_NETWORK;
-            LIBRARY_WEBIDL     = strcmp(argv_pp[i], "webidl") && LIBRARY_WEBIDL;
+            LIBRARY_WEB     = strcmp(argv_pp[i], "web") && LIBRARY_WEB;
         }
 
         if (bins)
@@ -216,7 +220,7 @@ NH_INSTALLER_BEGIN()
     if (!RUN) {NH_INSTALLER_QUIET = NH_TRUE;}
 
     BUILD_A_LIBRARY = 
-        LIBRARY_NETZHAUT || LIBRARY_LOADER || LIBRARY_CORE || LIBRARY_IO || LIBRARY_TTY || LIBRARY_NETWORK || LIBRARY_ECMASCRIPT || LIBRARY_HTML || LIBRARY_WEBIDL;
+        LIBRARY_NETZHAUT || LIBRARY_LOADER || LIBRARY_CORE || LIBRARY_IO || LIBRARY_TTY || LIBRARY_NETWORK || LIBRARY_ECMASCRIPT || LIBRARY_HTML || LIBRARY_DOM || LIBRARY_WEB;
 
     if (!BUILD_A_LIBRARY && BUILD_ALL_LIBRARIES) {
         LIBRARY_NETZHAUT   = NH_TRUE;
@@ -226,8 +230,9 @@ NH_INSTALLER_BEGIN()
         LIBRARY_TTY        = NH_TRUE;
         LIBRARY_NETWORK    = NH_TRUE;
         LIBRARY_HTML       = NH_TRUE;
+        LIBRARY_DOM        = NH_TRUE;
         LIBRARY_ECMASCRIPT = NH_TRUE;
-        LIBRARY_WEBIDL     = NH_TRUE;
+        LIBRARY_WEB     = NH_TRUE;
         BUILD_A_LIBRARY = NH_TRUE;
     }
 
@@ -291,8 +296,11 @@ NH_INSTALLER_BEGIN()
     if (LIBRARY_HTML) {
         NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhHTML", INSTALL_ALL_LIBRARIES))
     }
-    if (LIBRARY_WEBIDL) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhWebIDL", INSTALL_ALL_LIBRARIES))
+    if (LIBRARY_DOM) {
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhDOM", INSTALL_ALL_LIBRARIES))
+    }
+    if (LIBRARY_WEB) {
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhWeb", INSTALL_ALL_LIBRARIES))
     }
 
     if (INSTALL_ALL_LIBRARIES) {

@@ -9,6 +9,8 @@
  * Published under LGPLv3
  */
 
+#include "Tokenizer.h"
+
 #endif
 
 /** @addtogroup NhHTMLEnums
@@ -104,6 +106,9 @@
         NH_HTML_INSERTION_MODE originalInsertionMode;
         NH_BOOL scriptingEnabled;
         NH_BOOL framesetOk;
+        Nh_HTML_Token *Token_p;
+        Nh_Stack OpenElements;
+        Nh_Web_CompositeObject *Document_p;
     } Nh_HTML_Parser;
 
 /** @} */
@@ -111,6 +116,10 @@
 /** @addtogroup NhHTMLFunctions
  *  @{
  */
+
+    NH_HTML_RESULT Nh_HTML_parseDocument(
+        Nh_UnicodeString Codepoints, Nh_Web_CompositeObject *Document_p
+    );
 
 /** @} */
 

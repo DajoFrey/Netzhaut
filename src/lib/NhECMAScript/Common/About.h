@@ -12,7 +12,7 @@
 #endif
 
 /** @defgroup NhECMAScript
- *  @brief The NhECMAScript library implements the ECMA-262 engine.
+ *  @brief The NhECMAScript library implements the ECMAScript Language Specification (ECMA-262).
  */
 
 /** @defgroup NhECMAScriptChangelog Changelog

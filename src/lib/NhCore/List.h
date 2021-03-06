@@ -14,22 +14,6 @@
 
 #endif
 
-/** @addtogroup NhCoreStructs
- *  @{
- */
-
-    /**
-     * Dynamic list implementation using a two dimensional array. 
-     */
-    typedef struct Nh_List {
-        int chunkSize;   
-        int chunkCount;
-        int size;
-        void **pp;
-    } Nh_List;
-
-/** @} */
-
 /** @addtogroup NhCoreFunctions
  *  @{
  */

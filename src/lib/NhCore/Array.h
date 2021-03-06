@@ -10,7 +10,6 @@
  */
 
 #include "Common/API.h"
-#include "Common/API.h"
 #include "Common/Result.h"
 
 #endif

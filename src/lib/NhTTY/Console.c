@@ -15,6 +15,7 @@
 #include "Terminal.h"
 #include "Shell.h"
 
+#include "../NhLoader/Loader.h"
 #include "../NhCore/Memory.h"
 #include "../NhCore/Common/Macro.h"
 #include NH_FLOW
@@ -398,6 +399,19 @@ NH_TTY_BEGIN()
 NH_TTY_DIAGNOSTIC_END(NH_TTY_SUCCESS)
 }
 
+// NETZHAUT COMMAND ================================================================================
+
+static NH_TTY_RESULT Nh_TTY_handleNetzhautCommand(
+    Nh_TTY_Console *Console_p, NH_UNICODE_CODEPOINT c)
+{
+NH_TTY_BEGIN()
+
+    NH_LOADER.load_f("NhWeb", 0);
+    NH_TTY_CHECK(Nh_TTY_handleCurrentTileInput(NH_TTY_CONSOLE_KEY))
+
+NH_TTY_DIAGNOSTIC_END(NH_TTY_SUCCESS)
+}
+
 // INPUT ===========================================================================================
 
 NH_TTY_RESULT Nh_TTY_handleFirstCodepoint(
@@ -430,6 +444,16 @@ NH_TTY_BEGIN()
             Nh_TTY_ProgramPrototype *Prototype_p = Nh_TTY_getCurrentProgram(Console_p)->Prototype_p;
             NH_TTY_CHECK(Nh_TTY_appendToLastConsoleLine(Console_p, &c, 1))
             NH_TTY_CHECK(Nh_TTY_appendToLastConsoleLine(Console_p, (NH_UNICODE_CODEPOINT*)Prototype_p->Name.bytes_p, Prototype_p->Name.length))
+            NH_UNICODE_CODEPOINT whitespace = 32;
+            NH_TTY_CHECK(Nh_TTY_appendToLastConsoleLine(Console_p, &whitespace, 1))
+            break;
+        }
+
+        case 33:
+        {
+            NH_UNICODE_CODEPOINT codepoints_p[] = {110, 101, 116, 122, 104, 97, 117, 116};
+            NH_TTY_CHECK(Nh_TTY_appendToLastConsoleLine(Console_p, &c, 1))
+            NH_TTY_CHECK(Nh_TTY_appendToLastConsoleLine(Console_p, codepoints_p, 8))
             NH_UNICODE_CODEPOINT whitespace = 32;
             NH_TTY_CHECK(Nh_TTY_appendToLastConsoleLine(Console_p, &whitespace, 1))
             break;
@@ -471,6 +495,9 @@ NH_TTY_BEGIN()
     }
     else if (Nh_TTY_getLastConsoleLine(Console_p)->bytes_p[0] == 64) {
         NH_TTY_CHECK(Nh_TTY_handleProgramCommand(Console_p, c))
+    }
+    else if (Nh_TTY_getLastConsoleLine(Console_p)->bytes_p[0] == 33) {
+        NH_TTY_CHECK(Nh_TTY_handleNetzhautCommand(Console_p, c))
     }
     else if (c != '\n' && c != '\r') {
         NH_TTY_CHECK(Nh_TTY_handleProgramSwitchCommand(Console_p, c))

@@ -259,7 +259,7 @@ NH_TTY_BEGIN()
     else if (codepoint == 'w') {
         Nh_TTY_File *File_p = Nh_getFromLinkedList(&Editor_p->FileEditor.Files, Editor_p->FileEditor.current);
         if (File_p != NULL) {
-            NH_TTY_CHECK(Nh_TTY_parseWebIDLTextFile(logName_p, File_p->handle_p))
+            NH_TTY_CHECK(Nh_TTY_parseWebTextFile(logName_p, File_p->handle_p))
         }
     }
 

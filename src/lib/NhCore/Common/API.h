@@ -108,6 +108,20 @@
         char nullbyte;
     } Nh_Array;
 
+    /**
+     * Dynamic list implementation using a two dimensional array. 
+     */
+    typedef struct Nh_List {
+        int chunkSize;   
+        int chunkCount;
+        int size;
+        void **pp;
+    } Nh_List;
+
+    typedef struct Nh_BigInt {
+        int TODO;   
+    } Nh_BigInt;
+
     typedef struct Nh_PixelPosition {
         NH_PIXEL x;
         NH_PIXEL y;

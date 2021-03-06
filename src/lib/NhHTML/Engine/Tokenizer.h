@@ -115,23 +115,22 @@
 
     typedef struct Nh_HTML_DOCTYPEToken {
         NH_HTML_TOKEN type;
-        NH_UNICODE_CODEPOINT *name_p;
-        NH_UNICODE_CODEPOINT *publicIdentifier_p;
-        NH_UNICODE_CODEPOINT *systemIdentifier_p;
+        Nh_Web_DOMString Name;
+        Nh_Web_DOMString PublicIdentifier;
+        Nh_Web_DOMString SystemIdentifier;
         NH_BOOL forceQuirks;
     } Nh_HTML_DOCTYPEToken;
 
     typedef struct Nh_HTML_StartOrEndTagToken {
         NH_HTML_TOKEN type;
-        NH_UNICODE_CODEPOINT *tagName_p;
+        Nh_Web_DOMString TagName;
         NH_BOOL selfClosing;
         Nh_Array Attributes;
     } Nh_HTML_StartOrEndTagToken;
 
     typedef struct Nh_HTML_CommentOrCharacterToken {
         NH_HTML_TOKEN type;
-        NH_UNICODE_CODEPOINT *data_p;
-        unsigned int length;
+        Nh_Web_DOMString Data;
     } Nh_HTML_CommentOrCharacterToken;
 
     typedef union Nh_HTML_Token {

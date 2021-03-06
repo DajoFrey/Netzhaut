@@ -12,7 +12,8 @@
 #endif
 
 /** @defgroup NhDOM
- *  @brief The NhDOM library implements the ECMA-262 engine.
+ *  @brief The NhDOM library implements the DOM standard. 
+ *  DOM defines a platform-neutral model for events, aborting activities, and node trees.
  */
 
 /** @defgroup NhDOMChangelog Changelog

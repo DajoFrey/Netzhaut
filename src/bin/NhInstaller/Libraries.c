@@ -14,7 +14,7 @@
 #include "Message.h"
 #include "Unicode.h"
 #include "Main.h"
-#include "WebIDL.h"
+#include "Web.h"
 
 #include "Common/Macro.h"
 
@@ -26,7 +26,8 @@
 #include "../../lib/NhCore/Common/About.h"
 #include "../../lib/NhTTY/Common/About.h"
 #include "../../lib/NhHTML/Common/About.h"
-#include "../../lib/NhWebIDL/Common/About.h"
+#include "../../lib/NhDOM/Common/About.h"
+#include "../../lib/NhWeb/Common/About.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -346,9 +347,9 @@ NH_INSTALLER_BEGIN()
 NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
 }
 
-// BUILD NH_WEBIDL =================================================================================
+// BUILD NH_HTML ===================================================================================
 
-static NH_INSTALLER_RESULT Nh_Installer_buildNhWebIDL(
+static NH_INSTALLER_RESULT Nh_Installer_buildNhDOM(
     NH_BYTE *wrkDir_p, NH_BYTE *projDir_p, NH_BOOL install)
 {
 NH_INSTALLER_BEGIN()
@@ -356,20 +357,46 @@ NH_INSTALLER_BEGIN()
     NH_BYTE extra_p[1024] = {'\0'};
 
     NH_BYTE objPath_p[2048] = {'\0'};
-    sprintf(objPath_p, "%s%s", projDir_p, "/lib/OBJECTS/WEBIDL");
+    sprintf(objPath_p, "%s%s", projDir_p, "/lib/OBJECTS/DOM");
 
-    chdir(projDir_p);
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_processWebIDLSpecs())
-    chdir(wrkDir_p);
-
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_createObjectsDir(wrkDir_p, projDir_p, "NhWebIDL"))
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_createObjectsDir(wrkDir_p, projDir_p, "NhDOM"))
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_LIBRARY, Nh_Installer_createLibrary(
-        wrkDir_p, objPath_p, extra_p, "NhWebIDL", NH_WEBIDL_MAJOR_VERSION, NH_WEBIDL_MINOR_VERSION, NH_WEBIDL_PATCH_VERSION
+        wrkDir_p, objPath_p, extra_p, "NhDOM", NH_DOM_MAJOR_VERSION, NH_DOM_MINOR_VERSION, NH_DOM_PATCH_VERSION
     ))
 
     if (install) {
         NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_installLibrary(
-            "NhWebIDL", NH_WEBIDL_MAJOR_VERSION, NH_WEBIDL_MINOR_VERSION, NH_WEBIDL_PATCH_VERSION
+            "NhDOM", NH_DOM_MAJOR_VERSION, NH_DOM_MINOR_VERSION, NH_DOM_PATCH_VERSION
+        ))
+    }
+
+NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
+}
+
+// BUILD NH_WEB =================================================================================
+
+static NH_INSTALLER_RESULT Nh_Installer_buildNhWeb(
+    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p, NH_BOOL install)
+{
+NH_INSTALLER_BEGIN()
+
+    NH_BYTE extra_p[1024] = {'\0'};
+
+    NH_BYTE objPath_p[2048] = {'\0'};
+    sprintf(objPath_p, "%s%s", projDir_p, "/lib/OBJECTS/WEB");
+
+    chdir(projDir_p);
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_processWebSpecs())
+    chdir(wrkDir_p);
+
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_createObjectsDir(wrkDir_p, projDir_p, "NhWeb"))
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_LIBRARY, Nh_Installer_createLibrary(
+        wrkDir_p, objPath_p, extra_p, "NhWeb", NH_WEB_MAJOR_VERSION, NH_WEB_MINOR_VERSION, NH_WEB_PATCH_VERSION
+    ))
+
+    if (install) {
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_installLibrary(
+            "NhWeb", NH_WEB_MAJOR_VERSION, NH_WEB_MINOR_VERSION, NH_WEB_PATCH_VERSION
         ))
     }
 
@@ -590,14 +617,14 @@ NH_INSTALLER_BEGIN()
     else if (!strcmp(name_p, "NhIO")) {
         NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhIO(wrkDir_p, projDir_p, install))
     }
-    else if (!strcmp(name_p, "Netzhaut")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNetzhaut(wrkDir_p, projDir_p, install))
-    }
     else if (!strcmp(name_p, "NhTTY")) {
         NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhTTY(wrkDir_p, projDir_p, install))
     }
     else if (!strcmp(name_p, "NhHTML")) {
         NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhHTML(wrkDir_p, projDir_p, install))
+    }
+    else if (!strcmp(name_p, "NhDOM")) {
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhDOM(wrkDir_p, projDir_p, install))
     }
     else if (!strcmp(name_p, "NhNetwork")) {
         NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhNetwork(wrkDir_p, projDir_p, install))
@@ -605,8 +632,8 @@ NH_INSTALLER_BEGIN()
     else if (!strcmp(name_p, "NhECMAScript")) {
         NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhECMAScript(wrkDir_p, projDir_p, install))
     }
-    else if (!strcmp(name_p, "NhWebIDL")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhWebIDL(wrkDir_p, projDir_p, install))
+    else if (!strcmp(name_p, "NhWeb")) {
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhWeb(wrkDir_p, projDir_p, install))
     }
 
 NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)

@@ -59,7 +59,7 @@
         Nh_TTY_TextFile *TextFile_p
     );
 
-    NH_TTY_RESULT Nh_TTY_parseWebIDLTextFile(
+    NH_TTY_RESULT Nh_TTY_parseWebTextFile(
         NH_BYTE *name_p, Nh_TTY_TextFile *TextFile_p
     );
 

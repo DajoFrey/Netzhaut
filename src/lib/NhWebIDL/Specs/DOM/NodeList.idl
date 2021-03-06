@@ -1,8 +1,0 @@
-[Exposed=Window]
-interface NodeList {
-  private attribute * nodes;
-  private attribute unsigned long chunks;
-  getter Node? item(unsigned long index);
-  readonly attribute unsigned long length;
-  iterable<Node>;
-};
