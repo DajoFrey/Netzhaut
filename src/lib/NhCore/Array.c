@@ -34,13 +34,12 @@ NH_BEGIN()
     Array.allocatedLength = 0;
     Array.length = 0;
     Array.bytes_p = NULL;
-    Array.nullbyte = '\0';
 
 NH_END(Array)
 }
 
 NH_RESULT Nh_appendToArray(
-    Nh_Array *Array_p, void *bytes_p, int count)
+    Nh_Array *Array_p, void *bytes_p, unsigned long count)
 {
 NH_BEGIN()
 
@@ -52,11 +51,11 @@ NH_BEGIN()
     {
         if (Array_p->allocatedLength == 0) {
             Array_p->bytes_p = _Nh_allocate(Array_p->allocatedLengthPerChunk * Array_p->elementSize);
-            memset(Array_p->bytes_p, Array_p->nullbyte, Array_p->allocatedLengthPerChunk * Array_p->elementSize);
+            memset(Array_p->bytes_p, 0, Array_p->allocatedLengthPerChunk * Array_p->elementSize);
         }
         else {
             Array_p->bytes_p = realloc(Array_p->bytes_p, (Array_p->allocatedLength * Array_p->elementSize) + (Array_p->allocatedLengthPerChunk * Array_p->elementSize));
-            memset(Array_p->bytes_p + (Array_p->allocatedLength * Array_p->elementSize), Array_p->nullbyte, Array_p->allocatedLengthPerChunk * Array_p->elementSize);
+            memset(Array_p->bytes_p + (Array_p->allocatedLength * Array_p->elementSize), 0, Array_p->allocatedLengthPerChunk * Array_p->elementSize);
         }
 
         NH_CHECK_NULL(Array_p->bytes_p)
@@ -70,23 +69,21 @@ NH_DIAGNOSTIC_END(NH_SUCCESS)
 }
 
 void *_Nh_getFromArray(
-    Nh_Array *Array_p, int index)
+    Nh_Array *Array_p, unsigned long index)
 {
 #include NH_CUSTOM_CHECK
 
-    if (index < 0) {
-        index = Array_p->length;
-    }
+    if (index < 0) {index = 0;}
 
     while (Array_p->allocatedLength <= index) 
     {
         if (Array_p->allocatedLength == 0) {
             Array_p->bytes_p = _Nh_allocate(Array_p->elementSize * Array_p->allocatedLengthPerChunk);
-            memset(Array_p->bytes_p, Array_p->nullbyte, Array_p->allocatedLengthPerChunk * Array_p->elementSize);
+            memset(Array_p->bytes_p, 0, Array_p->allocatedLengthPerChunk * Array_p->elementSize);
         }
         else {
             Array_p->bytes_p = realloc(Array_p->bytes_p, (Array_p->allocatedLength * Array_p->elementSize) + (Array_p->allocatedLengthPerChunk * Array_p->elementSize));
-            memset(Array_p->bytes_p + (Array_p->allocatedLength * Array_p->elementSize), Array_p->nullbyte, Array_p->allocatedLengthPerChunk * Array_p->elementSize);
+            memset(Array_p->bytes_p + (Array_p->allocatedLength * Array_p->elementSize), 0, Array_p->allocatedLengthPerChunk * Array_p->elementSize);
         }
 
         NH_CHECK_NULL(NULL, Array_p->bytes_p)
@@ -98,6 +95,26 @@ void *_Nh_getFromArray(
     return Array_p->bytes_p + (index * Array_p->elementSize);
 
 #include NH_DEFAULT_CHECK
+}
+
+void *Nh_getFromArray(
+    Nh_Array *Array_p, unsigned long index)
+{
+NH_BEGIN()
+NH_END(_Nh_getFromArray(Array_p, index))
+}
+
+void *_Nh_incrementArray(
+    Nh_Array *Array_p)
+{
+    return _Nh_getFromArray(Array_p, Array_p->length);
+}
+
+void *Nh_incrementArray(
+    Nh_Array *Array_p)
+{
+NH_BEGIN()
+NH_END(_Nh_incrementArray(Array_p))
 }
 
 NH_RESULT Nh_removeTailFromArray(
@@ -178,13 +195,6 @@ NH_BEGIN()
     }
 
 NH_DIAGNOSTIC_END(NH_SUCCESS)
-}
-
-void *Nh_getFromArray(
-    Nh_Array *Array_p, int index)
-{
-NH_BEGIN()
-NH_END(_Nh_getFromArray(Array_p, index))
 }
 
 void _Nh_freeArray(

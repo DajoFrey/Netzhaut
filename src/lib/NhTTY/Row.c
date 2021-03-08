@@ -46,7 +46,7 @@ NH_TTY_RESULT Nh_TTY_addRow(
 {
 NH_TTY_BEGIN()
 
-    Nh_TTY_Row *Row_p = Nh_getFromArray(&Output_p->Rows, -1);
+    Nh_TTY_Row *Row_p = Nh_incrementArray(&Output_p->Rows);
     NH_TTY_CHECK_NULL(Row_p)
 
     Row_p->flags = 0;

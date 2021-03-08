@@ -44,7 +44,7 @@ NH_TTY_BEGIN()
 
     if (Console_p->block) {NH_TTY_DIAGNOSTIC_END(NH_TTY_ERROR_BAD_STATE)}
 
-    Nh_UnicodeString *NewLine_p = Nh_getFromArray(&Console_p->History, -1); 
+    Nh_UnicodeString *NewLine_p = Nh_incrementArray(&Console_p->History); 
     NH_TTY_CHECK_MEM(NewLine_p)
     *NewLine_p = Nh_initUnicodeString(32);
 
@@ -146,7 +146,7 @@ NH_TTY_BEGIN()
 
     NH_BOOL equal = length == Line_p->length;
     for (int i = 0; equal && i < Line_p->length; ++i) {
-        if (((NH_UNICODE_CODEPOINT*)Line_p->bytes_p)[i] != codepoints_p[i]) {equal = NH_FALSE;}
+        if (Line_p->p[i] != codepoints_p[i]) {equal = NH_FALSE;}
     }
 
 NH_TTY_END(equal)
@@ -225,7 +225,7 @@ NH_TTY_BEGIN()
     Nh_appendToUnicodeString(&Question, query_p, length);
     Nh_appendToUnicodeString(&Question, yesNo_p, yesNoLength);
 
-    NH_TTY_CHECK(Nh_TTY_setMessage(Console_p, (NH_UNICODE_CODEPOINT*)Question.bytes_p, Question.length))
+    NH_TTY_CHECK(Nh_TTY_setMessage(Console_p, Question.p, Question.length))
 
     Console_p->block = NH_TRUE;
     Console_p->args_p = args_p;
@@ -292,7 +292,7 @@ NH_TTY_BEGIN()
     for (int name = 0; name < Prototypes_p->size; ++name) {
         Nh_UnicodeString *Name_p = &((Nh_TTY_ProgramPrototype*)Prototypes_p->pp[name])->Name;
         if (index < Name_p->length) {
-            if (((NH_UNICODE_CODEPOINT*)Name_p->bytes_p)[index] == codepoint) {
+            if (Name_p->p[index] == codepoint) {
                 Nh_appendToList(&Matches, Name_p); 
             }
         }
@@ -319,7 +319,7 @@ NH_TTY_BEGIN()
     if (index > -1) {
         Console_p->currentProgram = index; 
         NH_TTY_CHECK(Nh_TTY_appendToConsole(Console_p, SWITCH_P, sizeof(SWITCH_P)/sizeof(SWITCH_P[0])))
-        NH_TTY_CHECK(Nh_TTY_appendToLastConsoleLine(Console_p, (NH_UNICODE_CODEPOINT*)Name_p->bytes_p, Name_p->length))
+        NH_TTY_CHECK(Nh_TTY_appendToLastConsoleLine(Console_p, Name_p->p, Name_p->length))
         NH_TTY_CHECK(Nh_TTY_handleCurrentTileInput(NH_TTY_CONSOLE_KEY))
         NH_TTY_DIAGNOSTIC_END(NH_TTY_SUCCESS)
     }
@@ -336,9 +336,7 @@ NH_TTY_BEGIN()
     Nh_UnicodeString *Line_p = Nh_TTY_getLastConsoleLine(Console_p);
 
     Nh_List *Prototypes_p = &Nh_TTY_getTerminal()->Prototypes;
-    Nh_List Matches = Nh_TTY_matchCodepoint(
-        Prototypes_p, 0, ((NH_UNICODE_CODEPOINT*)Line_p->bytes_p)[0]
-    );
+    Nh_List Matches = Nh_TTY_matchCodepoint(Prototypes_p, 0, Line_p->p[0]);
 
     if (Matches.size == 0) {
         NH_TTY_END(NH_TTY_SUCCESS)
@@ -351,7 +349,7 @@ NH_TTY_BEGIN()
 
     for (int index = 1; index < Line_p->length; ++index)
     {
-        Nh_List NewMatches = Nh_TTY_matchCodepoint(&Matches, index, ((NH_UNICODE_CODEPOINT*)Line_p->bytes_p)[index]);
+        Nh_List NewMatches = Nh_TTY_matchCodepoint(&Matches, index, Line_p->p[index]);
         if (Matches.size <= 1) {break;}
         else {
             Nh_freeList(&Matches, NH_FALSE);
@@ -381,7 +379,7 @@ NH_TTY_BEGIN()
 
     Nh_UnicodeString *CurrentConsoleLine_p = Nh_TTY_getLastConsoleLine(Console_p);
 
-    if (((NH_UNICODE_CODEPOINT*)CurrentConsoleLine_p->bytes_p)[0] != 64) {
+    if (CurrentConsoleLine_p->p[0] != 64) {
         NH_TTY_DIAGNOSTIC_END(NH_TTY_ERROR_BAD_STATE)
     }
 
@@ -443,7 +441,7 @@ NH_TTY_BEGIN()
         {
             Nh_TTY_ProgramPrototype *Prototype_p = Nh_TTY_getCurrentProgram(Console_p)->Prototype_p;
             NH_TTY_CHECK(Nh_TTY_appendToLastConsoleLine(Console_p, &c, 1))
-            NH_TTY_CHECK(Nh_TTY_appendToLastConsoleLine(Console_p, (NH_UNICODE_CODEPOINT*)Prototype_p->Name.bytes_p, Prototype_p->Name.length))
+            NH_TTY_CHECK(Nh_TTY_appendToLastConsoleLine(Console_p, Prototype_p->Name.p, Prototype_p->Name.length))
             NH_UNICODE_CODEPOINT whitespace = 32;
             NH_TTY_CHECK(Nh_TTY_appendToLastConsoleLine(Console_p, &whitespace, 1))
             break;
@@ -493,10 +491,10 @@ NH_TTY_BEGIN()
     if (Nh_TTY_getLastConsoleLine(Console_p)->length == 0) {
         NH_TTY_CHECK(Nh_TTY_handleFirstCodepoint(Console_p, c))
     }
-    else if (Nh_TTY_getLastConsoleLine(Console_p)->bytes_p[0] == 64) {
+    else if (Nh_TTY_getLastConsoleLine(Console_p)->p[0] == 64) {
         NH_TTY_CHECK(Nh_TTY_handleProgramCommand(Console_p, c))
     }
-    else if (Nh_TTY_getLastConsoleLine(Console_p)->bytes_p[0] == 33) {
+    else if (Nh_TTY_getLastConsoleLine(Console_p)->p[0] == 33) {
         NH_TTY_CHECK(Nh_TTY_handleNetzhautCommand(Console_p, c))
     }
     else if (c != '\n' && c != '\r') {
@@ -527,7 +525,7 @@ NH_TTY_BEGIN()
     }
     else {
         Nh_UnicodeString *Line_p = &((Nh_UnicodeString*)Console_p->History.bytes_p)[Console_p->History.length + row];
-        Nh_UTF8String UTF8 = Nh_encodeTextToUTF8((NH_UNICODE_CODEPOINT*)Line_p->bytes_p, Line_p->length);
+        Nh_UTF8String UTF8 = Nh_encodeTextToUTF8(Line_p->p, Line_p->length);
         Nh_appendToString(Row_p, UTF8.bytes_p, UTF8.length);
         for (int i = 0; i < cols - Line_p->length; ++i) {
             Nh_appendToString(Row_p, " ", 1); 

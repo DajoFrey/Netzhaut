@@ -35,8 +35,8 @@ NH_DOM_RESULT Nh_DOM_initializeDocument(
 {
 NH_DOM_BEGIN()
 
-    *((Nh_Web_DOMString*)MODE) = Nh_Web_initDOMString(32);
-    NH_WEB_CHECK(NH_DOM_ERROR_BAD_STATE, Nh_Web_appendToDOMString(MODE, "no-quirks", 9))
+//    *((Nh_Web_DOMString*)MODE) = Nh_Web_initDOMString(32);
+//    NH_WEB_CHECK(NH_DOM_ERROR_BAD_STATE, Nh_Web_appendToDOMString(MODE, "no-quirks", 9))
 
 NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)
 }

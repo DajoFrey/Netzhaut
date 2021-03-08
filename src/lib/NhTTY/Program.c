@@ -59,7 +59,7 @@ static NH_TTY_RESULT Nh_TTY_appendProgramInstance(
 {
 NH_TTY_BEGIN()
 
-    Nh_TTY_Program *Program_p = Nh_getFromArray(Programs_p, -1);
+    Nh_TTY_Program *Program_p = Nh_incrementArray(Programs_p);
     NH_TTY_CHECK_MEM(NH_TTY_ERROR_BAD_STATE, Program_p)
 
     Program_p->refresh     = NH_FALSE;

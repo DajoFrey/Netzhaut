@@ -71,7 +71,7 @@ NH_WEB_BEGIN()
     }
 
     if (!Specification_p) {
-        Specification_p = Nh_getFromArray(&NH_WEB_RUNTIME.Specifications, -1);
+        Specification_p = Nh_incrementArray(&NH_WEB_RUNTIME.Specifications);
         NH_WEB_CHECK_MEM(NULL, Specification_p)
         Specification_p->Fragments = Nh_initArray(sizeof(Nh_Web_Fragment), 64);
         strcpy(Specification_p->name_p, specification_p);
@@ -119,7 +119,7 @@ NH_WEB_BEGIN()
     Nh_Web_Specification *Specification_p = Nh_Web_getSpecification(specification_p);
     if (!Specification_p) {NH_WEB_DIAGNOSTIC_END(NH_WEB_ERROR_BAD_STATE)}
 
-    Nh_Web_Fragment *Fragment_p = Nh_getFromArray(&Specification_p->Fragments, -1);
+    Nh_Web_Fragment *Fragment_p = Nh_incrementArray(&Specification_p->Fragments);
     NH_WEB_CHECK_MEM(Fragment_p)
 
     Fragment_p->Specification_p = Specification_p;

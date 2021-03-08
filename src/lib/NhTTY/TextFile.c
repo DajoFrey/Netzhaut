@@ -77,16 +77,16 @@ NH_TTY_BEGIN()
 NH_TTY_END(buffer_p)
 }
 
-static Nh_Array *Nh_TTY_newLine(
+static Nh_UnicodeString *Nh_TTY_newLine(
     Nh_TTY_TextFile *TextFile_p, int index)
 {
 NH_TTY_BEGIN()
 
 #include NH_TTY_CUSTOM_CHECK
 
-    Nh_Array *New_p = Nh_allocate(sizeof(Nh_Array));
+    Nh_UnicodeString *New_p = Nh_allocate(sizeof(Nh_UnicodeString));
     NH_TTY_CHECK_MEM(NULL, New_p)
-    *New_p = Nh_initArray(sizeof(NH_UNICODE_CODEPOINT), 128);
+    *New_p = Nh_initUnicodeString(128);
     NH_CHECK(NULL, Nh_insertIntoList(&TextFile_p->Lines, New_p, index))
 
 #include NH_TTY_DEFAULT_CHECK
@@ -124,21 +124,21 @@ NH_TTY_BEGIN()
         NH_BYTE *bytes_p = Nh_TTY_readFile(path_p);
         NH_TTY_CHECK_MEM(NULL, bytes_p)
 
-        Nh_Array UnicodeCodepoints = Nh_decodeUTF8Text(bytes_p);
+        Nh_UnicodeString Codepoints = Nh_decodeUTF8Text(bytes_p);
 
-        for (unsigned long i = 0, lineStart = 0; i < UnicodeCodepoints.length; ++i) 
+        for (unsigned long i = 0, lineStart = 0; i < Codepoints.length; ++i) 
         {
-            if (((NH_UNICODE_CODEPOINT*)UnicodeCodepoints.bytes_p)[i] == '\n')
+            if (Codepoints.p[i] == '\n')
             {
-                Nh_Array *New_p = Nh_TTY_newLine(TextFile_p, TextFile_p->Lines.size);
+                Nh_UnicodeString *New_p = Nh_TTY_newLine(TextFile_p, TextFile_p->Lines.size);
                 NH_TTY_CHECK_MEM(NULL, New_p)
-                NH_CHECK(NULL, Nh_appendToArray(New_p, &((NH_UNICODE_CODEPOINT*)UnicodeCodepoints.bytes_p)[lineStart], i - lineStart))
+                NH_CHECK(NULL, Nh_appendToUnicodeString(New_p, &Codepoints.p[lineStart], i - lineStart))
                 lineStart = i + 1;
             }
-            if (((NH_UNICODE_CODEPOINT*)UnicodeCodepoints.bytes_p)[i] == '\0') {break;}
+            if (Codepoints.p[i] == '\0') {break;}
         }
 
-        Nh_freeArray(&UnicodeCodepoints);
+        Nh_freeUnicodeString(&Codepoints);
         free(bytes_p);
     }
     else {NH_TTY_CHECK_MEM(NULL, Nh_TTY_newLine(TextFile_p, TextFile_p->Lines.size))}
@@ -156,8 +156,8 @@ NH_TTY_RESULT Nh_TTY_closeTextFile(
 NH_TTY_BEGIN()
 
     for (int i = 0; i < TextFile_p->Lines.size; ++i) {
-        Nh_Array *String_p = TextFile_p->Lines.pp[i];
-        Nh_freeArray(String_p);
+        Nh_UnicodeString *String_p = TextFile_p->Lines.pp[i];
+        Nh_freeUnicodeString(String_p);
     }
     Nh_freeList(&TextFile_p->Lines, NH_FALSE);
 
@@ -184,11 +184,11 @@ NH_TTY_BEGIN()
     for (int i = 0; i < TextFile_p->Lines.size; ++i) 
     {
         if (i > 0) {Nh_appendToString(&Bytes, "\n", 1);}
-        Nh_Array *UnicodeCodepoints_p = TextFile_p->Lines.pp[i];
+        Nh_UnicodeString *Codepoints_p = TextFile_p->Lines.pp[i];
 
-        for (int j = 0; j < UnicodeCodepoints_p->length; ++j) {
+        for (int j = 0; j < Codepoints_p->length; ++j) {
             NH_BYTE bytes_p[4] = {'\0'};
-            size_t byteSize = Nh_encodeToUTF8(((NH_UNICODE_CODEPOINT*)UnicodeCodepoints_p->bytes_p)[j], bytes_p);
+            size_t byteSize = Nh_encodeToUTF8(Codepoints_p->p[j], bytes_p);
             Nh_appendToString(&Bytes, bytes_p, byteSize);
         }
     }
@@ -285,7 +285,7 @@ NH_TTY_BEGIN()
 
     Nh_UnicodeString *EditorLine_p = TextFile_p->Lines.pp[line];
     int renderCodepoints, codepoints = EditorLine_p->length;
-    for (renderCodepoints = codepoints; (renderCodepoints = Nh_TTY_getRenderLineWidth(TextFile_p, (NH_UNICODE_CODEPOINT*)EditorLine_p->bytes_p, codepoints)) > lineWidth;) {codepoints--;}
+    for (renderCodepoints = codepoints; (renderCodepoints = Nh_TTY_getRenderLineWidth(TextFile_p, EditorLine_p->p, codepoints)) > lineWidth;) {codepoints--;}
 
 //    Nh_UnicodeString HighlightedLine = *Line_p;
 //
@@ -297,12 +297,12 @@ NH_TTY_BEGIN()
 
     for (int i = 0; i < codepoints; ++i) 
     {
-        if (((NH_UNICODE_CODEPOINT*)EditorLine_p->bytes_p)[i] == 9) {
+        if (EditorLine_p->p[i] == 9) {
             for (int j = 0; j < TextFile_p->tabSize; ++j) {Nh_appendToString(RenderLine_p, " ", 1);}
         }
         else {
             NH_BYTE bytes_p[4] = {'\0'};
-            size_t byteSize = Nh_encodeToUTF8(((NH_UNICODE_CODEPOINT*)EditorLine_p->bytes_p)[i], bytes_p);
+            size_t byteSize = Nh_encodeToUTF8(EditorLine_p->p[i], bytes_p);
             Nh_appendToString(RenderLine_p, bytes_p, byteSize);
         }
     }
@@ -344,7 +344,7 @@ NH_TTY_BEGIN()
     TextFile_p->RenderLines = Nh_initArray(sizeof(Nh_String), TextFile_p->Lines.size);
 
     for (int line = 0; line < TextFile_p->Lines.size; ++line) {
-        Nh_String *RenderLine_p = Nh_getFromArray(&TextFile_p->RenderLines, -1);
+        Nh_String *RenderLine_p = Nh_incrementArray(&TextFile_p->RenderLines);
         *RenderLine_p = Nh_initString(256);
         NH_TTY_CHECK(Nh_TTY_renderTextFileLine(TextFile_p, RenderLine_p, line))
     }

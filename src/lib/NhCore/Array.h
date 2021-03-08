@@ -23,7 +23,7 @@
     );
 
     NH_RESULT Nh_appendToArray(
-        Nh_Array *Array_p, void *bytes_p, int count
+        Nh_Array *Array_p, void *bytes_p, unsigned long count
     );
 
     NH_RESULT Nh_insertIntoArray(
@@ -31,13 +31,21 @@
     );
 
     void *_Nh_getFromArray(
-        Nh_Array *Array_p, int index
+        Nh_Array *Array_p, unsigned long index
     );
 
     void *Nh_getFromArray(
-        Nh_Array *Array_p, int index
+        Nh_Array *Array_p, unsigned long index
     );
    
+    void *_Nh_incrementArray(
+        Nh_Array *Array_p
+    );
+    
+    void *Nh_incrementArray(
+        Nh_Array *Array_p
+    );
+
     NH_RESULT Nh_removeTailFromArray(
         Nh_Array *Array_p, unsigned int count
     );

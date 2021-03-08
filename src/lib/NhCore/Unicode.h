@@ -72,15 +72,19 @@
     );
     
     NH_RESULT Nh_appendToUnicodeString(
-        Nh_UnicodeString *String_p, NH_UNICODE_CODEPOINT *codepoints_p, int length
+        Nh_UnicodeString *String_p, NH_UNICODE_CODEPOINT *codepoints_p, unsigned long length
     );
     
+    NH_UNICODE_CODEPOINT *Nh_incrementUnicodeString(
+        Nh_UnicodeString *String_p
+    );
+
     void Nh_freeUnicodeString(
         Nh_UnicodeString *String_p
     );
 
     NH_RESULT Nh_removeTailFromUnicodeString(
-        Nh_UnicodeString *String_p, unsigned int count
+        Nh_UnicodeString *String_p, unsigned long count
     );
 
 // Unicode

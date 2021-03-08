@@ -20,7 +20,7 @@
  */
 
     NH_ECMASCRIPT_RESULT Nh_ECMAScript_logDecoder(
-        void *handle_p, Nh_Array *UnicodeCodePoints_p
+        void *handle_p, Nh_UnicodeString *Codepoints_p
     );
 
     NH_ECMASCRIPT_RESULT Nh_ECMAScript_logLexer(

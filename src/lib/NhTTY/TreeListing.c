@@ -501,8 +501,8 @@ NH_TTY_BEGIN()
                 NH_UNICODE_CODEPOINT *delete_p = Nh_TTY_getMessage(NH_TTY_MESSAGE_BINARY_QUERY_DELETE, &deleteLength);
                 Nh_UnicodeString File = Nh_decodeUTF8Text(Current_p->path_p);
                 NH_CHECK(NH_TTY_ERROR_BAD_STATE, Nh_appendToUnicodeString(&Question, delete_p, deleteLength))
-                NH_CHECK(NH_TTY_ERROR_BAD_STATE, Nh_appendToUnicodeString(&Question, (NH_UNICODE_CODEPOINT*)File.bytes_p, File.length))
-                NH_TTY_CHECK(Nh_TTY_setBinaryQueryMessage2((NH_UNICODE_CODEPOINT*)Question.bytes_p, Question.length, NULL, Nh_TTY_delete))
+                NH_CHECK(NH_TTY_ERROR_BAD_STATE, Nh_appendToUnicodeString(&Question, File.p, File.length))
+                NH_TTY_CHECK(Nh_TTY_setBinaryQueryMessage2(Question.p, Question.length, NULL, Nh_TTY_delete))
                 Nh_freeUnicodeString(&Question);
                 Nh_freeUnicodeString(&File);
             }
@@ -648,7 +648,7 @@ NH_TTY_BEGIN()
     Listing_p->width = Nh_TTY_getTreeListingWidth(Listing_p);
 
     for (int row = 0; row < Nodes.size; ++row) {
-        Nh_String *Line_p = Nh_getFromArray(&Listing_p->RenderLines, -1);
+        Nh_String *Line_p = Nh_incrementArray(&Listing_p->RenderLines);
         *Line_p = Nh_initString(128);
         NH_TTY_CHECK(Nh_TTY_renderTreeListingRow(
             &Nodes, Current_p, Line_p, row, Listing_p->width

@@ -162,7 +162,7 @@ NH_TTY_BEGIN()
               int messageLength;
               NH_UNICODE_CODEPOINT *message_p = Nh_TTY_getMessage(Tile_p->Console.Programs_p != NULL ? NH_TTY_MESSAGE_TILING_FOCUS : NH_TTY_MESSAGE_TILING_INSERT, &messageLength);
               Nh_appendToUnicodeString(&FocusOrInsert, message_p, messageLength);
-              NH_TTY_CHECK(Nh_TTY_setMessage(&Tile_p->Console, (NH_UNICODE_CODEPOINT*)FocusOrInsert.bytes_p, FocusOrInsert.length))
+              NH_TTY_CHECK(Nh_TTY_setMessage(&Tile_p->Console, FocusOrInsert.p, FocusOrInsert.length))
               Nh_freeUnicodeString(&FocusOrInsert);
         }
         else if (Tile_p->Parent_p == NULL) {

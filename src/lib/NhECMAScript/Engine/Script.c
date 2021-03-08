@@ -40,7 +40,7 @@ NH_ECMASCRIPT_BEGIN()
     Script_p->Realm_p = Realm_p;
     Script_p->Environment_p = NULL;
 
-    Nh_Array UnicodeCodepoints = Nh_initArray(sizeof(NH_UNICODE_CODEPOINT), 128);
+    Nh_UnicodeString UnicodeCodepoints = Nh_initUnicodeString(128);
 
     switch (encoding) 
     {

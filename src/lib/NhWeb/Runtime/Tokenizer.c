@@ -525,7 +525,7 @@ NH_WEB_BEGIN()
 
 DEFINE_TOKEN: ;
 
-    Nh_Web_Token *Token_p = Nh_getFromArray(Tokens_p, -1);
+    Nh_Web_Token *Token_p = Nh_incrementArray(Tokens_p);
     Token_p->type = type;
     Token_p->String = Nh_encodeTextToUTF8(codepoints_p, count);
 
@@ -540,11 +540,8 @@ NH_WEB_BEGIN()
     Nh_Array Tokens = Nh_initArray(sizeof(Nh_Web_Token), 64);
 
     int index = 0;
-    while (index < Codepoints.length) 
-    {
-        index += Nh_Web_getToken(
-            &Tokens, &((NH_UNICODE_CODEPOINT*)Codepoints.bytes_p)[index], Codepoints.length - index 
-        );
+    while (index < Codepoints.length) {
+        index += Nh_Web_getToken(&Tokens, &Codepoints.p[index], Codepoints.length - index);
     }
 
 NH_WEB_END(Tokens)
@@ -566,7 +563,7 @@ NH_WEB_BEGIN()
             continue;
         }
 
-        Nh_Web_Token *TokenCopy_p = Nh_getFromArray(&CleanTokens, -1);
+        Nh_Web_Token *TokenCopy_p = Nh_incrementArray(&CleanTokens);
         TokenCopy_p->type   = Token_p->type;
         TokenCopy_p->String = Nh_initString(32);
 

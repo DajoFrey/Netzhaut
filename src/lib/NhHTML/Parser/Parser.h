@@ -11,6 +11,10 @@
 
 #include "Tokenizer.h"
 
+#include "../Common/Result.h"
+
+#include "../../NhCore/Stack.h"
+
 #endif
 
 /** @addtogroup NhHTMLEnums
@@ -106,7 +110,6 @@
         NH_HTML_INSERTION_MODE originalInsertionMode;
         NH_BOOL scriptingEnabled;
         NH_BOOL framesetOk;
-        Nh_HTML_Token *Token_p;
         Nh_Stack OpenElements;
         Nh_Web_CompositeObject *Document_p;
     } Nh_HTML_Parser;

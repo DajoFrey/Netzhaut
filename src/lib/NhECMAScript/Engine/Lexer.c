@@ -564,7 +564,7 @@ NH_ECMASCRIPT_BEGIN()
 
 DEFINE_INPUT_ELEMENT: ;
 
-    Nh_ECMAScript_InputElement *InputElement_p = Nh_getFromArray(InputElements_p, -1);
+    Nh_ECMAScript_InputElement *InputElement_p = Nh_incrementArray(InputElements_p);
     InputElement_p->type = type;
     InputElement_p->String = Nh_encodeTextToUTF8(codepoints_p, count);
 
@@ -572,20 +572,19 @@ NH_ECMASCRIPT_END(count)
 }
 
 Nh_Array Nh_ECMAScript_getInputElements(
-    Nh_Array UnicodeCodepoints)
+    Nh_UnicodeString Codepoints)
 {
 NH_ECMASCRIPT_BEGIN()
 
     Nh_Array InputElements = Nh_initArray(sizeof(Nh_ECMAScript_InputElement), 64);
 
     int index = 0;
-    while (index < UnicodeCodepoints.length) 
+    while (index < Codepoints.length) 
     {
         NH_ECMASCRIPT_GOAL_SYMBOL goalSymbol = NH_ECMASCRIPT_GOAL_SYMBOL_INPUT_ELEMENT_DIV;
 
         index += Nh_ECMAScript_getInputElement(
-            &InputElements, goalSymbol, &((NH_UNICODE_CODEPOINT*)UnicodeCodepoints.bytes_p)[index], 
-            UnicodeCodepoints.length - index 
+            &InputElements, goalSymbol, &Codepoints.p[index], Codepoints.length - index 
         );
     }
 
@@ -609,7 +608,7 @@ NH_ECMASCRIPT_BEGIN()
             continue;
         }
 
-        Nh_ECMAScript_InputElement *InputElementCopy_p = Nh_getFromArray(&CleanInputElements, -1);
+        Nh_ECMAScript_InputElement *InputElementCopy_p = Nh_incrementArray(&CleanInputElements);
         InputElementCopy_p->type = InputElement_p->type;
         InputElementCopy_p->String = Nh_initString(32);
 

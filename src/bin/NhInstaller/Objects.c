@@ -139,6 +139,8 @@ static void *Nh_Installer_createNhHTMLObjects(
 {
 NH_INSTALLER_BEGIN()
 
+    CREATE("NhHTML/Parser/Parser.c", "../../lib/OBJECTS/HTML/Parser.o", extra_p)
+    CREATE("NhHTML/Parser/NamedCharacterReferences.c", "../../lib/OBJECTS/HTML/NamedCharacterReferences.o", extra_p)
     CREATE("NhHTML/Objects/Document.c", "../../lib/OBJECTS/HTML/Document.o", extra_p)
     CREATE("NhHTML/Common/Result.c", "../../lib/OBJECTS/HTML/Result.o", extra_p)
 

@@ -22,7 +22,6 @@
     #define NH_UNICODE_CODEPOINT uint_least32_t 
 
     #define Nh_String Nh_Array
-    #define Nh_UnicodeString Nh_Array
     #define Nh_UTF8String Nh_String
 
     /**
@@ -103,10 +102,15 @@
         int elementSize;             /**<Number of items.*/
         int allocatedLengthPerChunk;
         int allocatedLength;
-        int length;
+        unsigned long length;
         NH_BYTE *bytes_p;   /**<Opaque pointer to the first item in the list. A list with \ref count == 0 should have this set as NULL. The actual data should always be queried using @ref Nh_getFromLinkedList.*/
-        char nullbyte;
     } Nh_Array;
+
+    typedef struct Nh_UnicodeString {
+        NH_UNICODE_CODEPOINT *p;
+        unsigned long length;
+        Nh_Array Array;
+    } Nh_UnicodeString;
 
     /**
      * Dynamic list implementation using a two dimensional array. 

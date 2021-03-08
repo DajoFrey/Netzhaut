@@ -9,6 +9,9 @@
  * Published under LGPLv3
  */
 
+#include "Parser.h"
+#include "../Common/API.h"
+
 #endif
 
 /** @addtogroup NhHTMLEnums
@@ -121,6 +124,11 @@
         NH_BOOL forceQuirks;
     } Nh_HTML_DOCTYPEToken;
 
+    typedef struct Nh_HTML_Attribute {
+        Nh_Web_DOMString Name;
+        Nh_Web_DOMString Value;
+    } Nh_HTML_Attribute;
+
     typedef struct Nh_HTML_StartOrEndTagToken {
         NH_HTML_TOKEN type;
         Nh_Web_DOMString TagName;
@@ -143,6 +151,13 @@
     typedef struct Nh_HTML_Tokenizer {
         NH_HTML_TOKENIZATION_STATE state;
         NH_HTML_TOKENIZATION_STATE returnState;
+        Nh_Web_USVString Codepoints;
+        Nh_Array Tokens;
+        Nh_List Emits;
+        unsigned long index;
+        NH_UNICODE_CODEPOINT codepoint;
+        Nh_HTML_Token *Token_p;
+        Nh_Web_USVString TemporaryBuffer;    
     } Nh_HTML_Tokenizer;
 
 /** @} */

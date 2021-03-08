@@ -38,7 +38,7 @@ NH_WEB_BEGIN()
     if (!partial) {
         Nh_Web_getParseNodes(ClassRest_p, NH_WEB_PARSE_NODE_CLASS_MEMBER, &ClassMembers);
         for (int i = 0; i < ClassMembers.size; ++i) {
-            Nh_Web_ClassMember *ClassMember_p = Nh_getFromArray(&Class.Members, -1);
+            Nh_Web_ClassMember *ClassMember_p = Nh_incrementArray(&Class.Members);
             if (((Nh_Web_ParseNode*)((Nh_Web_ParseNode*)ClassMembers.pp[i])->Children.pp[0])->type == NH_WEB_PARSE_NODE_PARTIAL_CLASS_MEMBER) {
                 ClassMember_p->Node_p = ((Nh_Web_ParseNode*)((Nh_Web_ParseNode*)ClassMembers.pp[i])->Children.pp[0])->Children.pp[0];
             }
@@ -48,7 +48,7 @@ NH_WEB_BEGIN()
     else {
         Nh_Web_getParseNodes(ClassRest_p, NH_WEB_PARSE_NODE_PARTIAL_CLASS_MEMBER, &ClassMembers);
         for (int i = 0; i < ClassMembers.size; ++i) {
-            Nh_Web_ClassMember *ClassMember_p = Nh_getFromArray(&Class.Members, -1);
+            Nh_Web_ClassMember *ClassMember_p = Nh_incrementArray(&Class.Members);
             ClassMember_p->Node_p = ((Nh_Web_ParseNode*)ClassMembers.pp[i])->Children.pp[0];
         }
     }
@@ -78,12 +78,14 @@ NH_WEB_BEGIN()
     Nh_Web_getParseNodes(Fragment_p->ParseResult.Root_p, NH_WEB_PARSE_NODE_PARTIAL_CLASS_REST, &PartialClassRests);
 
     for (int i = 0; i < ClassRests.size; ++i) {
-        Nh_Web_Class *Class_p = Nh_getFromArray(&Fragment_p->Classes, -1);
+        Nh_Web_Class *Class_p = Nh_incrementArray(&Fragment_p->Classes);
+        NH_WEB_CHECK_MEM(Class_p)
         *Class_p = Nh_Web_createClass(Fragment_p, ClassRests.pp[i], NH_FALSE);
     }
 
     for (int i = 0; i < PartialClassRests.size; ++i) {
-        Nh_Web_Class *Class_p = Nh_getFromArray(&Fragment_p->Classes, -1);
+        Nh_Web_Class *Class_p = Nh_incrementArray(&Fragment_p->Classes);
+        NH_WEB_CHECK_MEM(Class_p)
         *Class_p = Nh_Web_createClass(Fragment_p, PartialClassRests.pp[i], NH_TRUE);
     }
 

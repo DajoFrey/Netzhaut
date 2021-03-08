@@ -62,7 +62,7 @@
  */
 
     Nh_Array Nh_ECMAScript_getInputElements(
-        Nh_Array UnicodeCodepoints
+        Nh_UnicodeString Codepoints
     );
 
     Nh_Array Nh_ECMAScript_discardRedundantInputElements(

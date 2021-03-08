@@ -114,11 +114,11 @@ Nh_UnicodeString Nh_decodeUTF8Text(
 {
 NH_BEGIN()
 
-    Nh_Array UnicodeCodepoints = Nh_initArray(sizeof(NH_UNICODE_CODEPOINT), 128);
+    Nh_UnicodeString UnicodeCodepoints = Nh_initUnicodeString(128);
 
     int i = 0;
     while (i < strlen(bytes_p)) {
-        NH_UNICODE_CODEPOINT *codepoint_p = Nh_getFromArray(&UnicodeCodepoints, -1);
+        NH_UNICODE_CODEPOINT *codepoint_p = Nh_incrementUnicodeString(&UnicodeCodepoints);
         i += Nh_decodeUTF8(&bytes_p[i], codepoint_p, sizeof(NH_UNICODE_CODEPOINT));
     }
 
@@ -148,14 +148,37 @@ Nh_UnicodeString Nh_initUnicodeString(
     int chunkSize)
 {
 NH_BEGIN()
-NH_END(Nh_initArray(sizeof(NH_UNICODE_CODEPOINT), chunkSize))
+
+    Nh_UnicodeString String;
+    String.Array  = Nh_initArray(sizeof(NH_UNICODE_CODEPOINT), chunkSize);
+    String.p      = (NH_UNICODE_CODEPOINT*)String.Array.bytes_p; 
+    String.length = 0;
+
+NH_END(String)
 }
 
 NH_RESULT Nh_appendToUnicodeString(
-    Nh_UnicodeString *String_p, NH_UNICODE_CODEPOINT *codepoints_p, int length)
+    Nh_UnicodeString *String_p, NH_UNICODE_CODEPOINT *codepoints_p, unsigned long length)
 {
 NH_BEGIN()
-NH_DIAGNOSTIC_END(Nh_appendToArray(String_p, codepoints_p, length))
+
+    NH_CHECK(Nh_appendToArray(&String_p->Array, codepoints_p, length))
+    String_p->p = (NH_UNICODE_CODEPOINT*)String_p->Array.bytes_p; 
+    String_p->length = String_p->Array.length;
+
+NH_DIAGNOSTIC_END(NH_SUCCESS)
+}
+
+NH_UNICODE_CODEPOINT *Nh_incrementUnicodeString(
+    Nh_UnicodeString *String_p)
+{
+NH_BEGIN()
+
+    NH_UNICODE_CODEPOINT *codepoint_p = Nh_incrementArray(&String_p->Array);
+    String_p->p = (NH_UNICODE_CODEPOINT*)String_p->Array.bytes_p; 
+    String_p->length = String_p->Array.length;
+
+NH_END(codepoint_p)
 }
 
 void Nh_freeUnicodeString(
@@ -163,16 +186,23 @@ void Nh_freeUnicodeString(
 {
 NH_BEGIN()
 
-    Nh_freeArray(String_p);
+    Nh_freeArray(&String_p->Array);
+    String_p->p = NULL;
+    String_p->length = 0;
 
 NH_SILENT_END()
 }
 
 NH_RESULT Nh_removeTailFromUnicodeString(
-    Nh_UnicodeString *String_p, unsigned int count)
+    Nh_UnicodeString *String_p, unsigned long count)
 {
 NH_BEGIN()
-NH_DIAGNOSTIC_END(Nh_removeTailFromArray(String_p, count))
+
+    NH_CHECK(Nh_removeTailFromArray(&String_p->Array, count))
+    String_p->p = (NH_UNICODE_CODEPOINT*)String_p->Array.bytes_p;
+    String_p->length = String_p->Array.length;
+
+NH_DIAGNOSTIC_END(NH_SUCCESS)
 }
 
 // LOOKUP ==========================================================================================

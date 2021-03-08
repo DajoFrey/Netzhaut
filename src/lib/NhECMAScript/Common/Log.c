@@ -62,16 +62,16 @@ NH_ECMASCRIPT_RESULT _Nh_ECMAScript_logDiagnosticEnd(
 //}
 
 NH_ECMASCRIPT_RESULT Nh_ECMAScript_logDecoder(
-    void *handle_p, Nh_Array *UnicodeCodePoints_p)
+    void *handle_p, Nh_UnicodeString *Codepoints_p)
 {
 NH_ECMASCRIPT_BEGIN()
 
-    for (int i = 0; i < UnicodeCodePoints_p->length; ++i) 
+    for (int i = 0; i < Codepoints_p->length; ++i) 
     {
         NH_BYTE message_p[512] = {'\0'};
         sprintf(
             message_p, "[NhECMAScript:%p:Decoder]{%s}", handle_p,
-            Nh_getUnicodeCodepointDescription(((NH_UNICODE_CODEPOINT*)UnicodeCodePoints_p->bytes_p)[i])
+            Nh_getUnicodeCodepointDescription(Codepoints_p->p[i])
         );
         Nh_sendLogMessage(message_p);
     }

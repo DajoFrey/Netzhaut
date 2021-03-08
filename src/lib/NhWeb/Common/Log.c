@@ -141,12 +141,18 @@ NH_WEB_BEGIN()
         NH_BYTE className_p[255] = {'\0'};
         sprintf(className_p, Class_p->partial ? "%s (partial)" : "%s", Class_p->name_p);
 
+        NH_BYTE message_p[1024] = {'\0'};
+        sprintf(
+            message_p, "[NhWeb:%s:Classes:%s]{Members:}", specification_p, className_p
+        );
+        Nh_sendLogMessage(message_p);
+
         for (int j = 0; j < Class_p->Members.length; ++j) 
         {
             Nh_Web_ClassMember *ClassMember_p = &((Nh_Web_ClassMember*)Class_p->Members.bytes_p)[j];
             NH_BYTE message_p[1024] = {'\0'};
             sprintf(
-                message_p, "[NhWeb:%s:Classes:%s]{%s}", specification_p, className_p, NH_WEB_PARSE_NODE_NAMES_PP[ClassMember_p->Node_p->type]
+                message_p, "[NhWeb:%s:Classes:%s]{  %s}", specification_p, className_p, NH_WEB_PARSE_NODE_NAMES_PP[ClassMember_p->Node_p->type]
             );
             Nh_sendLogMessage(message_p);
         }
