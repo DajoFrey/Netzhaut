@@ -116,9 +116,9 @@
      * Dynamic list implementation using a two dimensional array. 
      */
     typedef struct Nh_List {
-        int chunkSize;   
-        int chunkCount;
-        int size;
+        unsigned long chunkSize;   
+        unsigned long chunkCount;
+        unsigned long size;
         void **pp;
     } Nh_List;
 

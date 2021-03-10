@@ -26,7 +26,7 @@
 // INITIALIZE ======================================================================================
 
 NH_HTML_RESULT Nh_HTML_initializeDocument(
-    Nh_Web_Object *Document_p)
+    Nh_WebIDL_Object *Document_p)
 {
 NH_HTML_BEGIN()
 

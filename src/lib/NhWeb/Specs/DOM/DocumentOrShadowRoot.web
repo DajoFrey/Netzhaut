@@ -1,4 +1,0 @@
-class mixin DocumentOrShadowRoot {
-};
-Document includes DocumentOrShadowRoot;
-ShadowRoot includes DocumentOrShadowRoot;

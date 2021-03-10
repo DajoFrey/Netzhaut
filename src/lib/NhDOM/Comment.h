@@ -18,8 +18,8 @@
  *  @{
  */
 
-    Nh_Web_Object *Nh_DOM_createComment(
-        Nh_Web_DOMString DOMString
+    Nh_WebIDL_Object *Nh_DOM_createComment(
+        Nh_WebIDL_DOMString DOMString
     );
     
 /** @} */

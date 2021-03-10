@@ -10,7 +10,7 @@
  */
 
 #include "../../NhCore/Common/API.h"
-#include "../../NhWeb/Common/API.h"
+#include "../../NhWebIDL/Common/API.h"
 
 #endif
 

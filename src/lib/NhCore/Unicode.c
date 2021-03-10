@@ -126,7 +126,7 @@ NH_END(UnicodeCodepoints)
 }
 
 Nh_UTF8String Nh_encodeTextToUTF8(
-    NH_UNICODE_CODEPOINT *unicodeCodepoints_p, size_t length)
+    NH_UNICODE_CODEPOINT *codepoints_p, size_t length)
 {
 NH_BEGIN()
 
@@ -135,7 +135,7 @@ NH_BEGIN()
     for (int i = 0; i < length; ++i) {
         NH_BYTE bytes_p[4] = {'\0'};
         memset(bytes_p, 0, 4);
-        size_t size = Nh_encodeToUTF8(unicodeCodepoints_p[i], bytes_p);
+        size_t size = Nh_encodeToUTF8(codepoints_p[i], bytes_p);
         Nh_appendToArray(&String, bytes_p, size);
     }
 
@@ -203,6 +203,58 @@ NH_BEGIN()
     String_p->length = String_p->Array.length;
 
 NH_DIAGNOSTIC_END(NH_SUCCESS)
+}
+
+// ASCII ===========================================================================================
+
+NH_BOOL Nh_isASCIIUpperAlpha(
+    NH_UNICODE_CODEPOINT codepoint)
+{
+NH_BEGIN()
+NH_END(codepoint >= 0x41 && codepoint <= 0x5A)
+}
+
+NH_BOOL Nh_isASCIILowerAlpha(
+    NH_UNICODE_CODEPOINT codepoint)
+{
+NH_BEGIN()
+NH_END(codepoint >= 0x61 && codepoint <= 0x7A)
+}
+
+NH_BOOL Nh_isASCIIAlpha(
+    NH_UNICODE_CODEPOINT codepoint)
+{
+NH_BEGIN()
+NH_END(Nh_isASCIIUpperAlpha(codepoint) && Nh_isASCIILowerAlpha(codepoint))
+}
+
+NH_BOOL Nh_isASCIIDigit(
+    NH_UNICODE_CODEPOINT codepoint)
+{
+NH_BEGIN()
+NH_END(codepoint >= 0x30 && codepoint <= 0x39)
+}
+
+NH_BOOL Nh_isASCIIAlphaNumeric(
+    NH_UNICODE_CODEPOINT codepoint)
+{
+NH_BEGIN()
+NH_END(Nh_isASCIIAlpha(codepoint) || Nh_isASCIIDigit(codepoint))
+}
+
+NH_BOOL Nh_isASCIICaseInsensitiveMatch(
+    NH_BYTE *str1_p, NH_BYTE *str2_p)
+{
+NH_BEGIN()
+
+     for (;; str1_p++, str2_p++) {
+        int d = tolower((unsigned char)*str1_p) - tolower((unsigned char)*str2_p);
+        if (d != 0 || !*str1_p) {
+            NH_END(NH_FALSE)
+        }
+    }
+   
+NH_END(NH_TRUE)
 }
 
 // LOOKUP ==========================================================================================

@@ -28,7 +28,7 @@
 // INITIALIZE ======================================================================================
 
 NH_DOM_RESULT Nh_DOM_initializeEventTarget(
-    Nh_Web_Object *EventTarget_p)
+    Nh_WebIDL_Object *EventTarget_p)
 {
 NH_DOM_BEGIN()
 

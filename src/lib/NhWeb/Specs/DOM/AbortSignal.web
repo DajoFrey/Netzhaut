@@ -1,6 +1,0 @@
-[Exposed=(Window,Worker)]
-class AbortSignal : EventTarget {
-  readonly attribute boolean aborted;
-
-  attribute EventHandler onabort;
-};

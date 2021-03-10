@@ -20,7 +20,7 @@
 
 // https://heycam.github.io/webidl/#interface-object
 Nh_ECMAScript_Object *Nh_ECMAScript_createInterfaceObject(
-    Nh_Web_Interface *Interface_p, Nh_ECMAScript_Realm *Realm_p)
+    Nh_WebIDL_Interface *Interface_p, Nh_ECMAScript_Realm *Realm_p)
 {
 NH_ECMASCRIPT_BEGIN()
 

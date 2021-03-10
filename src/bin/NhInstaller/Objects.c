@@ -141,8 +141,14 @@ NH_INSTALLER_BEGIN()
 
     CREATE("NhHTML/Parser/Parser.c", "../../lib/OBJECTS/HTML/Parser.o", extra_p)
     CREATE("NhHTML/Parser/NamedCharacterReferences.c", "../../lib/OBJECTS/HTML/NamedCharacterReferences.o", extra_p)
+    CREATE("NhHTML/Parser/Elements.c", "../../lib/OBJECTS/HTML/Elements.o", extra_p)
+    CREATE("NhHTML/Parser/Tokenizer.c", "../../lib/OBJECTS/HTML/Tokenizer.o", extra_p)
+    CREATE("NhHTML/Parser/TreeConstruction.c", "../../lib/OBJECTS/HTML/TreeConstruction.o", extra_p)
     CREATE("NhHTML/Objects/Document.c", "../../lib/OBJECTS/HTML/Document.o", extra_p)
     CREATE("NhHTML/Common/Result.c", "../../lib/OBJECTS/HTML/Result.o", extra_p)
+    CREATE("NhHTML/Common/IndexMap.c", "../../lib/OBJECTS/HTML/IndexMap.o", extra_p)
+    CREATE("NhHTML/Common/Terminate.c", "../../lib/OBJECTS/HTML/Terminate.o", extra_p)
+    CREATE("NhHTML/Common/Initialize.c", "../../lib/OBJECTS/HTML/Initialize.o", extra_p)
 
 NH_INSTALLER_END((void*)NH_INSTALLER_SUCCESS)
 }
@@ -158,9 +164,14 @@ NH_INSTALLER_BEGIN()
     CREATE("NhDOM/EventTarget.c", "../../lib/OBJECTS/DOM/EventTarget.o", extra_p)
     CREATE("NhDOM/Node.c", "../../lib/OBJECTS/DOM/Node.o", extra_p)
     CREATE("NhDOM/Document.c", "../../lib/OBJECTS/DOM/Document.o", extra_p)
+    CREATE("NhDOM/DocumentType.c", "../../lib/OBJECTS/DOM/DocumentType.o", extra_p)
     CREATE("NhDOM/Comment.c", "../../lib/OBJECTS/DOM/Comment.o", extra_p)
+    CREATE("NhDOM/Element.c", "../../lib/OBJECTS/DOM/Element.o", extra_p)
+    CREATE("NhDOM/NamedNodeMap.c", "../../lib/OBJECTS/DOM/NamedNodeMap.o", extra_p)
     CREATE("NhDOM/CharacterData.c", "../../lib/OBJECTS/DOM/CharacterData.o", extra_p)
     CREATE("NhDOM/Common/Result.c", "../../lib/OBJECTS/DOM/Result.o", extra_p)
+    CREATE("NhDOM/Common/Initialize.c", "../../lib/OBJECTS/DOM/Initialize.o", extra_p)
+    CREATE("NhDOM/Common/Terminate.c", "../../lib/OBJECTS/DOM/Terminate.o", extra_p)
 
 NH_INSTALLER_END((void*)NH_INSTALLER_SUCCESS)
 }
@@ -213,24 +224,24 @@ NH_INSTALLER_END((void*)NH_INSTALLER_SUCCESS)
 
 // WEB OBJECTS ==================================================================================
 
-static void *Nh_Installer_createNhWebObjects(
+static void *Nh_Installer_createNhWebIDLObjects(
     void *extra_p)
 {
 NH_INSTALLER_BEGIN()
 
-    CREATE("NhWeb/Runtime/Tokenizer.c", "../../lib/OBJECTS/WEB/Tokenizer.o", extra_p)
-    CREATE("NhWeb/Runtime/Parser.c", "../../lib/OBJECTS/WEB/Parser.o", extra_p)
-    CREATE("NhWeb/Runtime/Builtin.c", "../../lib/OBJECTS/WEB/Builtin.o", extra_p)
-    CREATE("NhWeb/Runtime/Definitions.c", "../../lib/OBJECTS/WEB/Definitions.o", extra_p)
-    CREATE("NhWeb/Runtime/Runtime.c", "../../lib/OBJECTS/WEB/Runtime.o", extra_p)
-    CREATE("NhWeb/Runtime/Object.c", "../../lib/OBJECTS/WEB/Object.o", extra_p)
-    CREATE("NhWeb/Runtime/Type.c", "../../lib/OBJECTS/WEB/Type.o", extra_p)
-    CREATE("NhWeb/Runtime/String.c", "../../lib/OBJECTS/WEB/String.o", extra_p)
-    CREATE("NhWeb/Common/Log.c", "../../lib/OBJECTS/WEB/Log.o", extra_p)
-    CREATE("NhWeb/Common/Initialize.c", "../../lib/OBJECTS/WEB/Initialize.o", extra_p)
-    CREATE("NhWeb/Common/Terminate.c", "../../lib/OBJECTS/WEB/Terminate.o", extra_p)
-    CREATE("NhWeb/Common/IndexMap.c", "../../lib/OBJECTS/WEB/IndexMap.o", extra_p)
-    CREATE("NhWeb/Common/Result.c", "../../lib/OBJECTS/WEB/Result.o", extra_p)
+    CREATE("NhWebIDL/Runtime/Tokenizer.c", "../../lib/OBJECTS/WEBIDL/Tokenizer.o", extra_p)
+    CREATE("NhWebIDL/Runtime/Parser.c", "../../lib/OBJECTS/WEBIDL/Parser.o", extra_p)
+    CREATE("NhWebIDL/Runtime/Builtin.c", "../../lib/OBJECTS/WEBIDL/Builtin.o", extra_p)
+    CREATE("NhWebIDL/Runtime/Definitions.c", "../../lib/OBJECTS/WEBIDL/Definitions.o", extra_p)
+    CREATE("NhWebIDL/Runtime/Runtime.c", "../../lib/OBJECTS/WEBIDL/Runtime.o", extra_p)
+    CREATE("NhWebIDL/Runtime/Object.c", "../../lib/OBJECTS/WEBIDL/Object.o", extra_p)
+    CREATE("NhWebIDL/Runtime/Type.c", "../../lib/OBJECTS/WEBIDL/Type.o", extra_p)
+    CREATE("NhWebIDL/Runtime/String.c", "../../lib/OBJECTS/WEBIDL/String.o", extra_p)
+    CREATE("NhWebIDL/Common/Log.c", "../../lib/OBJECTS/WEBIDL/Log.o", extra_p)
+    CREATE("NhWebIDL/Common/Initialize.c", "../../lib/OBJECTS/WEBIDL/Initialize.o", extra_p)
+    CREATE("NhWebIDL/Common/Terminate.c", "../../lib/OBJECTS/WEBIDL/Terminate.o", extra_p)
+    CREATE("NhWebIDL/Common/IndexMap.c", "../../lib/OBJECTS/WEBIDL/IndexMap.o", extra_p)
+    CREATE("NhWebIDL/Common/Result.c", "../../lib/OBJECTS/WEBIDL/Result.o", extra_p)
 
 NH_INSTALLER_END((void*)NH_INSTALLER_SUCCESS)
 }
@@ -473,22 +484,22 @@ NH_INSTALLER_BEGIN()
 NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
 }
 
-// OBJECTS/WEB ==================================================================================
+// OBJECTS/WEBIDL ==================================================================================
 
-static NH_INSTALLER_RESULT Nh_Installer_createNhWebObjectsDir(
+static NH_INSTALLER_RESULT Nh_Installer_createNhWebIDLObjectsDir(
     char *projDir_p, char *path_p)
 {
 NH_INSTALLER_BEGIN()
 
     chdir(projDir_p);
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_BIN_OBJECT_DIRECTORY, Nh_Installer_createDir("lib/OBJECTS/WEB"))
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_BIN_OBJECT_DIRECTORY, Nh_Installer_createDir("lib/OBJECTS/WEBIDL"))
     chdir(path_p);
 
     char extra_p[1024] = {'\0'};
     if (NH_INSTALLER_FLOW_LOGGING) {sprintf(extra_p, "-DNH_LOG_FLOW");}
     else {sprintf(extra_p, "");}
    
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, (NH_INSTALLER_RESULT)Nh_Installer_createNhWebObjects(extra_p))
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, (NH_INSTALLER_RESULT)Nh_Installer_createNhWebIDLObjects(extra_p))
 
 NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
 }
@@ -556,8 +567,8 @@ NH_INSTALLER_BEGIN()
     else if (!strcmp(name_p, "NhNetwork")) {
         NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_createNhNetworkObjectsDir(projDir_p, path_p))
     }
-    else if (!strcmp(name_p, "NhWeb")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_createNhWebObjectsDir(projDir_p, path_p))
+    else if (!strcmp(name_p, "NhWebIDL")) {
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_createNhWebIDLObjectsDir(projDir_p, path_p))
     }
     else if (!strcmp(name_p, "NhECMAScript")) {
         NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_createNhECMAScriptObjectsDir(projDir_p, path_p))

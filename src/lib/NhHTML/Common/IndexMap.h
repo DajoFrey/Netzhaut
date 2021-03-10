@@ -19,7 +19,7 @@
  */
 
     typedef struct Nh_HTML_IndexMap {
-        Nh_HashMap TODO;
+        Nh_HashMap Tags;
     } Nh_HTML_IndexMap;
 
 /** @} */

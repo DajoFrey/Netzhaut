@@ -45,6 +45,7 @@
  */
 
 // UTF8
+
     size_t Nh_validateUTF8(
         NH_UNICODE_CODEPOINT *u, size_t i
     );
@@ -62,10 +63,10 @@
     );
 
     Nh_UTF8String Nh_encodeTextToUTF8(
-        NH_UNICODE_CODEPOINT *unicodeCodepoints_p, size_t length
+        NH_UNICODE_CODEPOINT *codepoints_p, size_t length
     );
 
-// Unicode String
+// UNICODE STRING
 
     Nh_UnicodeString Nh_initUnicodeString(
         int chunkSize
@@ -87,7 +88,8 @@
         Nh_UnicodeString *String_p, unsigned long count
     );
 
-// Unicode
+// UNICODE LOOKUP
+
     const NH_BYTE *Nh_getUnicodeCodepointDescription(
         NH_UNICODE_CODEPOINT codepoint
     );
@@ -103,6 +105,31 @@
     NH_RESULT Nh_logUnicodeCodepoints(
     );
 
+// ASCII
+
+    NH_BOOL Nh_isASCIIUpperAlpha(
+        NH_UNICODE_CODEPOINT codepoint
+    );
+    
+    NH_BOOL Nh_isASCIILowerAlpha(
+        NH_UNICODE_CODEPOINT codepoint
+    );
+    
+    NH_BOOL Nh_isASCIIAlpha(
+        NH_UNICODE_CODEPOINT codepoint
+    );
+    
+    NH_BOOL Nh_isASCIIDigit(
+        NH_UNICODE_CODEPOINT codepoint
+    );
+    
+    NH_BOOL Nh_isASCIIAlphaNumeric(
+        NH_UNICODE_CODEPOINT codepoint
+    );
+    
+    NH_BOOL Nh_isASCIICaseInsensitiveMatch(
+        NH_BYTE *str1_p, NH_BYTE *str2_p
+    );
 /** @} */
 
 #endif 

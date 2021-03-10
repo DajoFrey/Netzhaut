@@ -19,7 +19,7 @@
  */
 
     Nh_List Nh_initList(
-        unsigned int chunkSize
+        unsigned long chunkSize
     );
     
     NH_RESULT _Nh_appendToList(
@@ -39,11 +39,11 @@
     );
    
     NH_RESULT Nh_insertIntoList(
-        Nh_List *List_p, void *handle_p, int index
+        Nh_List *List_p, void *handle_p, unsigned long index
     );
 
     void *Nh_getFromList(
-        Nh_List *List_p, int index
+        Nh_List *List_p, unsigned long index
     );
 
     void _Nh_freeList(

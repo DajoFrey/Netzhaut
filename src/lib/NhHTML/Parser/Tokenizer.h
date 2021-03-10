@@ -9,8 +9,10 @@
  * Published under LGPLv3
  */
 
-#include "Parser.h"
 #include "../Common/API.h"
+#include "../Common/Result.h"
+
+#include "../../NhWebIDL/Runtime/String.h"
 
 #endif
 
@@ -118,27 +120,27 @@
 
     typedef struct Nh_HTML_DOCTYPEToken {
         NH_HTML_TOKEN type;
-        Nh_Web_DOMString Name;
-        Nh_Web_DOMString PublicIdentifier;
-        Nh_Web_DOMString SystemIdentifier;
+        Nh_WebIDL_DOMString *Name_p;
+        Nh_WebIDL_DOMString *PublicIdentifier_p;
+        Nh_WebIDL_DOMString *SystemIdentifier_p;
         NH_BOOL forceQuirks;
     } Nh_HTML_DOCTYPEToken;
 
     typedef struct Nh_HTML_Attribute {
-        Nh_Web_DOMString Name;
-        Nh_Web_DOMString Value;
+        Nh_WebIDL_DOMString Name;
+        Nh_WebIDL_DOMString Value;
     } Nh_HTML_Attribute;
 
     typedef struct Nh_HTML_StartOrEndTagToken {
         NH_HTML_TOKEN type;
-        Nh_Web_DOMString TagName;
+        Nh_WebIDL_DOMString TagName;
         NH_BOOL selfClosing;
         Nh_Array Attributes;
     } Nh_HTML_StartOrEndTagToken;
 
     typedef struct Nh_HTML_CommentOrCharacterToken {
         NH_HTML_TOKEN type;
-        Nh_Web_DOMString Data;
+        Nh_WebIDL_DOMString Data;
     } Nh_HTML_CommentOrCharacterToken;
 
     typedef union Nh_HTML_Token {
@@ -151,13 +153,14 @@
     typedef struct Nh_HTML_Tokenizer {
         NH_HTML_TOKENIZATION_STATE state;
         NH_HTML_TOKENIZATION_STATE returnState;
-        Nh_Web_USVString Codepoints;
+        Nh_WebIDL_USVString Codepoints;
         Nh_Array Tokens;
         Nh_List Emits;
         unsigned long index;
         NH_UNICODE_CODEPOINT codepoint;
         Nh_HTML_Token *Token_p;
-        Nh_Web_USVString TemporaryBuffer;    
+        Nh_WebIDL_USVString TemporaryBuffer;    
+        void *Parser_p;
     } Nh_HTML_Tokenizer;
 
 /** @} */
@@ -169,8 +172,8 @@
     Nh_HTML_Tokenizer Nh_HTML_initTokenizer(
     );
 
-    Nh_Array Nh_HTML_tokenize(
-        Nh_HTML_Tokenizer *Tokenizer_p, NH_UNICODE_CODEPOINT *codepoints_p, unsigned int length
+    NH_HTML_RESULT Nh_HTML_consumeNext(
+        Nh_HTML_Tokenizer *Tokenizer_p
     );
 
 /** @} */

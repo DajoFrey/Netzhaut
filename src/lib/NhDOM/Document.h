@@ -18,8 +18,28 @@
  *  @{
  */
 
+    extern Nh_WebIDL_DOMString NH_DOM_DOCUMENT_MODE_NO_QUIRKS;
+    extern Nh_WebIDL_DOMString NH_DOM_DOCUMENT_MODE_QUIRKS;
+    extern Nh_WebIDL_DOMString NH_DOM_DOCUMENT_MODE_LIMITED_QUIRKS;
+
+/** @} */
+
+/** @addtogroup NhDOMFunctions
+ *  @{
+ */
+
+    NH_DOM_RESULT Nh_DOM_initDocumentModes(
+    );
+    
+    NH_DOM_RESULT Nh_DOM_freeDocumentModes(
+    );
+
     NH_DOM_RESULT Nh_DOM_setDocumentMode(
-        Nh_Web_Object *Document_p, NH_BYTE *mode_p
+        Nh_WebIDL_Object *Document_p, Nh_WebIDL_DOMString *Mode_p
+    );
+
+    NH_DOM_RESULT Nh_DOM_setDocumentType(
+        Nh_WebIDL_Object *Document_p, Nh_WebIDL_Object *DocumentType_p
     );
 
 /** @} */

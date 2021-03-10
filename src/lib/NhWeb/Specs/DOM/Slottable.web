@@ -1,5 +1,0 @@
-class mixin Slottable {
-  readonly attribute HTMLSlotElement? assignedSlot;
-};
-Element includes Slottable;
-Text includes Slottable;

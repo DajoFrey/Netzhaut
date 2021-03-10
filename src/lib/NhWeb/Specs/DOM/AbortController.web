@@ -1,8 +1,0 @@
-[Exposed=(Window,Worker)]
-class AbortController {
-  constructor();
-
-  [SameObject] readonly attribute AbortSignal signal;
-
-  undefined abort();
-};

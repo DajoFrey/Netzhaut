@@ -15,8 +15,8 @@
 #include NH_DOM_FLOW
 #include NH_DOM_DEFAULT_CHECK
 
-#include "../NhWeb/Runtime/String.h"
-#include "../NhWeb/Runtime/Object.h"
+#include "../NhWebIDL/Runtime/String.h"
+#include "../NhWebIDL/Runtime/Object.h"
 
 #include "../NhCore/List.h"
 #include "../NhCore/Memory.h"
@@ -28,7 +28,7 @@
 // INITIALIZE ======================================================================================
 
 NH_DOM_RESULT Nh_DOM_initializeComment(
-    Nh_Web_Object *Node_p)
+    Nh_WebIDL_Object *Node_p)
 {
 NH_DOM_BEGIN()
 
@@ -37,16 +37,16 @@ NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)
 
 // INTERNAL ========================================================================================
 
-Nh_Web_Object *Nh_DOM_createComment(
-    Nh_Web_DOMString DOMString)
+Nh_WebIDL_Object *Nh_DOM_createComment(
+    Nh_WebIDL_DOMString DOMString)
 {
 NH_DOM_BEGIN()
 
 #include NH_DOM_CUSTOM_CHECK
 
-    Nh_Web_Object *Comment_p = Nh_Web_createObject("DOM", "Comment");
+    Nh_WebIDL_Object *Comment_p = Nh_WebIDL_createObject("DOM", "Comment");
     NH_DOM_CHECK_MEM(NULL, Comment_p)
-    NH_DOM_CHECK(NULL, Nh_DOM_appendToCharacterData(Comment_p->Inherit_p, DOMString))
+    NH_DOM_CHECK(NULL, Nh_DOM_appendToCharacterData(Comment_p->Child_p, DOMString))
 
 #include NH_DOM_DEFAULT_CHECK
 

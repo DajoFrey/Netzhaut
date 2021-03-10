@@ -23,7 +23,7 @@
 // LIST ============================================================================================
 
 Nh_List Nh_initList(
-    unsigned int chunkSize)
+    unsigned long chunkSize)
 {
 NH_BEGIN()
 
@@ -79,7 +79,7 @@ NH_DIAGNOSTIC_END(NH_SUCCESS)
 }
 
 NH_RESULT Nh_insertIntoList(
-    Nh_List *List_p, void *handle_p, int index)
+    Nh_List *List_p, void *handle_p, unsigned long index)
 {
 NH_BEGIN()
 
@@ -93,7 +93,7 @@ NH_BEGIN()
 
     NH_CHECK(Nh_appendToList(List_p, List_p->pp[List_p->size - 1]))
 
-    for (int i = List_p->size - 1; i > index; --i) {
+    for (unsigned long i = List_p->size - 1; i > index; --i) {
         List_p->pp[i] = List_p->pp[i - 1];
     }
 
@@ -110,7 +110,7 @@ NH_DIAGNOSTIC_END(Nh_insertIntoList(List_p, handle_p, 0))
 }
 
 void *Nh_getFromList(
-    Nh_List *List_p, int index)
+    Nh_List *List_p, unsigned long index)
 {
 NH_BEGIN()
 
@@ -134,7 +134,7 @@ NH_BEGIN()
     _Nh_free(List_p->pp);
 
     List_p->chunkCount = 0;
-    List_p->size       = 0;
+    List_p->size = 0;
     List_p->pp = NULL;
 
 NH_SILENT_END()
@@ -192,8 +192,8 @@ NH_RESULT Nh_removeFromList2(
 {
 NH_BEGIN()
 
-    int index = -1;
-    for (int i = 0; i < List_p->size; ++i) {
+    unsigned long index = -1;
+    for (unsigned long i = 0; i < List_p->size; ++i) {
         if (List_p->pp[i] == handle_p) {index = i; break;}
     }
 

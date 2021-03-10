@@ -19,7 +19,7 @@
  */
 
     NH_DOM_RESULT Nh_DOM_appendToNodeList(
-        Nh_Web_Object *NodeList_p, Nh_Web_Object *Node_p
+        Nh_WebIDL_Object *NodeList_p, Nh_WebIDL_Object *Node_p
     );
 
 /** @} */

@@ -1,3 +1,0 @@
-[Exposed=Window]
-class CDATASection : Text {
-};

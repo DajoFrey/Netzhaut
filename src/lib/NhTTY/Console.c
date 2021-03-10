@@ -404,7 +404,7 @@ static NH_TTY_RESULT Nh_TTY_handleNetzhautCommand(
 {
 NH_TTY_BEGIN()
 
-    NH_LOADER.load_f("NhWeb", 0);
+    NH_LOADER.load_f("NhWebIDL", 0);
     NH_TTY_CHECK(Nh_TTY_handleCurrentTileInput(NH_TTY_CONSOLE_KEY))
 
 NH_TTY_DIAGNOSTIC_END(NH_TTY_SUCCESS)

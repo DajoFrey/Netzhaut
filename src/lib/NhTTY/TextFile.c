@@ -27,7 +27,7 @@
 #include NH_TTY_FLOW
 #include NH_TTY_DEFAULT_CHECK
 
-#include "../NhWeb/Runtime/Parser.h"
+#include "../NhWebIDL/Runtime/Parser.h"
 #include "../NhLoader/Loader.h"
 
 #include <stddef.h>
@@ -193,12 +193,12 @@ NH_TTY_BEGIN()
         }
     }
 
-    Nh_Web_parse_f parse_f = NH_LOADER.loadFunction_f("NhWeb", 0, "Nh_Web_parse");
+    Nh_WebIDL_parse_f parse_f = NH_LOADER.loadFunction_f("NhWebIDL", 0, "Nh_WebIDL_parse");
 
     if (parse_f != NULL) 
     {
-        Nh_Web_FragmentParseResult ParseResult = parse_f(name_p, Bytes.bytes_p);
-        Nh_Web_unparse_f unparse_f = NH_LOADER.loadFunction_f("NhWeb", 0, "Nh_Web_unparse");
+        Nh_WebIDL_FragmentParseResult ParseResult = parse_f(name_p, Bytes.bytes_p);
+        Nh_WebIDL_unparse_f unparse_f = NH_LOADER.loadFunction_f("NhWebIDL", 0, "Nh_WebIDL_unparse");
         if (unparse_f != NULL) {unparse_f(ParseResult);}
         else {NH_TTY_DIAGNOSTIC_END(NH_TTY_ERROR_BAD_STATE)}
     }

@@ -17,6 +17,10 @@
 #define NH_DOM_CUSTOM_CHECK "../NhDOM/Common/MACRO/CUSTOM_CHECK.h"
 #define NH_DOM_FLOW "../NhDOM/Common/MACRO/FLOW.h"
 
+#define NH_DOM_DEFAULT_CHECK2 "../../NhDOM/Common/MACRO/DEFAULT_CHECK.h"
+#define NH_DOM_CUSTOM_CHECK2 "../../NhDOM/Common/MACRO/CUSTOM_CHECK.h"
+#define NH_DOM_FLOW2 "../../NhDOM/Common/MACRO/FLOW.h"
+
 #endif
 
 #endif 

@@ -11,6 +11,7 @@
 
 #include "Tokenizer.h"
 
+#include "../Common/API.h"
 #include "../Common/Result.h"
 
 #include "../../NhCore/Stack.h"
@@ -105,13 +106,20 @@
  *  @{
  */
 
+    typedef struct Nh_HTML_ParseError {
+        NH_HTML_PARSE_ERROR type;
+        unsigned long index;
+    } Nh_HTML_ParseError;
+
     typedef struct Nh_HTML_Parser {
         NH_HTML_INSERTION_MODE insertionMode;
         NH_HTML_INSERTION_MODE originalInsertionMode;
         NH_BOOL scriptingEnabled;
         NH_BOOL framesetOk;
         Nh_Stack OpenElements;
-        Nh_Web_CompositeObject *Document_p;
+        Nh_WebIDL_Object *Document_p;
+        Nh_Array Errors;
+        Nh_HTML_Token *Token_p;
     } Nh_HTML_Parser;
 
 /** @} */
@@ -121,7 +129,7 @@
  */
 
     NH_HTML_RESULT Nh_HTML_parseDocument(
-        Nh_UnicodeString Codepoints, Nh_Web_CompositeObject *Document_p
+        Nh_UnicodeString Codepoints, Nh_WebIDL_Object *Document_p
     );
 
 /** @} */

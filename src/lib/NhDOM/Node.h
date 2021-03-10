@@ -19,7 +19,15 @@
  */
 
     NH_DOM_RESULT Nh_DOM_appendChildToNode(
-        Nh_Web_Object *Node_p, Nh_Web_Object *Child_p
+        Nh_WebIDL_Object *Node_p, Nh_WebIDL_Object *Child_p
+    );
+
+    NH_DOM_RESULT Nh_DOM_setNodeDocument(
+        Nh_WebIDL_Object *Node_p, Nh_WebIDL_Object *NodeDocument_p
+    );
+
+    Nh_WebIDL_Object *Nh_DOM_getNodeDocument(
+        Nh_WebIDL_Object *Node_p
     );
 
 /** @} */

@@ -19,7 +19,7 @@
  */
 
     NH_DOM_RESULT Nh_DOM_appendToCharacterData(
-        Nh_Web_Object *CharacterData_p, Nh_Web_DOMString DOMString 
+        Nh_WebIDL_Object *CharacterData_p, Nh_WebIDL_DOMString DOMString 
     );
 
 /** @} */

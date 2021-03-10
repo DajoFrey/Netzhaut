@@ -23,19 +23,21 @@
 
 // DECLARE =========================================================================================
 
-#define NODES NodeList_p->Attributes.pp[0]
-#define LENGTH *((NH_WEB_UNSIGNED_LONG*)NodeList_p->Attributes.pp[1])
+#define NODES NodeList_p->internal_p
+#define LENGTH NodeList_p->Attributes.pp[0]
 
 // INITIALIZE ======================================================================================
 
 NH_DOM_RESULT Nh_DOM_initializeNodeList(
-    Nh_Web_Object *NodeList_p)
+    Nh_WebIDL_Object *NodeList_p)
 {
 NH_DOM_BEGIN()
 
     NODES = Nh_allocate(sizeof(Nh_List));
     NH_DOM_CHECK_MEM(NODES)
+
     *((Nh_List*)NODES) = Nh_initList(16);
+    LENGTH = &((Nh_List*)NODES)->size;
 
 NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)
 }
@@ -43,12 +45,11 @@ NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)
 // INTERNAL ========================================================================================
 
 NH_DOM_RESULT Nh_DOM_appendToNodeList(
-    Nh_Web_Object *NodeList_p, Nh_Web_Object *Node_p)
+    Nh_WebIDL_Object *NodeList_p, Nh_WebIDL_Object *Node_p)
 {
 NH_DOM_BEGIN()
 
     Nh_appendToList(NODES, Node_p);
-    LENGTH += 1;
 
 NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)
 }

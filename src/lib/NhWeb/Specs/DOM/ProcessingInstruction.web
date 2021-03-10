@@ -1,4 +1,0 @@
-[Exposed=Window]
-class ProcessingInstruction : CharacterData {
-  readonly attribute DOMString target;
-};
