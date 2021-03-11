@@ -84,12 +84,27 @@ NH_LOADER_BEGIN()
 NH_LOADER_DIAGNOSTIC_END(NH_LOADER_SUCCESS)
 }
 
+static NH_LOADER_RESULT Nh_Loader_loadDependencies(
+    const NH_BYTE *name_p)
+{
+NH_LOADER_BEGIN()
+
+    if (!strcmp(name_p, "NhHTML")) {
+        NH_LOADER_CHECK(NH_LOADER.load_f("NhWebIDL", 0))
+        NH_LOADER_CHECK(NH_LOADER.load_f("NhDOM", 0))
+    }
+
+NH_LOADER_DIAGNOSTIC_END(NH_LOADER_SUCCESS)
+}
+
 static NH_LOADER_RESULT Nh_Loader_load(
     const NH_BYTE *name_p, int major)
 {
 NH_LOADER_BEGIN()
 
     if (Nh_Loader_getModule(name_p, major)) {NH_LOADER_DIAGNOSTIC_END(NH_LOADER_SUCCESS)}
+ 
+    NH_LOADER_CHECK(Nh_Loader_loadDependencies(name_p))
 
     void *lib_p = Nh_Loader_loadLibrary((NH_BYTE*)name_p, major);
     NH_LOADER_CHECK_NULL(lib_p)

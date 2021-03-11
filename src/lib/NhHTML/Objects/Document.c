@@ -17,6 +17,8 @@
 #include "../../NhCore/List.h"
 #include "../../NhCore/Memory.h"
 
+#include "../../NhWebIDL/Runtime/Object.h"
+
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,4 +37,12 @@ NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
 
 // API =============================================================================================
 
+Nh_WebIDL_Object *Nh_HTML_createDocument()
+{
+NH_HTML_BEGIN()
+
+    Nh_WebIDL_Object *Document_p = Nh_WebIDL_createCompositeObject("HTML", "Document");
+
+NH_HTML_END(Document_p)
+}
 

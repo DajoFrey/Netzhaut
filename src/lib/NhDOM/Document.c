@@ -19,6 +19,8 @@
 #include NH_WEBIDL_FLOW1
 #include NH_WEBIDL_CUSTOM_CHECK1
 
+#include "../NhCore/Memory.h"
+
 #include <string.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -27,7 +29,6 @@
 // DECLARE =========================================================================================
 
 #define MODE ((Nh_DOM_Document*)Document_p->internal_p)->Mode_p
-
 #define DOCTYPE Document_p->Attributes.pp[9]
 
 typedef struct Nh_DOM_Document {
@@ -46,6 +47,9 @@ NH_DOM_RESULT Nh_DOM_initializeDocument(
     Nh_WebIDL_Object *Document_p)
 {
 NH_DOM_BEGIN()
+
+    Document_p->internal_p = Nh_allocate(sizeof(Nh_DOM_Document));
+    NH_DOM_CHECK_MEM(Document_p->internal_p)
 
     MODE = &NH_DOM_DOCUMENT_MODE_NO_QUIRKS;
 

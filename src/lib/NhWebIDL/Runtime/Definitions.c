@@ -15,12 +15,116 @@
 #include NH_WEBIDL_FLOW
 #include NH_WEBIDL_DEFAULT_CHECK
 
+#include "../../NhCore/Memory.h"
+
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 // CLASSES =========================================================================================
+
+static const NH_BYTE *Nh_WebIDL_getInterfaceMemberName(
+    Nh_WebIDL_ParseNode *Node_p)
+{
+NH_WEBIDL_BEGIN()
+
+    NH_BYTE *name_p = NULL;
+
+    switch (Node_p->type)
+    {
+        case NH_WEBIDL_PARSE_NODE_CONST :
+            name_p = ((Nh_WebIDL_ParseNode*)Node_p->Children.pp[2])->Token_p->String.bytes_p;
+            break;
+
+        case NH_WEBIDL_PARSE_NODE_READ_ONLY_MEMBER :
+        case NH_WEBIDL_PARSE_NODE_READ_WRITE_ATTRIBUTE :
+        {
+            Nh_List AttributeNames = Nh_initList(1);
+            Nh_WebIDL_getParseNodes(Node_p, NH_WEBIDL_PARSE_NODE_ATTRIBUTE_NAME, &AttributeNames);
+            if (AttributeNames.size == 1) {
+                if (((Nh_WebIDL_ParseNode*)((Nh_WebIDL_ParseNode*)AttributeNames.pp[0])->Children.pp[0])->Children.size == 0) {
+                    name_p = ((Nh_WebIDL_ParseNode*)((Nh_WebIDL_ParseNode*)AttributeNames.pp[0])->Children.pp[0])->Token_p->String.bytes_p;
+                } 
+            }
+            Nh_freeList(&AttributeNames, NH_FALSE);
+            break;
+        }
+        case NH_WEBIDL_PARSE_NODE_OPERATION :
+        {
+            Nh_List OperationNames = Nh_initList(1);
+            Nh_WebIDL_getParseNodes(Node_p, NH_WEBIDL_PARSE_NODE_OPERATION_NAME, &OperationNames);
+            if (OperationNames.size == 1) {
+                if (((Nh_WebIDL_ParseNode*)((Nh_WebIDL_ParseNode*)OperationNames.pp[0])->Children.pp[0])->Children.size == 0) {
+                    name_p = ((Nh_WebIDL_ParseNode*)((Nh_WebIDL_ParseNode*)OperationNames.pp[0])->Children.pp[0])->Token_p->String.bytes_p;
+                } 
+            }
+            Nh_freeList(&OperationNames, NH_FALSE);
+            break;
+        }
+        case NH_WEBIDL_PARSE_NODE_READ_WRITE_MAPLIKE :
+        case NH_WEBIDL_PARSE_NODE_READ_WRITE_SETLIKE :
+            break;
+    }
+
+NH_WEBIDL_END(name_p)
+}
+
+static NH_WEBIDL_RESULT Nh_WebIDL_getInterfaceMembers(
+    Nh_WebIDL_Interface *Interface_p, Nh_WebIDL_ParseNode *InterfaceRest_p, NH_BOOL partial)
+{
+NH_WEBIDL_BEGIN()
+
+    Nh_List InterfaceMembers = Nh_initList(8);
+
+    if (!partial) {
+        Nh_WebIDL_getParseNodes(InterfaceRest_p, NH_WEBIDL_PARSE_NODE_CLASS_MEMBER, &InterfaceMembers);
+        for (int i = 0; i < InterfaceMembers.size; ++i) {
+            Nh_WebIDL_InterfaceMember *InterfaceMember_p = Nh_incrementArray(&Interface_p->Members);
+            if (((Nh_WebIDL_ParseNode*)((Nh_WebIDL_ParseNode*)InterfaceMembers.pp[i])->Children.pp[0])->type == NH_WEBIDL_PARSE_NODE_PARTIAL_CLASS_MEMBER) {
+                InterfaceMember_p->Node_p = ((Nh_WebIDL_ParseNode*)((Nh_WebIDL_ParseNode*)InterfaceMembers.pp[i])->Children.pp[0])->Children.pp[0];
+            }
+            else {InterfaceMember_p->Node_p = ((Nh_WebIDL_ParseNode*)InterfaceMembers.pp[i])->Children.pp[0];} // constructor
+            InterfaceMember_p->name_p = Nh_WebIDL_getInterfaceMemberName(InterfaceMember_p->Node_p);
+        }
+    }
+    else {
+        Nh_WebIDL_getParseNodes(InterfaceRest_p, NH_WEBIDL_PARSE_NODE_PARTIAL_CLASS_MEMBER, &InterfaceMembers);
+        for (int i = 0; i < InterfaceMembers.size; ++i) {
+            Nh_WebIDL_InterfaceMember *InterfaceMember_p = Nh_incrementArray(&Interface_p->Members);
+            InterfaceMember_p->Node_p = ((Nh_WebIDL_ParseNode*)InterfaceMembers.pp[i])->Children.pp[0];
+            InterfaceMember_p->name_p = Nh_WebIDL_getInterfaceMemberName(InterfaceMember_p->Node_p);
+        }
+    }
+  
+    Nh_freeList(&InterfaceMembers, NH_FALSE);
+
+NH_WEBIDL_DIAGNOSTIC_END(NH_WEBIDL_SUCCESS)
+}
+
+static NH_WEBIDL_RESULT Nh_WebIDL_getInterfaceInheritance(
+    Nh_WebIDL_Interface *Interface_p, Nh_WebIDL_ParseNode *InterfaceRest_p)
+{
+NH_WEBIDL_BEGIN()
+
+    Nh_List Inheritance = Nh_initList(1);
+    Nh_WebIDL_getParseNodes(InterfaceRest_p, NH_WEBIDL_PARSE_NODE_INHERITANCE, &Inheritance);
+
+    if (Inheritance.size == 1 && ((Nh_WebIDL_ParseNode*)Inheritance.pp[0])->Children.size > 0) 
+    {
+        Interface_p->Inheritance_p = Nh_allocate(sizeof(Nh_WebIDL_InterfaceInheritance));
+        NH_WEBIDL_CHECK_MEM(Interface_p->Inheritance_p)
+        Interface_p->Inheritance_p->interface_p = ((Nh_WebIDL_ParseNode*)((Nh_WebIDL_ParseNode*)Inheritance.pp[0])->Children.pp[1])->Token_p->String.bytes_p;
+        Interface_p->Inheritance_p->specification_p = NULL;
+        if (((Nh_WebIDL_ParseNode*)((Nh_WebIDL_ParseNode*)Inheritance.pp[0])->Children.pp[2])->Children.size == 2) {
+            Interface_p->Inheritance_p->specification_p = ((Nh_WebIDL_ParseNode*)((Nh_WebIDL_ParseNode*)((Nh_WebIDL_ParseNode*)Inheritance.pp[0])->Children.pp[2])->Children.pp[1])->Token_p->String.bytes_p;
+        }
+    }
+
+    Nh_freeList(&Inheritance, NH_FALSE);
+
+NH_WEBIDL_DIAGNOSTIC_END(NH_WEBIDL_SUCCESS)
+}
 
 static Nh_WebIDL_Interface Nh_WebIDL_createInterface(
     Nh_WebIDL_Specification *Specification_p, Nh_WebIDL_ParseNode *InterfaceRest_p, NH_BOOL partial)
@@ -32,34 +136,10 @@ NH_WEBIDL_BEGIN()
     Interface.Members = Nh_initArray(sizeof(Nh_WebIDL_InterfaceMember), 8);
     Interface.name_p  = ((Nh_WebIDL_ParseNode*)InterfaceRest_p->Children.pp[0])->Token_p->String.bytes_p;
     Interface.Specification_p = Specification_p;
+    Interface.Inheritance_p   = NULL;
 
-    Nh_List InterfaceMembers = Nh_initList(8);
-
-    if (!partial) {
-        Nh_WebIDL_getParseNodes(InterfaceRest_p, NH_WEBIDL_PARSE_NODE_CLASS_MEMBER, &InterfaceMembers);
-        for (int i = 0; i < InterfaceMembers.size; ++i) {
-            Nh_WebIDL_InterfaceMember *InterfaceMember_p = Nh_incrementArray(&Interface.Members);
-            if (((Nh_WebIDL_ParseNode*)((Nh_WebIDL_ParseNode*)InterfaceMembers.pp[i])->Children.pp[0])->type == NH_WEBIDL_PARSE_NODE_PARTIAL_CLASS_MEMBER) {
-                InterfaceMember_p->Node_p = ((Nh_WebIDL_ParseNode*)((Nh_WebIDL_ParseNode*)InterfaceMembers.pp[i])->Children.pp[0])->Children.pp[0];
-            }
-            else {InterfaceMember_p->Node_p = ((Nh_WebIDL_ParseNode*)InterfaceMembers.pp[i])->Children.pp[0];} // constructor
-        }
-    }
-    else {
-        Nh_WebIDL_getParseNodes(InterfaceRest_p, NH_WEBIDL_PARSE_NODE_PARTIAL_CLASS_MEMBER, &InterfaceMembers);
-        for (int i = 0; i < InterfaceMembers.size; ++i) {
-            Nh_WebIDL_InterfaceMember *InterfaceMember_p = Nh_incrementArray(&Interface.Members);
-            InterfaceMember_p->Node_p = ((Nh_WebIDL_ParseNode*)InterfaceMembers.pp[i])->Children.pp[0];
-        }
-    }
-  
-    Nh_List Inheritance = Nh_initList(1);
-    Nh_WebIDL_getParseNodes(InterfaceRest_p, NH_WEBIDL_PARSE_NODE_INHERITANCE, &Inheritance);
-
-    Interface.Child_p = Nh_getFromList(&Inheritance, 0);
-
-    Nh_freeList(&InterfaceMembers, NH_FALSE);
-    Nh_freeList(&Inheritance, NH_FALSE);
+    Nh_WebIDL_getInterfaceMembers(&Interface, InterfaceRest_p, partial);
+    Nh_WebIDL_getInterfaceInheritance(&Interface, InterfaceRest_p);
 
 NH_WEBIDL_END(Interface)
 }

@@ -32,7 +32,7 @@
 
 #define NODE_TYPE Node_p->Attributes.pp[0]
 #define NODE_NAME Node_p->Attributes.pp[1] 
-#define CHILD_NODES Node_p->Attributes.pp[8]
+#define CHILD_NODES Node_p->Attributes.pp[7]
 
 typedef struct Nh_DOM_Node {
     Nh_WebIDL_Object *Document_p;
@@ -56,35 +56,35 @@ NH_DOM_BEGIN()
             continue;
         }
     
-        if (strcmp(Parent_p->Interface_p->name_p, "Element")) {
+        if (!strcmp(Parent_p->Interface_p->name_p, "Element")) {
             NODE_TYPE = (void*)1;
         }
-        else if (strcmp(Parent_p->Interface_p->name_p, "Attr")) {
+        else if (!strcmp(Parent_p->Interface_p->name_p, "Attr")) {
             NODE_TYPE = (void*)2;
         }
-        else if (strcmp(Parent_p->Interface_p->name_p, "Text")) {
+        else if (!strcmp(Parent_p->Interface_p->name_p, "Text")) {
             NODE_TYPE = (void*)3;
         }
-        else if (strcmp(Parent_p->Interface_p->name_p, "CDATASection")) {
+        else if (!strcmp(Parent_p->Interface_p->name_p, "CDATASection")) {
             NODE_TYPE = (void*)4;
         }
-        else if (strcmp(Parent_p->Interface_p->name_p, "ProcessingInstruction")) {
+        else if (!strcmp(Parent_p->Interface_p->name_p, "ProcessingInstruction")) {
             NODE_TYPE = (void*)7;
         }
-        else if (strcmp(Parent_p->Interface_p->name_p, "Comment")) {
+        else if (!strcmp(Parent_p->Interface_p->name_p, "Comment")) {
             NODE_TYPE = (void*)8;
         }
-        else if (strcmp(Parent_p->Interface_p->name_p, "Document")) {
+        else if (!strcmp(Parent_p->Interface_p->name_p, "Document")) {
             NODE_TYPE = (void*)9;
         }
-        else if (strcmp(Parent_p->Interface_p->name_p, "DocumentType")) {
+        else if (!strcmp(Parent_p->Interface_p->name_p, "DocumentType")) {
             NODE_TYPE = (void*)10;
         }
-        else if (strcmp(Parent_p->Interface_p->name_p, "DocumentFragment")) {
+        else if (!strcmp(Parent_p->Interface_p->name_p, "DocumentFragment")) {
             NODE_TYPE = (void*)11;
         }
 
-        if (NODE_TYPE > 0) {NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)}
+        if (NODE_TYPE) {NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)}
 
         Parent_p = Parent_p->Parent_p;
     }
@@ -113,12 +113,22 @@ NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)
 
 // INTERNAL ========================================================================================
 
-NH_DOM_RESULT Nh_DOM_appendChildToNode(
+NH_DOM_RESULT Nh_DOM_appendToNode(
     Nh_WebIDL_Object *Node_p, Nh_WebIDL_Object *Child_p)
 {
 NH_DOM_BEGIN()
 
     NH_DOM_CHECK(Nh_DOM_appendToNodeList(CHILD_NODES, Child_p))
+
+NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)
+}
+
+NH_DOM_RESULT Nh_DOM_insertIntoNode(
+    Nh_WebIDL_Object *Node_p, Nh_WebIDL_Object *Child_p, NH_WEBIDL_UNSIGNED_LONG index)
+{
+NH_DOM_BEGIN()
+
+    NH_DOM_CHECK(Nh_DOM_insertIntoNodeList(CHILD_NODES, Child_p, index))
 
 NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)
 }

@@ -205,7 +205,14 @@ NH_BEGIN()
 NH_DIAGNOSTIC_END(NH_SUCCESS)
 }
 
-// ASCII ===========================================================================================
+// CHECKS ==========================================================================================
+
+NH_BOOL Nh_isASCIIWhitespace(
+    NH_UNICODE_CODEPOINT codepoint)
+{
+NH_BEGIN()
+NH_END(codepoint == 0x09 || codepoint == 0x0A || codepoint == 0x0C || codepoint == 0x0D || codepoint == 0x20)
+}
 
 NH_BOOL Nh_isASCIIUpperAlpha(
     NH_UNICODE_CODEPOINT codepoint)
@@ -247,14 +254,51 @@ NH_BOOL Nh_isASCIICaseInsensitiveMatch(
 {
 NH_BEGIN()
 
-     for (;; str1_p++, str2_p++) {
-        int d = tolower((unsigned char)*str1_p) - tolower((unsigned char)*str2_p);
-        if (d != 0 || !*str1_p) {
+    if (strlen(str1_p) != strlen(str2_p)) {NH_END(NH_FALSE)}
+
+    for (int i = 0; i < strlen(str1_p); ++i) {
+        int d = tolower((unsigned char)str1_p[i]) - tolower((unsigned char)str2_p[i]);
+        if (d != 0) {
             NH_END(NH_FALSE)
         }
     }
    
 NH_END(NH_TRUE)
+}
+
+NH_BOOL Nh_isSurrogate(
+    NH_UNICODE_CODEPOINT codepoint)
+{
+NH_BEGIN()
+NH_END(codepoint >= 0xD800 && codepoint <= 0xDFFF)
+}
+
+NH_BOOL Nh_isScalarValue(
+    NH_UNICODE_CODEPOINT codepoint)
+{
+NH_BEGIN()
+NH_END(!Nh_isSurrogate(codepoint))
+}
+
+NH_BOOL Nh_isNonCharacter(
+    NH_UNICODE_CODEPOINT codepoint)
+{
+NH_BEGIN()
+NH_END((codepoint >= 0xFDD0 && codepoint <= 0xFDEF) || codepoint == 0xFFFE || codepoint == 0xFFFF || codepoint == 0x1FFFE || codepoint == 0x1FFFF || codepoint == 0x2FFFE || codepoint == 0x2FFFF || codepoint == 0x3FFFE || codepoint == 0x3FFFF || codepoint == 0x4FFFE || codepoint == 0x4FFFF || codepoint == 0x5FFFE || codepoint == 0x5FFFF || codepoint == 0x6FFFE || codepoint == 0x6FFFF || codepoint == 0x7FFFE || codepoint == 0x7FFFF || codepoint == 0x8FFFE || codepoint == 0x8FFFF || codepoint == 0x9FFFE || codepoint == 0x9FFFF || codepoint == 0xAFFFE || codepoint == 0xAFFFF || codepoint == 0xBFFFE || codepoint == 0xBFFFF || codepoint == 0xCFFFE || codepoint == 0xCFFFF || codepoint == 0xDFFFE || codepoint == 0xDFFFF || codepoint == 0xEFFFE || codepoint == 0xEFFFF || codepoint == 0xFFFFE || codepoint == 0xFFFFF || codepoint == 0x10FFFE || codepoint == 0x10FFFF)
+}
+
+NH_BOOL Nh_isC0Control(
+    NH_UNICODE_CODEPOINT codepoint)
+{
+NH_BEGIN()
+NH_END(codepoint >= 0x0000 && codepoint <= 0x001F)
+}
+
+NH_BOOL Nh_isControl(
+    NH_UNICODE_CODEPOINT codepoint)
+{
+NH_BEGIN()
+NH_END(Nh_isC0Control(codepoint) || (codepoint >= 0x007F && codepoint <= 0x009F))
 }
 
 // LOOKUP ==========================================================================================

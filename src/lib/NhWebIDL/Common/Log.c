@@ -141,6 +141,15 @@ NH_WEBIDL_BEGIN()
         NH_BYTE className_p[255] = {'\0'};
         sprintf(className_p, Interface_p->partial ? "%s (partial)" : "%s", Interface_p->name_p);
 
+        if (Interface_p->Inheritance_p) 
+        {
+            NH_BYTE message_p[1024] = {'\0'}; 
+            sprintf(
+                message_p, "[NhWebIDL:%s:Interfaces:%s]{Inherits %s (%s)}", specification_p, className_p, Interface_p->Inheritance_p->interface_p, Interface_p->Inheritance_p->specification_p ? Interface_p->Inheritance_p->specification_p : Interface_p->Specification_p->name_p
+            );
+            Nh_sendLogMessage(message_p);
+        }
+
         NH_BYTE message_p[1024] = {'\0'};
         sprintf(
             message_p, "[NhWebIDL:%s:Interfaces:%s]{Members:}", specification_p, className_p
@@ -152,7 +161,7 @@ NH_WEBIDL_BEGIN()
             Nh_WebIDL_InterfaceMember *InterfaceMember_p = &((Nh_WebIDL_InterfaceMember*)Interface_p->Members.bytes_p)[j];
             NH_BYTE message_p[1024] = {'\0'};
             sprintf(
-                message_p, "[NhWebIDL:%s:Interfaces:%s]{  %s}", specification_p, className_p, NH_WEBIDL_PARSE_NODE_NAMES_PP[InterfaceMember_p->Node_p->type]
+                message_p, "[NhWebIDL:%s:Interfaces:%s]{  %s %s}", specification_p, className_p, NH_WEBIDL_PARSE_NODE_NAMES_PP[InterfaceMember_p->Node_p->type], InterfaceMember_p->name_p == NULL ? "null" : InterfaceMember_p->name_p
             );
             Nh_sendLogMessage(message_p);
         }

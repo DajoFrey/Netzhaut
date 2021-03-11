@@ -163,6 +163,8 @@ NH_TTY_BEGIN()
     Logger_p->listingWidth   = 0;
     Logger_p->height         = 0;
     Logger_p->LastUpdate     = Nh_getSystemTime();
+    Logger_p->screenCurrent  = 0;
+    Logger_p->rowOffset      = 0;
     Logger_p->updateIntervalInSeconds = 1.0;
 
     Logger_p->Root.LoggerNode_p = &NH_LOGGER.Root;
@@ -263,15 +265,23 @@ NH_TTY_BEGIN()
     switch (key) 
     {
         case 'w' :
-            if (index > 0) {
+            if (index > 0) 
+            {
                 Current_p->isCurrent = NH_FALSE;
                 ((Nh_TTY_LoggerNode*)Nodes.pp[index - 1])->isCurrent = NH_TRUE;
+
+                if (Logger_p->screenCurrent == 0 && Logger_p->rowOffset > 0) {Logger_p->rowOffset--;}
+                else if (Logger_p->screenCurrent > 0) {Logger_p->screenCurrent--;}
             }
             break;
         case 's' :
-            if (Nodes.size > index + 1) {
+            if (Nodes.size > index + 1) 
+            {
                 Current_p->isCurrent = NH_FALSE;
                 ((Nh_TTY_LoggerNode*)Nodes.pp[index + 1])->isCurrent = NH_TRUE;
+
+                if (Logger_p->screenCurrent < Logger_p->height - 1) {Logger_p->screenCurrent++;}
+                else {Logger_p->rowOffset++;}
             }
             break;
     }
@@ -563,7 +573,7 @@ NH_TTY_BEGIN()
     int tmp = -1;
     Nh_List Nodes = Nh_initList(16);
     Nh_TTY_getLoggerNodes(&Logger_p->Root, &Nodes);
-    Nh_TTY_LoggerNode *Node_p = Nh_getFromList(&Nodes, row);
+    Nh_TTY_LoggerNode *Node_p = Nh_getFromList(&Nodes, row + Logger_p->rowOffset);
 
     if (Logger_p->showCategories)
     {

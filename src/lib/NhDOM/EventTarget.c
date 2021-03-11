@@ -23,7 +23,7 @@
 
 // DECLARE =========================================================================================
 
-#define EVENT_LISTENERS EventTarget_p->Attributes.pp[0]
+#define EVENT_LISTENERS EventTarget_p->internal_p
 
 // INITIALIZE ======================================================================================
 
@@ -32,8 +32,9 @@ NH_DOM_RESULT Nh_DOM_initializeEventTarget(
 {
 NH_DOM_BEGIN()
 
-    EVENT_LISTENERS = Nh_allocate(sizeof(Nh_List));
-    NH_DOM_CHECK_MEM(EVENT_LISTENERS)
+    EventTarget_p->internal_p = Nh_allocate(sizeof(Nh_List));
+    NH_DOM_CHECK_MEM(EventTarget_p->internal_p)
+
     *((Nh_List*)EVENT_LISTENERS) = Nh_initList(16);
 
 NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)

@@ -22,6 +22,18 @@
         Nh_WebIDL_Object *NodeList_p, Nh_WebIDL_Object *Node_p
     );
 
+    NH_DOM_RESULT Nh_DOM_insertIntoNodeList(
+        Nh_WebIDL_Object *NodeList_p, Nh_WebIDL_Object *Child_p, NH_WEBIDL_UNSIGNED_LONG index
+    );
+
+    Nh_WebIDL_Object *Nh_DOM_getFromNodeList(
+        Nh_WebIDL_Object *NodeList_p, NH_WEBIDL_UNSIGNED_LONG index
+    );
+    
+    NH_WEBIDL_UNSIGNED_LONG Nh_DOM_getNodeListLength(
+        Nh_WebIDL_Object *NodeList_p
+    );
+
 /** @} */
 
 #endif

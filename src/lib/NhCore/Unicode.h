@@ -105,7 +105,11 @@
     NH_RESULT Nh_logUnicodeCodepoints(
     );
 
-// ASCII
+// CHECKS 
+
+    NH_BOOL Nh_isASCIIWhitespace(
+        NH_UNICODE_CODEPOINT codepoint
+    );
 
     NH_BOOL Nh_isASCIIUpperAlpha(
         NH_UNICODE_CODEPOINT codepoint
@@ -130,6 +134,27 @@
     NH_BOOL Nh_isASCIICaseInsensitiveMatch(
         NH_BYTE *str1_p, NH_BYTE *str2_p
     );
+
+    NH_BOOL Nh_isSurrogate(
+        NH_UNICODE_CODEPOINT codepoint
+    );
+    
+    NH_BOOL Nh_isScalarValue(
+        NH_UNICODE_CODEPOINT codepoint
+    );
+    
+    NH_BOOL Nh_isNonCharacter(
+        NH_UNICODE_CODEPOINT codepoint
+    );
+
+    NH_BOOL Nh_isC0Control(
+        NH_UNICODE_CODEPOINT codepoint
+    );
+    
+    NH_BOOL Nh_isControl(
+        NH_UNICODE_CODEPOINT codepoint
+    );
+
 /** @} */
 
 #endif 

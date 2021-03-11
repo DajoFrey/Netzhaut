@@ -20,7 +20,7 @@
 
     Nh_WebIDL_Object *Nh_DOM_createElement(
         Nh_WebIDL_Object *Document_p, Nh_WebIDL_DOMString *LocalName_p, Nh_WebIDL_DOMString *Namespace_p, Nh_WebIDL_DOMString *NamespacePrefix_p,
-        Nh_WebIDL_DOMString *Is_p, NH_BOOL synchronousCustomElements
+        Nh_WebIDL_DOMString *Is_p, NH_BOOL synchronousCustomElements, Nh_WebIDL_Interface *Interface_p
     );
 
     Nh_WebIDL_DOMString *Nh_DOM_getNamespaceURI(

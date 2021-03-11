@@ -63,6 +63,10 @@
         NH_BYTE *name_p, Nh_TTY_TextFile *TextFile_p
     );
 
+    NH_TTY_RESULT Nh_TTY_parseHTML(
+        NH_BYTE *name_p, Nh_TTY_TextFile *TextFile_p
+    );
+
     NH_TTY_RESULT Nh_TTY_handleTextFileInput(
         Nh_TTY_File *File_p, int height, NH_UNICODE_CODEPOINT c, NH_BOOL insertMode, NH_BOOL *refresh_p
     );

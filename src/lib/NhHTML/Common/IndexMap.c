@@ -21,7 +21,7 @@
 // DECLARE =========================================================================================
 
 typedef enum NH_HTML_INDEXMAP_E {
-    NH_HTML_INDEXMAP_TAGS = 1,
+    NH_HTML_INDEXMAP_TAGS = 0,
     NH_HTML_INDEXMAP_COUNT,
 } NH_HTML_INDEXMAP_E;
 

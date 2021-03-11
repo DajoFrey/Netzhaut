@@ -250,7 +250,7 @@ NH_TTY_BEGIN()
 
     Nh_SystemTime SystemTime = Nh_getSystemTime();
     NH_BYTE logName_p[255] = {'\0'};
-    sprintf(logName_p, "NhTTY_%lu%lu", SystemTime.seconds, SystemTime.milliseconds);
+    sprintf(logName_p, "%lu%lu", SystemTime.seconds, SystemTime.milliseconds);
 
     if (codepoint == 'e') {
         Nh_TTY_File *File_p = Nh_getFromLinkedList(&Editor_p->FileEditor.Files, Editor_p->FileEditor.current);
@@ -260,6 +260,12 @@ NH_TTY_BEGIN()
         Nh_TTY_File *File_p = Nh_getFromLinkedList(&Editor_p->FileEditor.Files, Editor_p->FileEditor.current);
         if (File_p != NULL) {
             NH_TTY_CHECK(Nh_TTY_parseWebTextFile(logName_p, File_p->handle_p))
+        }
+    }
+    else if (codepoint == 'h') {
+        Nh_TTY_File *File_p = Nh_getFromLinkedList(&Editor_p->FileEditor.Files, Editor_p->FileEditor.current);
+        if (File_p != NULL) {
+            NH_TTY_CHECK(Nh_TTY_parseHTML(logName_p, File_p->handle_p))
         }
     }
 

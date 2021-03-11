@@ -18,6 +18,9 @@
  *  @{
  */
 
+    Nh_WebIDL_Object *Nh_HTML_createDocument(
+    );
+
 /** @} */
 
 #endif

@@ -82,12 +82,17 @@
         Nh_Array Fragments;
     } Nh_WebIDL_Specification;
 
+    typedef struct Nh_WebIDL_InterfaceInheritance {
+        const NH_BYTE *interface_p;
+        const NH_BYTE *specification_p;
+    } Nh_WebIDL_InterfaceInheritance;
+
     typedef struct Nh_WebIDL_Interface {
         NH_BOOL partial;
         NH_BYTE *name_p;
         Nh_Array Members;
         Nh_WebIDL_Specification *Specification_p;
-        Nh_WebIDL_ParseNode *Child_p;
+        Nh_WebIDL_InterfaceInheritance *Inheritance_p;
     } Nh_WebIDL_Interface;
 
     typedef struct Nh_WebIDL_Object {

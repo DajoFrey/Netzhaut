@@ -41,6 +41,8 @@
         NH_BOOL showCategories;
         int listingWidth;
         int height;
+        int screenCurrent;
+        int rowOffset;
         Nh_TTY_LoggerNode Root;
         Nh_SystemTime LastUpdate;
         double updateIntervalInSeconds;

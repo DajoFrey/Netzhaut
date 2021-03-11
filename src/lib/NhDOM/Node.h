@@ -18,8 +18,12 @@
  *  @{
  */
 
-    NH_DOM_RESULT Nh_DOM_appendChildToNode(
+    NH_DOM_RESULT Nh_DOM_appendToNode(
         Nh_WebIDL_Object *Node_p, Nh_WebIDL_Object *Child_p
+    );
+
+    NH_DOM_RESULT Nh_DOM_insertIntoNode(
+        Nh_WebIDL_Object *Node_p, Nh_WebIDL_Object *Child_p, NH_WEBIDL_UNSIGNED_LONG index
     );
 
     NH_DOM_RESULT Nh_DOM_setNodeDocument(

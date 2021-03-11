@@ -273,6 +273,7 @@ NH_WEBIDL_BEGIN()
     ||  codepoints_p[0] == '~' 
     ||  codepoints_p[0] == '?' 
     ||  codepoints_p[0] == ':' 
+    ||  codepoints_p[0] == '@' 
     ||  codepoints_p[0] == '=') 
     {
         NH_WEBIDL_END(1)

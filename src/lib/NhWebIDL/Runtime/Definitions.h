@@ -20,6 +20,7 @@
  */
 
     typedef struct Nh_WebIDL_InterfaceMember {
+        const NH_BYTE *name_p;
         Nh_WebIDL_ParseNode *Node_p;
     } Nh_WebIDL_InterfaceMember;
 

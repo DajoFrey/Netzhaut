@@ -27,6 +27,7 @@
 #include NH_TTY_FLOW
 #include NH_TTY_DEFAULT_CHECK
 
+#include "../NhHTML/Parser/Parser.h"
 #include "../NhWebIDL/Runtime/Parser.h"
 #include "../NhLoader/Loader.h"
 
@@ -205,6 +206,34 @@ NH_TTY_BEGIN()
     else {NH_TTY_DIAGNOSTIC_END(NH_TTY_ERROR_BAD_STATE)}
 
     Nh_freeString(&Bytes);
+
+NH_TTY_DIAGNOSTIC_END(NH_TTY_SUCCESS)
+}
+
+NH_TTY_RESULT Nh_TTY_parseHTML(
+    NH_BYTE *name_p, Nh_TTY_TextFile *TextFile_p)
+{
+NH_TTY_BEGIN()
+
+    Nh_UnicodeString InputStream = Nh_initUnicodeString(255);
+
+    for (int i = 0; i < TextFile_p->Lines.size; ++i) {
+        Nh_UnicodeString *Line_p = TextFile_p->Lines.pp[i];
+        Nh_appendToUnicodeString(&InputStream, Line_p->p, Line_p->length);
+    }
+
+    Nh_HTML_parseDocument_f parse_f = NH_LOADER.loadFunction_f("NhHTML", 0, "Nh_HTML_parseDocument");
+
+    if (parse_f != NULL) 
+    {
+        parse_f(InputStream, NULL);
+//        Nh_WebIDL_unparse_f unparse_f = NH_LOADER.loadFunction_f("NhWebIDL", 0, "Nh_WebIDL_unparse");
+//        if (unparse_f != NULL) {unparse_f(ParseResult);}
+//        else {NH_TTY_DIAGNOSTIC_END(NH_TTY_ERROR_BAD_STATE)}
+    }
+    else {NH_TTY_DIAGNOSTIC_END(NH_TTY_ERROR_BAD_STATE)}
+
+    Nh_freeUnicodeString(&InputStream);
 
 NH_TTY_DIAGNOSTIC_END(NH_TTY_SUCCESS)
 }

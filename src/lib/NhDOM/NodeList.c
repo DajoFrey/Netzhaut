@@ -54,3 +54,27 @@ NH_DOM_BEGIN()
 NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)
 }
 
+NH_DOM_RESULT Nh_DOM_insertIntoNodeList(
+    Nh_WebIDL_Object *NodeList_p, Nh_WebIDL_Object *Node_p, NH_WEBIDL_UNSIGNED_LONG index)
+{
+NH_DOM_BEGIN()
+
+    Nh_insertIntoList(NODES, Node_p, index);
+
+NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)
+}
+
+Nh_WebIDL_Object *Nh_DOM_getFromNodeList(
+    Nh_WebIDL_Object *NodeList_p, NH_WEBIDL_UNSIGNED_LONG index)
+{
+NH_DOM_BEGIN()
+NH_DOM_END(((Nh_List*)NODES)->pp[index])
+}
+
+NH_WEBIDL_UNSIGNED_LONG Nh_DOM_getNodeListLength(
+    Nh_WebIDL_Object *NodeList_p)
+{
+NH_DOM_BEGIN()
+NH_DOM_END(*((NH_WEBIDL_UNSIGNED_LONG*)LENGTH))
+}
+

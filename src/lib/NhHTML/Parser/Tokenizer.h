@@ -153,7 +153,7 @@
     typedef struct Nh_HTML_Tokenizer {
         NH_HTML_TOKENIZATION_STATE state;
         NH_HTML_TOKENIZATION_STATE returnState;
-        Nh_WebIDL_USVString Codepoints;
+        Nh_WebIDL_USVString InputStream;
         Nh_Array Tokens;
         Nh_List Emits;
         unsigned long index;
@@ -170,6 +170,7 @@
  */
 
     Nh_HTML_Tokenizer Nh_HTML_initTokenizer(
+        void *Parser_p, Nh_WebIDL_USVString InputStream
     );
 
     NH_HTML_RESULT Nh_HTML_consumeNext(

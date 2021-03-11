@@ -136,6 +136,7 @@ const NH_BYTE *NH_WEBIDL_PARSE_NODE_NAMES_PP[] = {
     "ExtendedAttributeIdent",
     "ExtendedAttributeIdentList",
     "ExtendedAttributeNamedArgList",
+    "NON_STANDARD_Specifier",
 };
 
 size_t NH_WEBIDL_PARSE_NODE_NAMES_PP_COUNT = sizeof(NH_WEBIDL_PARSE_NODE_NAMES_PP) / sizeof(NH_WEBIDL_PARSE_NODE_NAMES_PP[0]);
@@ -1657,18 +1658,40 @@ NH_WEBIDL_BEGIN()
 NH_WEBIDL_END(Nh_WebIDL_initParseResult(NULL))
 }
 
+static Nh_WebIDL_ParseResult Nh_WebIDL_parseNON_STANDARD_Specifier(
+    Nh_WebIDL_Parser *Parser_p)
+{
+NH_WEBIDL_BEGIN()
+
+    Nh_WebIDL_ParseNode *Specifier_p = Nh_WebIDL_allocateNonTerminalParseNode("NON_STANDARD_Specifier", 2);
+
+    if (Parser_p->unparsed > 1 && Parser_p->Tokens_p[0].String.bytes_p[0] == '@' && Parser_p->Tokens_p[1].type == NH_WEBIDL_TOKEN_IDENTIFIER)
+    {
+        Nh_appendToList(&Specifier_p->Children, Nh_WebIDL_allocateTerminalParseNode(&Parser_p->Tokens_p[0]));
+        Nh_appendToList(&Specifier_p->Children, Nh_WebIDL_allocateTerminalParseNode(&Parser_p->Tokens_p[1]));
+
+        *Parser_p = Nh_WebIDL_advanceParser(*Parser_p, 2);
+    }
+
+NH_WEBIDL_END(Nh_WebIDL_initParseResult(Specifier_p))
+}
+
 static Nh_WebIDL_ParseResult Nh_WebIDL_parseInheritance(
     Nh_WebIDL_Parser *Parser_p)
 {
 NH_WEBIDL_BEGIN()
 
-    Nh_WebIDL_ParseNode *Inheritance_p = Nh_WebIDL_allocateNonTerminalParseNode("Inheritance", 2);
+    Nh_WebIDL_ParseNode *Inheritance_p = Nh_WebIDL_allocateNonTerminalParseNode("Inheritance", 3);
 
     if (Parser_p->unparsed > 1 && Parser_p->Tokens_p[0].String.bytes_p[0] == ':' && Parser_p->Tokens_p[1].type == NH_WEBIDL_TOKEN_IDENTIFIER)
     {
         Nh_appendToList(&Inheritance_p->Children, Nh_WebIDL_allocateTerminalParseNode(&Parser_p->Tokens_p[0]));
         Nh_appendToList(&Inheritance_p->Children, Nh_WebIDL_allocateTerminalParseNode(&Parser_p->Tokens_p[1]));
+
         *Parser_p = Nh_WebIDL_advanceParser(*Parser_p, 2);
+
+        Nh_WebIDL_ParseResult Specifier = Nh_WebIDL_parseNON_STANDARD_Specifier(Parser_p);
+        Nh_appendToList(&Inheritance_p->Children, Specifier.Node_p);
     }
 
 NH_WEBIDL_END(Nh_WebIDL_initParseResult(Inheritance_p))

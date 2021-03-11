@@ -38,6 +38,10 @@
         Nh_WebIDL_Object *Object_p, NH_BYTE *specification_p, NH_BYTE *interface_p
     );
 
+    void *Nh_WebIDL_get(
+        Nh_WebIDL_Object *Object_p, NH_BYTE *attribute_p
+    );
+
 //    Nh_WebIDL_Any Nh_WebIDL_callOperation(
 //        Nh_WebIDL_Object *Object_p, NH_BYTE *name_p, ...
 //    );

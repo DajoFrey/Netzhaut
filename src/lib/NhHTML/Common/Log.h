@@ -9,6 +9,7 @@
  * Published under LGPLv3
  */
 
+#include "API.h"
 #include "Result.h"
 
 #endif
@@ -27,6 +28,10 @@
     
     NH_HTML_RESULT _Nh_HTML_logDiagnosticEnd(
         const NH_BYTE *file_p, const NH_BYTE *function_p, NH_HTML_RESULT result, int line
+    );
+
+    NH_HTML_RESULT Nh_HTML_logDocument(
+        NH_BYTE *logName_p, Nh_WebIDL_Object *Document_p
     );
 
 /** @} */

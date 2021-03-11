@@ -21,8 +21,7 @@
 
 #include "../NhWebIDL/Runtime/Object.h"
 #include "../NhWebIDL/Runtime/String.h"
-
-#include "../NhHTML/Parser/Elements.h"
+#include "../NhWebIDL/Runtime/Runtime.h"
 
 #include <stddef.h>
 #include <stdio.h>
@@ -53,7 +52,7 @@ NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)
 // https://dom.spec.whatwg.org/#concept-create-element
 Nh_WebIDL_Object *Nh_DOM_createElement(
     Nh_WebIDL_Object *Document_p, Nh_WebIDL_DOMString *LocalName_p, Nh_WebIDL_DOMString *Namespace_p, Nh_WebIDL_DOMString *NamespacePrefix_p,
-    Nh_WebIDL_DOMString *Is_p, NH_BOOL synchronousCustomElements)
+    Nh_WebIDL_DOMString *Is_p, NH_BOOL synchronousCustomElements, Nh_WebIDL_Interface *Interface_p)
 {
 NH_DOM_BEGIN()
 
@@ -62,10 +61,8 @@ NH_DOM_BEGIN()
     NH_DOM_CHECK_NULL(NULL, Document_p)
     NH_DOM_CHECK_NULL(NULL, LocalName_p)
 
-    Nh_WebIDL_Interface *Interface_p = NULL;
-
-    if (Namespace_p == &NH_WEBIDL_HTML_NAMESPACE) {
-        Interface_p = Nh_HTML_getElementInterface(LocalName_p->bytes_p);
+    if (Interface_p == NULL) {
+        Interface_p = Nh_WebIDL_getInterface("DOM", "Element");
     }
 
     NH_DOM_CHECK_NULL(NULL, Interface_p)
@@ -73,7 +70,7 @@ NH_DOM_BEGIN()
     Nh_WebIDL_Object *Object_p = Nh_WebIDL_createObjectFromInterface(Interface_p);
     NH_DOM_CHECK_NULL(NULL, Object_p)
 
-    Nh_WebIDL_Object *Element_p = Nh_WebIDL_getObject(Element_p, "DOM", "Element");
+    Nh_WebIDL_Object *Element_p = Nh_WebIDL_getObject(Object_p, "DOM", "Element");
     NH_DOM_CHECK_NULL(NULL, Element_p)
 
     NAMESPACE_URI = Namespace_p;

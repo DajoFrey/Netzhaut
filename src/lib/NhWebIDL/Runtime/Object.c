@@ -25,7 +25,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-// OBJECT ==========================================================================================
+// DECLARE =========================================================================================
+
+static Nh_WebIDL_Object *Nh_WebIDL_createObjectFromInterfaceWithParent(
+    Nh_WebIDL_Interface *Interface_p, Nh_WebIDL_Object *Parent_p
+);
+
+typedef int (*init_f)(Nh_WebIDL_Object *Object_p);
+
+// CREATE OBJECT ===================================================================================
 
 static NH_BOOL Nh_WebIDL_isAttribute(
     Nh_WebIDL_ParseNode *Node_p)
@@ -44,10 +52,24 @@ NH_WEBIDL_BEGIN()
 NH_WEBIDL_END(NH_FALSE)
 }
 
-typedef int (*init_f)(Nh_WebIDL_Object *Object_p);
+static Nh_WebIDL_Object *Nh_WebIDL_createObjectWithParent(
+    NH_BYTE *specification_p, NH_BYTE *interface_p, Nh_WebIDL_Object *Parent_p)
+{
+NH_WEBIDL_BEGIN()
 
-Nh_WebIDL_Object *Nh_WebIDL_createObjectFromInterface(
-    Nh_WebIDL_Interface *Interface_p)
+    NH_WEBIDL_CHECK_NULL(NULL, specification_p)
+    NH_WEBIDL_CHECK_NULL(NULL, interface_p)
+
+    Nh_WebIDL_Interface *Interface_p = Nh_WebIDL_getInterface(specification_p, interface_p);
+    NH_WEBIDL_CHECK_NULL(NULL, Interface_p)
+
+    if (Interface_p->partial) {NH_WEBIDL_END(NULL)}
+
+NH_WEBIDL_END(Nh_WebIDL_createObjectFromInterfaceWithParent(Interface_p, Parent_p))
+}
+
+static Nh_WebIDL_Object *Nh_WebIDL_createObjectFromInterfaceWithParent(
+    Nh_WebIDL_Interface *Interface_p, Nh_WebIDL_Object *Parent_p)
 {
 NH_WEBIDL_BEGIN()
 
@@ -56,7 +78,7 @@ NH_WEBIDL_BEGIN()
  
     Object_p->Interface_p = Interface_p;
     Object_p->Child_p     = NULL;
-    Object_p->Parent_p    = NULL;
+    Object_p->Parent_p    = Parent_p;
     Object_p->internal_p  = NULL;
     Object_p->Parts       = Nh_initList(1);
 
@@ -78,36 +100,36 @@ NH_WEBIDL_BEGIN()
     sprintf(libName_p, "Nh%s", Object_p->Interface_p->Specification_p->name_p);
 
     init_f initNewObject_f = NH_LOADER.loadFunction_f(libName_p, 0, funcName_p);
-    if (initNewObject_f) {initNewObject_f(Object_p);} 
+    if (initNewObject_f) {NH_WEBIDL_CHECK(NULL, initNewObject_f(Object_p))} 
 
-    // TODO cross specification inheritance
-    if (Interface_p->Child_p != NULL && Interface_p->Child_p->Children.size > 0) 
+    if (Interface_p->Inheritance_p != NULL) 
     {
-        Object_p->Child_p = Nh_WebIDL_createObject(Interface_p->Specification_p->name_p, ((Nh_WebIDL_ParseNode*)Interface_p->Child_p->Children.pp[1])->Token_p->String.bytes_p);
+        Object_p->Child_p = Nh_WebIDL_createObjectWithParent(
+            Interface_p->Inheritance_p->specification_p ? (NH_BYTE*)Interface_p->Inheritance_p->specification_p : (NH_BYTE*)Interface_p->Specification_p->name_p, 
+            (NH_BYTE*)Interface_p->Inheritance_p->interface_p, 
+            Object_p
+        );
         NH_WEBIDL_CHECK_MEM(NULL, Object_p->Child_p)
-        Object_p->Child_p->Parent_p = Object_p;
     }
 
 NH_WEBIDL_END(Object_p)
+}
+
+Nh_WebIDL_Object *Nh_WebIDL_createObjectFromInterface(
+    Nh_WebIDL_Interface *Interface_p)
+{
+NH_WEBIDL_BEGIN()
+NH_WEBIDL_END(Nh_WebIDL_createObjectFromInterfaceWithParent(Interface_p, NULL))
 }
 
 Nh_WebIDL_Object *Nh_WebIDL_createObject(
     NH_BYTE *specification_p, NH_BYTE *interface_p)
 {
 NH_WEBIDL_BEGIN()
-
-    NH_WEBIDL_CHECK_NULL(NULL, specification_p)
-    NH_WEBIDL_CHECK_NULL(NULL, interface_p)
-
-    Nh_WebIDL_Interface *Interface_p = Nh_WebIDL_getInterface(specification_p, interface_p);
-    NH_WEBIDL_CHECK_NULL(NULL, Interface_p)
-
-    if (Interface_p->partial) {NH_WEBIDL_END(NULL)}
-
-NH_WEBIDL_END(Nh_WebIDL_createObjectFromInterface(Interface_p))
+NH_WEBIDL_END(Nh_WebIDL_createObjectWithParent(specification_p, interface_p, NULL))
 }
 
-// COMPOSITE OBJECT ================================================================================
+// CREATE COMPOSITE OBJECT =========================================================================
 
 Nh_WebIDL_Object *Nh_WebIDL_createCompositeObject(
     NH_BYTE *specification_p, NH_BYTE *interface_p, ...)
@@ -152,6 +174,8 @@ NH_WEBIDL_BEGIN()
 NH_WEBIDL_END(Object_p)
 }
 
+// GET =============================================================================================
+
 Nh_WebIDL_Object *Nh_WebIDL_getPart(
     Nh_WebIDL_Object *Object_p, NH_BYTE *specification_p, ...) 
 {
@@ -182,6 +206,27 @@ NH_WEBIDL_BEGIN()
         if (!strcmp(Object_p->Interface_p->Specification_p->name_p, specification_p)
         &&  !strcmp(Object_p->Interface_p->name_p, interface_p)) {
             NH_WEBIDL_END(Object_p) 
+        }
+        Object_p = Object_p->Child_p;
+    }
+
+NH_WEBIDL_END(NULL)
+}
+
+void *Nh_WebIDL_get(
+    Nh_WebIDL_Object *Object_p, NH_BYTE *attribute_p)
+{
+NH_WEBIDL_BEGIN()
+
+    while (Object_p != NULL) 
+    {
+        unsigned int attributeIndex = 0;
+        for (int i = 0; i < Object_p->Interface_p->Members.length; ++i) {
+            Nh_WebIDL_InterfaceMember *Member_p = &((Nh_WebIDL_InterfaceMember*)Object_p->Interface_p->Members.bytes_p)[i];
+            if (Member_p->name_p != NULL && !strcmp(Member_p->name_p, attribute_p)) {
+                NH_WEBIDL_END(Object_p->Attributes.pp[attributeIndex])
+            }
+            if (Nh_WebIDL_isAttribute(Member_p->Node_p)) {attributeIndex++;}
         }
         Object_p = Object_p->Child_p;
     }

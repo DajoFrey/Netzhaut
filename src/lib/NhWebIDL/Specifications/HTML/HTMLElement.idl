@@ -1,5 +1,5 @@
 [Exposed=Window]
-interface HTMLElement : Element {
+interface HTMLElement : Element @ DOM {
   [HTMLConstructor] constructor();
 
   // metadata attributes
