@@ -281,7 +281,7 @@ NH_HTML_BEGIN()
 NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
 }
 
-// DATA STATE ======================================================================================
+// CONSUME =========================================================================================
 
 static NH_HTML_RESULT Nh_HTML_consumeData(
     Nh_HTML_Tokenizer *Tokenizer_p)
@@ -2411,6 +2411,8 @@ NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
 }
 
 // 13.2.5.74
+
+// HANDLE EOF ======================================================================================
 
 static NH_HTML_RESULT Nh_HTML_handleEOF(
     Nh_HTML_Tokenizer *Tokenizer_p)

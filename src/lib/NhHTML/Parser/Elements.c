@@ -139,9 +139,50 @@ const NH_BYTE *NH_HTML_TAG_NAMES_PP[] =
     "var",
     "video",
     "wbr",
+    "applet",
+    "bgsound",
+    "blink",
+    "isindex",
+    "keygen",
+    "multicol",
+    "nextid",
+    "spacer",
+    "acronym",
+    "basefont",
+    "big",
+    "center",
+    "nobr",
+    "noembed",
+    "noframes",
+    "plaintext",
+    "rb",
+    "rtc",
+    "strike",
+    "tt",
+    "listing",
+    "xmp",
+    // legacy
+    "frameset",
+    "dir",
+    "font",
+    "marquee",
+    "frame",
 };
 
 unsigned long NH_HTML_TAG_NAMES_PP_COUNT = sizeof(NH_HTML_TAG_NAMES_PP) / sizeof(NH_HTML_TAG_NAMES_PP[0]);
+
+// GET INDEX =======================================================================================
+
+int Nh_HTML_getTagIndex(
+    NH_BYTE *tagname_p)
+{
+NH_HTML_BEGIN()
+
+    void *value_p = Nh_getFromHashMap(&NH_HTML_INDEXMAP.Tags, tagname_p);
+    if (!value_p) {NH_HTML_END(-1)}
+
+NH_HTML_END(*((unsigned int*)value_p))
+}
 
 // GET CORRESPONDING CLASS =========================================================================
 
@@ -151,48 +192,37 @@ Nh_WebIDL_Interface *Nh_HTML_getElementInterface(
 {
 NH_HTML_BEGIN()
 
-    void *value_p = Nh_getFromHashMap(&NH_HTML_INDEXMAP.Tags, tagname_p);
+    int index = Nh_HTML_getTagIndex(tagname_p);
 
-    if (!value_p) 
-    {
-        if (!strcmp(tagname_p, "applet")
-        ||  !strcmp(tagname_p, "bgsound")
-        ||  !strcmp(tagname_p, "blink")
-        ||  !strcmp(tagname_p, "isindex")
-        ||  !strcmp(tagname_p, "keygen")
-        ||  !strcmp(tagname_p, "multicol")
-        ||  !strcmp(tagname_p, "nextid")
-        ||  !strcmp(tagname_p, "spacer")) 
-        { 
-            NH_HTML_END(Nh_WebIDL_getInterface("HTML", "HTMLUnknownElement"))
-        }
-
-        if (!strcmp(tagname_p, "acronym")
-        ||  !strcmp(tagname_p, "basefont")
-        ||  !strcmp(tagname_p, "big")
-        ||  !strcmp(tagname_p, "center")
-        ||  !strcmp(tagname_p, "nobr")
-        ||  !strcmp(tagname_p, "noembed")
-        ||  !strcmp(tagname_p, "noframes")
-        ||  !strcmp(tagname_p, "plaintext")
-        ||  !strcmp(tagname_p, "rb")
-        ||  !strcmp(tagname_p, "rtc")
-        ||  !strcmp(tagname_p, "strike")
-        ||  !strcmp(tagname_p, "tt")) 
-        { 
-            NH_HTML_END(Nh_WebIDL_getInterface("HTML", "HTMLElement"))
-        }
-
-        if (!strcmp(tagname_p, "listing")
-        ||  !strcmp(tagname_p, "xmp")) 
-        {
-            NH_HTML_END(Nh_WebIDL_getInterface("HTML", "HTMLPreElement"))
-        }
-
+    if (index == -1) {
         NH_HTML_END(Nh_WebIDL_getInterface("HTML", "HTMLUnknownElement"))
     }
 
-    unsigned int index = *((unsigned int*)value_p);
+    switch (index)
+    {
+        case NH_HTML_TAG_APPLET    :
+        case NH_HTML_TAG_BGSOUND   :
+        case NH_HTML_TAG_BLINK     :
+        case NH_HTML_TAG_ISINDEX   :
+        case NH_HTML_TAG_KEYGEN    :
+        case NH_HTML_TAG_MULTICOL  :
+        case NH_HTML_TAG_NEXTID    :
+        case NH_HTML_TAG_SPACER    : NH_HTML_END(Nh_WebIDL_getInterface("HTML", "HTMLUnknownElement"))
+        case NH_HTML_TAG_ACRONYM   :
+        case NH_HTML_TAG_BASEFONT  :
+        case NH_HTML_TAG_BIG       :
+        case NH_HTML_TAG_CENTER    :
+        case NH_HTML_TAG_NOBR      :
+        case NH_HTML_TAG_NOEMBED   :
+        case NH_HTML_TAG_NOFRAMES  :
+        case NH_HTML_TAG_PLAINTEXT :
+        case NH_HTML_TAG_RB        :
+        case NH_HTML_TAG_RTC       :
+        case NH_HTML_TAG_STRIKE    :
+        case NH_HTML_TAG_TT        : NH_HTML_END(Nh_WebIDL_getInterface("HTML", "HTMLElement"))
+        case NH_HTML_TAG_LISTING   :
+        case NH_HTML_TAG_XMP       : NH_HTML_END(Nh_WebIDL_getInterface("HTML", "HTMLPreElement"))
+    }
 
     switch (index)
     {
@@ -272,7 +302,44 @@ NH_HTML_BEGIN()
         case NH_HTML_TAG_TRACK      : NH_HTML_END(Nh_WebIDL_getInterface("HTML", "HTMLTrackElement"))
         case NH_HTML_TAG_UL         : NH_HTML_END(Nh_WebIDL_getInterface("HTML", "HTMLUListElement"))
         case NH_HTML_TAG_VIDEO      : NH_HTML_END(Nh_WebIDL_getInterface("HTML", "HTMLVideoElement"))
-        default                     : NH_HTML_END(Nh_WebIDL_getInterface("HTML", "HTMLElement"))
+        case NH_HTML_TAG_ABBR       :
+        case NH_HTML_TAG_ADDRESS    :
+        case NH_HTML_TAG_ARTICLE    :
+        case NH_HTML_TAG_ASIDE      :
+        case NH_HTML_TAG_B          :
+        case NH_HTML_TAG_BDI        :
+        case NH_HTML_TAG_BDO        :
+        case NH_HTML_TAG_CITE       :
+        case NH_HTML_TAG_CODE       :
+        case NH_HTML_TAG_DD         :
+        case NH_HTML_TAG_DFN        :
+        case NH_HTML_TAG_DT         :
+        case NH_HTML_TAG_EM         :
+        case NH_HTML_TAG_FIGCAPTION :
+        case NH_HTML_TAG_FIGURE     :
+        case NH_HTML_TAG_FOOTER     :
+        case NH_HTML_TAG_HEADER     :
+        case NH_HTML_TAG_HGROUP     :
+        case NH_HTML_TAG_I          :
+        case NH_HTML_TAG_KBD        :
+        case NH_HTML_TAG_MAIN       :
+        case NH_HTML_TAG_MARK       :
+        case NH_HTML_TAG_NAV        :
+        case NH_HTML_TAG_NOSCRIPT   :
+        case NH_HTML_TAG_RP         :
+        case NH_HTML_TAG_RT         :
+        case NH_HTML_TAG_RUBY       :
+        case NH_HTML_TAG_S          :
+        case NH_HTML_TAG_SAMP       :
+        case NH_HTML_TAG_SECTION    :
+        case NH_HTML_TAG_SMALL      :
+        case NH_HTML_TAG_STRONG     :
+        case NH_HTML_TAG_SUB        :
+        case NH_HTML_TAG_SUMMARY    :
+        case NH_HTML_TAG_SUP        :
+        case NH_HTML_TAG_U          :
+        case NH_HTML_TAG_VAR        :
+        case NH_HTML_TAG_WBR        : NH_HTML_END(Nh_WebIDL_getInterface("HTML", "HTMLElement"))
     }
 
 NH_HTML_END(Nh_WebIDL_getInterface("HTML", "HTMLUnknownElement"))

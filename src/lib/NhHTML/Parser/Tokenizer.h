@@ -136,6 +136,7 @@
         Nh_WebIDL_DOMString TagName;
         NH_BOOL selfClosing;
         Nh_Array Attributes;
+        int tag;
     } Nh_HTML_StartOrEndTagToken;
 
     typedef struct Nh_HTML_CommentOrCharacterToken {

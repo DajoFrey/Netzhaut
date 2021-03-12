@@ -117,14 +117,17 @@
         NH_BOOL framesetOk;
         NH_BOOL pause;
         NH_BOOL stop;
-        NH_BOOL scriptingEnabled;
+        NH_BOOL scripting;
         NH_BOOL fosterParenting;
         unsigned int scriptNestingLevel;
         Nh_Stack OpenElements;
+        Nh_List ActiveFormattingElements;
         Nh_WebIDL_Object *Document_p;
         Nh_WebIDL_Object *HeadElement_p;
+        Nh_WebIDL_Object *FormElement_p;
         Nh_Array Errors;
         Nh_HTML_Token *Token_p;
+        Nh_HTML_Tokenizer *Tokenizer_p;
     } Nh_HTML_Parser;
 
 /** @} */

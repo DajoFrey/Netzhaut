@@ -102,19 +102,22 @@ NH_HTML_BEGIN()
 
     Nh_HTML_Parser Parser;
 
-    Parser.insertionMode         = NH_HTML_INSERTION_MODE_INITIAL;
-    Parser.originalInsertionMode = Parser.insertionMode;
-    Parser.framesetOk            = NH_TRUE;
-    Parser.pause                 = NH_FALSE;
-    Parser.stop                  = NH_FALSE;
-    Parser.scriptingEnabled      = NH_TRUE;
-    Parser.fosterParenting       = NH_FALSE;
-    Parser.scriptNestingLevel    = 0;
-    Parser.OpenElements          = Nh_initStack(255);
-    Parser.Document_p            = Document_p;
-    Parser.HeadElement_p         = NULL;
-    Parser.Errors                = Nh_initArray(sizeof(Nh_HTML_ParseError), 16);
-    Parser.Token_p               = NULL;
+    Parser.insertionMode            = NH_HTML_INSERTION_MODE_INITIAL;
+    Parser.originalInsertionMode    = Parser.insertionMode;
+    Parser.framesetOk               = NH_TRUE;
+    Parser.pause                    = NH_FALSE;
+    Parser.stop                     = NH_FALSE;
+    Parser.scripting                = NH_TRUE;
+    Parser.fosterParenting          = NH_FALSE;
+    Parser.scriptNestingLevel       = 0;
+    Parser.OpenElements             = Nh_initStack(255);
+    Parser.ActiveFormattingElements = Nh_initList(64);
+    Parser.Document_p               = Document_p;
+    Parser.HeadElement_p            = NULL;
+    Parser.FormElement_p            = NULL;
+    Parser.Errors                   = Nh_initArray(sizeof(Nh_HTML_ParseError), 16);
+    Parser.Token_p                  = NULL;
+    Parser.Tokenizer_p              = NULL;
 
     if (!Parser.Document_p) {
         Parser.Document_p = Nh_HTML_createDocument();
@@ -137,6 +140,7 @@ NH_HTML_BEGIN()
     Nh_WebIDL_USVString NormalizedInputStream = Nh_HTML_normalizeNewlines(InputStream);
 
     Nh_HTML_Tokenizer Tokenizer = Nh_HTML_initTokenizer(&Parser, NormalizedInputStream);
+    Parser.Tokenizer_p = &Tokenizer;
 
     while (!Parser.stop) {
         NH_HTML_CHECK(NULL, Nh_HTML_consumeNext(&Tokenizer))

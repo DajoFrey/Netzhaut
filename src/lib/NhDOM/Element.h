@@ -23,6 +23,10 @@
         Nh_WebIDL_DOMString *Is_p, NH_BOOL synchronousCustomElements, Nh_WebIDL_Interface *Interface_p
     );
 
+    Nh_WebIDL_DOMString *Nh_DOM_getLocalName(
+        Nh_WebIDL_Object *Element_p
+    );
+
     Nh_WebIDL_DOMString *Nh_DOM_getNamespaceURI(
         Nh_WebIDL_Object *Element_p
     );

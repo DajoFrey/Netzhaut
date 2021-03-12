@@ -132,6 +132,34 @@
         NH_HTML_TAG_VAR,
         NH_HTML_TAG_VIDEO,
         NH_HTML_TAG_WBR,
+        NH_HTML_TAG_APPLET,
+        NH_HTML_TAG_BGSOUND,
+        NH_HTML_TAG_BLINK,
+        NH_HTML_TAG_ISINDEX,
+        NH_HTML_TAG_KEYGEN,
+        NH_HTML_TAG_MULTICOL,
+        NH_HTML_TAG_NEXTID,
+        NH_HTML_TAG_SPACER,
+        NH_HTML_TAG_ACRONYM,
+        NH_HTML_TAG_BASEFONT,
+        NH_HTML_TAG_BIG,
+        NH_HTML_TAG_CENTER,
+        NH_HTML_TAG_NOBR,
+        NH_HTML_TAG_NOEMBED,
+        NH_HTML_TAG_NOFRAMES,
+        NH_HTML_TAG_PLAINTEXT,
+        NH_HTML_TAG_RB,
+        NH_HTML_TAG_RTC,
+        NH_HTML_TAG_STRIKE,
+        NH_HTML_TAG_TT,
+        NH_HTML_TAG_LISTING,
+        NH_HTML_TAG_XMP,
+        // legacy
+        NH_HTML_TAG_FRAMESET,
+        NH_HTML_TAG_DIR,
+        NH_HTML_TAG_FONT,
+        NH_HTML_TAG_MARQUEE,
+        NH_HTML_TAG_FRAME,
     } NH_HTML_TAG;
 
 /** @} */
@@ -148,6 +176,10 @@
 /** @addtogroup NhHTMLFunctions
  *  @{
  */
+
+    int Nh_HTML_getTagIndex(
+        NH_BYTE *tagname_p
+    );
 
     Nh_WebIDL_Interface *Nh_HTML_getElementInterface(
         NH_BYTE *tagname_p
