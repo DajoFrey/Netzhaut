@@ -133,6 +133,7 @@ static NH_BYTE *files_pp[] = {
     "src/lib/NhWebIDL/Specifications/HTML/HTMLTableElement.idl",
     "src/lib/NhWebIDL/Specifications/HTML/HTMLTableRowElement.idl",
     "src/lib/NhWebIDL/Specifications/HTML/HTMLTableSectionElement.idl",
+    "src/lib/NhWebIDL/Specifications/HTML/HTMLTitleElement.idl",
 };
 
 static int fileCount = sizeof(files_pp)/sizeof(files_pp[0]);

@@ -14,9 +14,7 @@
 #include NH_HTML_FLOW
 #include NH_HTML_DEFAULT_CHECK
 
-#include "../../NhCore/List.h"
-#include "../../NhCore/Memory.h"
-
+#include "../../NhDOM/Node.h"
 #include "../../NhWebIDL/Runtime/Object.h"
 
 #include <stddef.h>
@@ -42,6 +40,9 @@ Nh_WebIDL_Object *Nh_HTML_createDocument()
 NH_HTML_BEGIN()
 
     Nh_WebIDL_Object *Document_p = Nh_WebIDL_createCompositeObject("HTML", "Document");
+
+    // The node document of a document is that document itself. All nodes have a node document at all times. 
+    Nh_DOM_setNodeDocument(Nh_DOM_getNode(Document_p), Document_p);
 
 NH_HTML_END(Document_p)
 }

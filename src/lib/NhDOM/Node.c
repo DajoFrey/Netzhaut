@@ -113,6 +113,13 @@ NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)
 
 // INTERNAL ========================================================================================
 
+Nh_WebIDL_Object *Nh_DOM_getNode(
+    Nh_WebIDL_Object *Object_p)
+{
+NH_DOM_BEGIN()
+NH_DOM_END(Nh_WebIDL_getObject(Object_p, "DOM", "Node"))
+}
+
 NH_DOM_RESULT Nh_DOM_appendToNode(
     Nh_WebIDL_Object *Node_p, Nh_WebIDL_Object *Child_p)
 {

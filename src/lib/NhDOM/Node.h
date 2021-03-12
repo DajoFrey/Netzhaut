@@ -18,6 +18,10 @@
  *  @{
  */
 
+    Nh_WebIDL_Object *Nh_DOM_getNode(
+        Nh_WebIDL_Object *Object_p
+    );
+
     NH_DOM_RESULT Nh_DOM_appendToNode(
         Nh_WebIDL_Object *Node_p, Nh_WebIDL_Object *Child_p
     );

@@ -451,6 +451,7 @@ NH_HTML_BEGIN()
     if (Nh_isASCIIUpperAlpha(Tokenizer_p->codepoint)) {
         NH_UNICODE_CODEPOINT lower = Tokenizer_p->codepoint + 0x20;
         Nh_WebIDL_appendUnicodeToDOMString(&Tokenizer_p->Token_p->StartOrEndTag.TagName, &lower, 1);
+        NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
     }
 
     switch (Tokenizer_p->codepoint)

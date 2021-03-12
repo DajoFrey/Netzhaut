@@ -117,6 +117,7 @@
 #include "../Specifications/HTML/HTMLTableElement.idl.h"
 #include "../Specifications/HTML/HTMLTableRowElement.idl.h"
 #include "../Specifications/HTML/HTMLTableSectionElement.idl.h"
+#include "../Specifications/HTML/HTMLTitleElement.idl.h"
 
 // FRAGMENT NAMES ==================================================================================
 
@@ -226,6 +227,7 @@ NH_BYTE *NH_WEBIDL_FRAGMENT_NAMES_PP[] = {
     "HTML_HTMLTableElement",
     "HTML_HTMLTableRowElement",
     "HTML_HTMLTableSectionElement",
+    "HTML_HTMLTitleElement",
 };
 
 size_t NH_WEBIDL_FRAGMENT_NAMES_PP_COUNT = sizeof(NH_WEBIDL_FRAGMENT_NAMES_PP) / sizeof(NH_WEBIDL_FRAGMENT_NAMES_PP[0]);
@@ -338,6 +340,7 @@ unsigned NH_BYTE *NH_WEBIDL_FRAGMENTS_PP[] = {
     Nh_WebIDL_HTML_HTMLTableElement_p,
     Nh_WebIDL_HTML_HTMLTableRowElement_p,
     Nh_WebIDL_HTML_HTMLTableSectionElement_p,
+    Nh_WebIDL_HTML_HTMLTitleElement_p,
 };
 
 size_t NH_WEBIDL_FRAGMENTS_PP_COUNT = sizeof(NH_WEBIDL_FRAGMENTS_PP) / sizeof(NH_WEBIDL_FRAGMENTS_PP[0]);
@@ -450,4 +453,5 @@ const unsigned int NH_WEBIDL_FRAGMENT_LENGTHS_P[] = {
     Nh_WebIDL_HTML_HTMLTableElement_p_len,
     Nh_WebIDL_HTML_HTMLTableRowElement_p_len,
     Nh_WebIDL_HTML_HTMLTableSectionElement_p_len,
+    Nh_WebIDL_HTML_HTMLTitleElement_p_len,
 };

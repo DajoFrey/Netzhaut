@@ -49,6 +49,10 @@
     } NH_HTML_INSERTION_MODE;
 
     typedef enum NH_HTML_PARSE_ERROR {
+        // custom
+        NH_HTML_PARSE_ERROR_IGNORED_TOKEN,
+        NH_HTML_PARSE_ERROR_PLACEHOLDER,
+        // from spec
         NH_HTML_PARSE_ERROR_ABRUPT_CLOSING_OF_EMPTY_COMMENT,
         NH_HTML_PARSE_ERROR_ABRUPT_DOCTYPE_PUBLIC_IDENTIFIER,
         NH_HTML_PARSE_ERROR_ABRUPT_DOCTYPE_SYSTEM_IDENTIFIER,
@@ -121,6 +125,7 @@
         NH_BOOL fosterParenting;
         unsigned int scriptNestingLevel;
         Nh_Stack OpenElements;
+        Nh_Stack TemplateInsertionModes;
         Nh_List ActiveFormattingElements;
         Nh_WebIDL_Object *Document_p;
         Nh_WebIDL_Object *HeadElement_p;

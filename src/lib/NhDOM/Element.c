@@ -59,6 +59,13 @@ NH_DOM_DIAGNOSTIC_END(NH_DOM_SUCCESS)
 
 // INTERNAL ========================================================================================
 
+Nh_WebIDL_Object *Nh_DOM_getElement(
+    Nh_WebIDL_Object *Object_p)
+{
+NH_DOM_BEGIN()
+NH_DOM_END(Nh_WebIDL_getObject(Object_p, "DOM", "Element"))
+}
+
 static Nh_WebIDL_DOMString Nh_DOM_allocateQualifiedName(
     Nh_WebIDL_Object *Element_p)
 {
@@ -116,7 +123,7 @@ NH_DOM_BEGIN()
     Nh_WebIDL_Object *Object_p = Nh_WebIDL_createObjectFromInterface(Interface_p);
     NH_DOM_CHECK_NULL(NULL, Object_p)
 
-    Nh_WebIDL_Object *Element_p = Nh_WebIDL_getObject(Object_p, "DOM", "Element");
+    Nh_WebIDL_Object *Element_p = Nh_DOM_getElement(Object_p);
     NH_DOM_CHECK_NULL(NULL, Element_p)
 
     NAMESPACE_URI    = Namespace_p;

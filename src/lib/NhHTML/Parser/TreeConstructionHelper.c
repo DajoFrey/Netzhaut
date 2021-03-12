@@ -40,7 +40,7 @@ Nh_WebIDL_Object *Nh_HTML_createElementForToken(
 {
 NH_HTML_BEGIN()
 
-    Nh_WebIDL_Object *Document_p = Nh_DOM_getNodeDocument(Nh_WebIDL_getObject(IntendedParent_p, "DOM", "Node"));
+    Nh_WebIDL_Object *Document_p = Nh_DOM_getNodeDocument(Nh_DOM_getNode(IntendedParent_p));
     Nh_WebIDL_DOMString *LocalName_p = &Token_p->StartOrEndTag.TagName;
     Nh_WebIDL_DOMString *Is_p = NULL;
 
@@ -62,7 +62,7 @@ NH_WEBIDL_UNSIGNED_LONG Nh_HTML_getAppropriatePlaceForInsertingNode(
 {
 NH_HTML_BEGIN()
 
-    if (*Target_pp == NULL) {*Target_pp = Nh_peekStack(&Parser_p->OpenElements);}
+    if (*Target_pp == NULL) {*Target_pp = Nh_HTML_getCurrentNode(Parser_p);}
 
     NH_WEBIDL_UNSIGNED_LONG adjustedInsertionPosition = 0;
 
@@ -111,7 +111,7 @@ NH_HTML_BEGIN()
     NH_WEBIDL_UNSIGNED_LONG adjustedInsertionLocation = Nh_HTML_getAppropriatePlaceForInsertingNode(Parser_p, &Target_p);
 
     Nh_WebIDL_Object *Element_p = Nh_HTML_createElementForToken(Token_p, Namespace_p, Target_p);
-    Nh_DOM_insertIntoNode(Nh_WebIDL_getObject(Target_p, "DOM", "Node"), Element_p, adjustedInsertionLocation);
+    Nh_DOM_insertIntoNode(Nh_DOM_getNode(Target_p), Element_p, adjustedInsertionLocation);
 
     Nh_pushStack(&Parser_p->OpenElements, Element_p);
 
@@ -119,10 +119,10 @@ NH_HTML_END(Element_p)
 }
 
 Nh_WebIDL_Object *Nh_HTML_insertHTMLElement(
-    Nh_HTML_Parser *Parser_p, Nh_HTML_Token Token)
+    Nh_HTML_Parser *Parser_p, Nh_HTML_Token *Token_p)
 {
 NH_HTML_BEGIN()
-NH_HTML_END(Nh_HTML_insertForeignElement(Parser_p, &Token, &NH_WEBIDL_HTML_NAMESPACE))
+NH_HTML_END(Nh_HTML_insertForeignElement(Parser_p, Token_p, &NH_WEBIDL_HTML_NAMESPACE))
 }
 
 // https://html.spec.whatwg.org/multipage/parsing.html#insert-a-character
@@ -160,14 +160,59 @@ NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
 
 // https://html.spec.whatwg.org/multipage/parsing.html#generic-rcdata-element-parsing-algorithm
 NH_HTML_RESULT Nh_HTML_parseRAWTEXTOrRCDATA(
-    Nh_HTML_Parser *Parser_p, Nh_HTML_Token Token, NH_BOOL RAWTEXT)
+    Nh_HTML_Parser *Parser_p, Nh_HTML_Token *Token_p, NH_BOOL RAWTEXT)
 {
 NH_HTML_BEGIN()
 
-    NH_HTML_CHECK_MEM(Nh_HTML_insertHTMLElement(Parser_p, Token))
+    NH_HTML_CHECK_MEM(Nh_HTML_insertHTMLElement(Parser_p, Token_p))
+
     Parser_p->Tokenizer_p->state = RAWTEXT ? NH_HTML_TOKENIZATION_STATE_RAWTEXT : NH_HTML_TOKENIZATION_STATE_RCDATA;
     Parser_p->originalInsertionMode = Parser_p->insertionMode;
     Parser_p->insertionMode = NH_HTML_INSERTION_MODE_TEXT;
+
+NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+}
+
+Nh_HTML_Token *Nh_HTML_getEmptyStartTagToken(
+    NH_HTML_TAG tag)
+{
+NH_HTML_BEGIN()
+
+    if (tag >= 255) {NH_HTML_END(NULL)}
+
+    static Nh_HTML_Token Tokens_p[255];
+
+    Tokens_p[tag].type                          = NH_HTML_TOKEN_START_TAG;
+    Tokens_p[tag].StartOrEndTag.TagName.bytes_p = (NH_BYTE*)NH_HTML_TAG_NAMES_PP[tag];
+    Tokens_p[tag].StartOrEndTag.TagName.length  = strlen(NH_HTML_TAG_NAMES_PP[tag]);
+    Tokens_p[tag].StartOrEndTag.Attributes      = Nh_initArray(1, 1);
+    Tokens_p[tag].StartOrEndTag.selfClosing     = NH_FALSE;
+
+NH_HTML_END(&Tokens_p[tag])
+}
+
+// ACTIVE FORMATTING ELEMENTS ======================================================================
+// https://html.spec.whatwg.org/multipage/parsing.html#the-list-of-active-formatting-elements
+
+// https://html.spec.whatwg.org/multipage/parsing.html#push-onto-the-list-of-active-formatting-elements
+NH_HTML_RESULT Nh_HTML_pushActiveFormattingElement(
+    Nh_HTML_Parser *Parser_p, Nh_WebIDL_Object *Element_p)
+{
+NH_HTML_BEGIN()
+
+    // TODO
+
+    Nh_appendToList(&Parser_p->ActiveFormattingElements, Element_p);
+
+NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+}
+
+NH_HTML_RESULT Nh_HTML_insertMarker(
+    Nh_HTML_Parser *Parser_p)
+{
+NH_HTML_BEGIN()
+
+    Nh_appendToList(&Parser_p->ActiveFormattingElements, NULL);
 
 NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
 }
@@ -185,22 +230,6 @@ NH_HTML_BEGIN()
     // TODO
 
 NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-}
-
-Nh_HTML_Token Nh_HTML_createEmptyStartTagToken(
-    NH_HTML_TAG tag)
-{
-NH_HTML_BEGIN()
-
-    Nh_HTML_Token Token;
-
-    Token.type = NH_HTML_TOKEN_START_TAG;
-    Token.StartOrEndTag.TagName.bytes_p = (NH_BYTE*)NH_HTML_TAG_NAMES_PP[tag];
-    Token.StartOrEndTag.TagName.length  = strlen(NH_HTML_TAG_NAMES_PP[tag]);
-    Token.StartOrEndTag.Attributes      = Nh_initArray(1, 1);
-    Token.StartOrEndTag.selfClosing     = NH_FALSE;
-
-NH_HTML_END(Token)
 }
 
 // IMPLIED END TAGS ================================================================================
@@ -228,7 +257,7 @@ NH_HTML_BEGIN()
 
     while (CurrentNode_p)
     {
-        Nh_WebIDL_DOMString *LocalName_p = Nh_DOM_getLocalName(Nh_WebIDL_getObject(CurrentNode_p, "DOM", "Node"));
+        Nh_WebIDL_DOMString *LocalName_p = Nh_DOM_getLocalName(Nh_DOM_getElement(CurrentNode_p));
         NH_BOOL pop = NH_FALSE;
 
         for (int i = 0; i < sizeof(elements_pp)/sizeof(elements_pp[i]); ++i) {
@@ -309,13 +338,6 @@ NH_HTML_BEGIN()
 NH_HTML_END(Nh_peekStack(&Parser_p->OpenElements))
 }
 
-Nh_WebIDL_Object *Nh_HTML_popCurrentNode(
-    Nh_HTML_Parser *Parser_p)
-{
-NH_HTML_BEGIN()
-NH_HTML_END(Nh_popStack(&Parser_p->OpenElements))
-}
-
 Nh_WebIDL_Object *Nh_HTML_getAdjustedCurrentNode(
     Nh_HTML_Parser *Parser_p)
 {
@@ -326,17 +348,123 @@ NH_HTML_BEGIN()
 NH_HTML_END(Nh_HTML_getCurrentNode(Parser_p))
 }
 
-NH_BOOL Nh_HTML_hasOpenElement(
-    Nh_HTML_Parser *Parser_p, NH_BYTE *target_p)
+NH_HTML_RESULT Nh_HTML_pushOpenElement(
+    Nh_HTML_Parser *Parser_p, Nh_WebIDL_Object *Object_p)
 {
 NH_HTML_BEGIN()
 
-    for (int i = Parser_p->OpenElements.size - 1; i >= 0; --i)
+    Nh_pushStack(&Parser_p->OpenElements, Object_p);
+
+NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+}
+
+Nh_WebIDL_Object *Nh_HTML_popCurrentNode(
+    Nh_HTML_Parser *Parser_p)
+{
+NH_HTML_BEGIN()
+NH_HTML_END(Nh_popStack(&Parser_p->OpenElements))
+}
+
+// https://html.spec.whatwg.org/multipage/parsing.html#special
+NH_BOOL Nh_HTML_inSpecialCategory(
+    Nh_WebIDL_Object *Node_p)
+{
+NH_HTML_BEGIN()
+
+    Nh_WebIDL_DOMString *LocalName_p = Nh_DOM_getLocalName(Nh_WebIDL_getObject(Node_p, "DOM", "Element"));
+    int tag = Nh_HTML_getTagIndex(LocalName_p->bytes_p);
+
+    if (!strcmp(Node_p->Interface_p->Specification_p->name_p, "HTML"))
     {
-        Nh_WebIDL_Object *Node_p = Nh_getFromList(&Parser_p->OpenElements, i);
-        Nh_WebIDL_DOMString *LocalName_p = Nh_DOM_getLocalName(Nh_WebIDL_getObject(Node_p, "DOM", "Element"));
-        if (!strcmp(LocalName_p->bytes_p, target_p)) {NH_HTML_END(NH_TRUE)}
+        switch (tag)
+        {
+            case NH_HTML_TAG_ADDRESS    : 
+            case NH_HTML_TAG_APPLET     :
+            case NH_HTML_TAG_AREA       :
+            case NH_HTML_TAG_ARTICLE    :
+            case NH_HTML_TAG_ASIDE      :
+            case NH_HTML_TAG_BASE       :
+            case NH_HTML_TAG_BASEFONT   : 
+            case NH_HTML_TAG_BGSOUND    :
+            case NH_HTML_TAG_BLOCKQUOTE : 
+            case NH_HTML_TAG_BODY       :
+            case NH_HTML_TAG_BR         :
+            case NH_HTML_TAG_BUTTON     :
+            case NH_HTML_TAG_CAPTION    :
+            case NH_HTML_TAG_CENTER     :
+            case NH_HTML_TAG_COL        :
+            case NH_HTML_TAG_COLGROUP   :
+            case NH_HTML_TAG_DD         :
+            case NH_HTML_TAG_DETAILS    :
+            case NH_HTML_TAG_DIR        :
+            case NH_HTML_TAG_DIV        :
+            case NH_HTML_TAG_DL         :
+            case NH_HTML_TAG_DT         :
+            case NH_HTML_TAG_EMBED      :
+            case NH_HTML_TAG_FIELDSET   :
+            case NH_HTML_TAG_FIGCAPTION :
+            case NH_HTML_TAG_FIGURE     :
+            case NH_HTML_TAG_FOOTER     :
+            case NH_HTML_TAG_FORM       :
+            case NH_HTML_TAG_FRAME      :
+            case NH_HTML_TAG_FRAMESET   : 
+            case NH_HTML_TAG_H1         : 
+            case NH_HTML_TAG_H2         : 
+            case NH_HTML_TAG_H3         : 
+            case NH_HTML_TAG_H4         : 
+            case NH_HTML_TAG_H5         : 
+            case NH_HTML_TAG_H6         : 
+            case NH_HTML_TAG_HEAD       :
+            case NH_HTML_TAG_HEADER     :
+            case NH_HTML_TAG_HGROUP     :
+            case NH_HTML_TAG_HR         :
+            case NH_HTML_TAG_HTML       :
+            case NH_HTML_TAG_IFRAME     :
+            case NH_HTML_TAG_IMG        :
+            case NH_HTML_TAG_INPUT      :
+            case NH_HTML_TAG_KEYGEN     :
+            case NH_HTML_TAG_LI         :
+            case NH_HTML_TAG_LINK       :
+            case NH_HTML_TAG_LISTING    :
+            case NH_HTML_TAG_MAIN       :
+            case NH_HTML_TAG_MARQUEE    :
+            case NH_HTML_TAG_MENU       :
+            case NH_HTML_TAG_META       :
+            case NH_HTML_TAG_NAV        :
+            case NH_HTML_TAG_NOEMBED    :
+            case NH_HTML_TAG_NOFRAMES   :
+            case NH_HTML_TAG_NOSCRIPT   :
+            case NH_HTML_TAG_OBJECT     :
+            case NH_HTML_TAG_OL         :
+            case NH_HTML_TAG_P          :
+            case NH_HTML_TAG_PARAM      :
+            case NH_HTML_TAG_PLAINTEXT  :
+            case NH_HTML_TAG_PRE        :
+            case NH_HTML_TAG_SCRIPT     :
+            case NH_HTML_TAG_SECTION    :
+            case NH_HTML_TAG_SELECT     :
+            case NH_HTML_TAG_SOURCE     :
+            case NH_HTML_TAG_STYLE      :
+            case NH_HTML_TAG_SUMMARY    :
+            case NH_HTML_TAG_TABLE      :
+            case NH_HTML_TAG_TBODY      :
+            case NH_HTML_TAG_TD         :
+            case NH_HTML_TAG_TEMPLATE   :
+            case NH_HTML_TAG_TEXTAREA   :
+            case NH_HTML_TAG_TFOOT      :
+            case NH_HTML_TAG_TH         :
+            case NH_HTML_TAG_THEAD      :
+            case NH_HTML_TAG_TITLE      :
+            case NH_HTML_TAG_TR         :
+            case NH_HTML_TAG_TRACK      :
+            case NH_HTML_TAG_UL         :
+            case NH_HTML_TAG_WBR        :
+            case NH_HTML_TAG_XMP        : NH_HTML_END(NH_TRUE)
+            default                     : break;
+        }
     }
+
+    // TODO MathML, SVG
 
 NH_HTML_END(NH_FALSE)
 }
@@ -349,7 +477,8 @@ NH_HTML_BEGIN()
     for (int i = Parser_p->OpenElements.size - 1; i >= 0; --i)
     {
         Nh_WebIDL_Object *Node_p = Nh_getFromList(&Parser_p->OpenElements, i);
-        Nh_WebIDL_DOMString *LocalName_p = Nh_DOM_getLocalName(Nh_WebIDL_getObject(Node_p, "DOM", "Element"));
+        Nh_WebIDL_DOMString *LocalName_p = Nh_DOM_getLocalName(Nh_DOM_getElement(Node_p));
+
         if (!strcmp(LocalName_p->bytes_p, target_p)) {NH_HTML_END(NH_TRUE)}
 
         for (int j = 0; j < items; ++j) {
@@ -483,47 +612,5 @@ NH_HTML_BEGIN()
     };
 
 NH_HTML_END(Nh_HTML_hasElementInSpecificScope(Parser_p, target_p, selectScope_pp, sizeof(selectScope_pp)/sizeof(selectScope_pp[0])))
-}
-
-NH_BOOL Nh_HTML_hasOtherOpenElements1(
-    Nh_HTML_Parser *Parser_p)
-{
-NH_HTML_BEGIN()
-
-    static NH_BYTE *elements_pp[] = {
-        "dd",
-        "dt",
-        "li",
-        "optgroup",
-        "option",
-        "p",
-        "rb",
-        "rp",
-        "rt",
-        "rtc",
-        "tbody",
-        "td",
-        "tfoot",
-        "th",
-        "thead",
-        "tr",
-        "body",
-        "html",
-    };
-
-    for (int i = 0; i < Parser_p->OpenElements.size; ++i) 
-    {
-        Nh_WebIDL_Object *Node_p = Nh_getFromList(&Parser_p->OpenElements, i);
-        Nh_WebIDL_DOMString *LocalName_p = Nh_DOM_getLocalName(Nh_WebIDL_getObject(Node_p, "DOM", "Element"));
-
-        NH_BOOL match = NH_FALSE;
-        for (int j = 0; j < sizeof(elements_pp)/sizeof(elements_pp[0]); ++j) {
-            if (strcmp(LocalName_p->bytes_p, elements_pp[j])) {match = NH_TRUE; break;}
-        }
-
-        if (!match) {NH_HTML_END(NH_TRUE)}
-    }
-
-NH_HTML_END(NH_FALSE)
 }
 

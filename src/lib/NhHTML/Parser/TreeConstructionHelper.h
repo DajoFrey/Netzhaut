@@ -39,7 +39,7 @@
     );
     
     Nh_WebIDL_Object *Nh_HTML_insertHTMLElement(
-        Nh_HTML_Parser *Parser_p, Nh_HTML_Token Token
+        Nh_HTML_Parser *Parser_p, Nh_HTML_Token *Token_p
     );
     
     NH_HTML_RESULT Nh_HTML_insertCharacter(
@@ -47,15 +47,25 @@
     );
     
     NH_HTML_RESULT Nh_HTML_parseRAWTEXTOrRCDATA(
-        Nh_HTML_Parser *Parser_p, Nh_HTML_Token Token, NH_BOOL RAWTEXT
+        Nh_HTML_Parser *Parser_p, Nh_HTML_Token *Token_p, NH_BOOL RAWTEXT
     );
     
-    NH_HTML_RESULT Nh_HTML_reconstructActiveFormattingElements(
+    Nh_HTML_Token *Nh_HTML_getEmptyStartTagToken(
+        NH_HTML_TAG tag
+    );
+
+// ACTIVE FORMATTING ELEMENTS
+
+    NH_HTML_RESULT Nh_HTML_pushActiveFormattingElement(
+        Nh_HTML_Parser *Parser_p, Nh_WebIDL_Object *Element_p
+    );
+
+    NH_HTML_RESULT Nh_HTML_insertMarker(
         Nh_HTML_Parser *Parser_p
     );
-    
-    Nh_HTML_Token Nh_HTML_createEmptyStartTagToken(
-        NH_HTML_TAG tag
+
+    NH_HTML_RESULT Nh_HTML_reconstructActiveFormattingElements(
+        Nh_HTML_Parser *Parser_p
     );
 
 // IMPLIED END TAGS
@@ -74,16 +84,20 @@
         Nh_HTML_Parser *Parser_p
     );
 
-    Nh_WebIDL_Object *Nh_HTML_popCurrentNode(
-        Nh_HTML_Parser *Parser_p
-    );
-
     Nh_WebIDL_Object *Nh_HTML_getAdjustedCurrentNode(
         Nh_HTML_Parser *Parser_p
     );
 
-    NH_BOOL Nh_HTML_hasOpenElement(
-        Nh_HTML_Parser *Parser_p, NH_BYTE *target_p
+    NH_HTML_RESULT Nh_HTML_pushOpenElement(
+        Nh_HTML_Parser *Parser_p, Nh_WebIDL_Object *Object_p
+    );
+
+    Nh_WebIDL_Object *Nh_HTML_popCurrentNode(
+        Nh_HTML_Parser *Parser_p
+    );
+
+    NH_BOOL Nh_HTML_inSpecialCategory(
+        Nh_WebIDL_Object *Node_p
     );
 
     NH_BOOL Nh_HTML_hasElementInScope(
@@ -104,10 +118,6 @@
     
     NH_BOOL Nh_HTML_hasElementInSelectScope(
         Nh_HTML_Parser *Parser_p, NH_BYTE *target_p
-    );
-
-    NH_BOOL Nh_HTML_hasOtherOpenElements1(
-        Nh_HTML_Parser *Parser_p
     );
 
 /** @} */

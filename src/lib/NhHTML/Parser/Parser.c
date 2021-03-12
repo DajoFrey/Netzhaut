@@ -111,6 +111,7 @@ NH_HTML_BEGIN()
     Parser.fosterParenting          = NH_FALSE;
     Parser.scriptNestingLevel       = 0;
     Parser.OpenElements             = Nh_initStack(255);
+    Parser.TemplateInsertionModes   = Nh_initStack(255);
     Parser.ActiveFormattingElements = Nh_initList(64);
     Parser.Document_p               = Document_p;
     Parser.HeadElement_p            = NULL;

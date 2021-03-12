@@ -39,6 +39,15 @@ static NH_HTML_RESULT Nh_HTML_reprocessToken(
     Nh_HTML_Parser *Parser_p, NH_HTML_INSERTION_MODE insertionMode
 );
 
+// PARSE ERROR =====================================================================================
+
+static NH_HTML_RESULT Nh_HTML_newTreeConstructionError(
+    Nh_HTML_Parser *Parser_p, NH_HTML_PARSE_ERROR error)
+{
+NH_HTML_BEGIN()
+NH_HTML_DIAGNOSTIC_END(Nh_HTML_newParseError(Parser_p, 0, error))
+}
+
 // INITIAL =========================================================================================
 
 static NH_BOOL Nh_HTML_startsWith(
@@ -186,50 +195,60 @@ static NH_HTML_RESULT Nh_HTML_processInitial(
 {
 NH_HTML_BEGIN()
 
-    if (Parser_p->Token_p->type == NH_HTML_TOKEN_CHARACTER
-    && (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
-    ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0A
-    ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0C
-    ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0D
-    ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20))
-    { 
-        // ignore token
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_COMMENT)
+    switch (Parser_p->Token_p->type)
     {
-        NH_HTML_CHECK(Nh_HTML_insertComment(Parser_p, Parser_p->Document_p))
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_DOCTYPE)
-    {
-        if (Parser_p->Token_p->DOCTYPE.Name_p == NULL 
-        ||  strcmp(Parser_p->Token_p->DOCTYPE.Name_p->bytes_p, "html") 
-        ||  Parser_p->Token_p->DOCTYPE.PublicIdentifier_p != NULL
-        ||  Parser_p->Token_p->DOCTYPE.SystemIdentifier_p != NULL
-        &&  strcmp(Parser_p->Token_p->DOCTYPE.Name_p->bytes_p, "about:legacy-compat"))
+        case NH_HTML_TOKEN_CHARACTER :
         {
-            // parse error
+            if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0A
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0C
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0D
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20)
+            { 
+                NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                break;
+            }
+            goto INITIAL_DEFAULT;
         }
-
-        Nh_WebIDL_Object *DocumentType_p = Nh_DOM_createDocumentType(
-            Parser_p->Token_p->DOCTYPE.Name_p, Parser_p->Token_p->DOCTYPE.PublicIdentifier_p, 
-            Parser_p->Token_p->DOCTYPE.SystemIdentifier_p
-        );
-
-        Nh_DOM_appendToNode(Parser_p->Document_p->Child_p, DocumentType_p);
-        Nh_DOM_setDocumentType(Parser_p->Document_p, DocumentType_p);
-
-        if (Nh_HTML_setDocumentToQuirksModeFromDOCTYPE(Parser_p)) {
-            Nh_DOM_setDocumentMode(Parser_p->Document_p, &NH_DOM_DOCUMENT_MODE_QUIRKS);
+        case NH_HTML_TOKEN_COMMENT :
+        {
+            NH_HTML_CHECK(Nh_HTML_insertComment(Parser_p, Parser_p->Document_p))
+            break;
         }
-        else if (Nh_HTML_setDocumentToLimitedQuirksModeFromDOCTYPE(Parser_p)) {
-            Nh_DOM_setDocumentMode(Parser_p->Document_p, &NH_DOM_DOCUMENT_MODE_LIMITED_QUIRKS);
-        }
+        case NH_HTML_TOKEN_DOCTYPE :
+        {
+            if (Parser_p->Token_p->DOCTYPE.Name_p == NULL 
+            ||  strcmp(Parser_p->Token_p->DOCTYPE.Name_p->bytes_p, "html") 
+            ||  Parser_p->Token_p->DOCTYPE.PublicIdentifier_p != NULL
+            ||  Parser_p->Token_p->DOCTYPE.SystemIdentifier_p != NULL
+            &&  strcmp(Parser_p->Token_p->DOCTYPE.Name_p->bytes_p, "about:legacy-compat"))
+            {
+                NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+            }
 
-        Parser_p->insertionMode = NH_HTML_INSERTION_MODE_BEFORE_HTML;
-    }
-    else {
-        NH_DOM_CHECK(NH_HTML_ERROR_BAD_STATE, Nh_DOM_setDocumentMode(Parser_p->Document_p, &NH_DOM_DOCUMENT_MODE_QUIRKS))
-        NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_BEFORE_HTML))
+            Nh_WebIDL_Object *DocumentType_p = Nh_DOM_createDocumentType(
+                Parser_p->Token_p->DOCTYPE.Name_p, Parser_p->Token_p->DOCTYPE.PublicIdentifier_p, 
+                Parser_p->Token_p->DOCTYPE.SystemIdentifier_p
+            );
+
+            Nh_DOM_appendToNode(Parser_p->Document_p->Child_p, DocumentType_p);
+            Nh_DOM_setDocumentType(Parser_p->Document_p, DocumentType_p);
+
+            if (Nh_HTML_setDocumentToQuirksModeFromDOCTYPE(Parser_p)) {
+                Nh_DOM_setDocumentMode(Parser_p->Document_p, &NH_DOM_DOCUMENT_MODE_QUIRKS);
+            }
+            else if (Nh_HTML_setDocumentToLimitedQuirksModeFromDOCTYPE(Parser_p)) {
+                Nh_DOM_setDocumentMode(Parser_p->Document_p, &NH_DOM_DOCUMENT_MODE_LIMITED_QUIRKS);
+            }
+
+            Parser_p->insertionMode = NH_HTML_INSERTION_MODE_BEFORE_HTML;
+            break;
+        }
+        default : INITIAL_DEFAULT :
+        {
+            NH_DOM_CHECK(NH_HTML_ERROR_BAD_STATE, Nh_DOM_setDocumentMode(Parser_p->Document_p, &NH_DOM_DOCUMENT_MODE_QUIRKS))
+            NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_BEFORE_HTML))
+        }
     }
 
 NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
@@ -242,57 +261,68 @@ static NH_HTML_RESULT Nh_HTML_processBeforeHTML(
 {
 NH_HTML_BEGIN()
 
-    if (Parser_p->Token_p->type == NH_HTML_TOKEN_DOCTYPE)
+    switch (Parser_p->Token_p->type)
     {
-        // parse error, ignore token
-        NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_COMMENT)
-    {
-        NH_HTML_DIAGNOSTIC_END(Nh_HTML_insertComment(Parser_p, Parser_p->Document_p))
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_CHARACTER)
-    {
-        if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0A
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0C
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0D
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20)
-        { 
-            // ignore token
-            NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-        }
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_START_TAG && Parser_p->Token_p->StartOrEndTag.tag == NH_HTML_TAG_HTML) 
-    {
-        Nh_WebIDL_Object *Element_p = Nh_HTML_createElementForToken(Parser_p->Token_p, &NH_WEBIDL_HTML_NAMESPACE, Parser_p->Document_p);
-        NH_DOM_CHECK(NH_HTML_ERROR_BAD_STATE, Nh_DOM_appendToNode(Parser_p->Document_p->Child_p, Element_p))
-        Nh_pushStack(&Parser_p->OpenElements, Element_p);
-        Parser_p->insertionMode = NH_HTML_INSERTION_MODE_BEFORE_HEAD;
-        NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_END_TAG)
-    {
-        if (Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_HEAD
-        &&  Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_BODY
-        &&  Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_HTML
-        &&  Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_BR) 
+        case NH_HTML_TOKEN_DOCTYPE :
         {
-            // parse error, ignore token
-            NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+            NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+            break;
+        }
+        case NH_HTML_TOKEN_COMMENT :
+        {
+            NH_HTML_CHECK(Nh_HTML_insertComment(Parser_p, Parser_p->Document_p))
+            break;
+        }
+        case NH_HTML_TOKEN_CHARACTER :
+        {
+            if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0A
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0C
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0D
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20)
+            { 
+                NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                break;
+            }
+            goto BEFORE_HTML_DEFAULT;
+        }
+        case NH_HTML_TOKEN_START_TAG :
+        {
+            if (Parser_p->Token_p->StartOrEndTag.tag == NH_HTML_TAG_HTML) 
+            {
+                Nh_WebIDL_Object *HTMLHtmlElement_p = Nh_HTML_createElementForToken(Parser_p->Token_p, &NH_WEBIDL_HTML_NAMESPACE, Parser_p->Document_p);
+                NH_HTML_CHECK_MEM(HTMLHtmlElement_p)
+                NH_DOM_CHECK(NH_HTML_ERROR_BAD_STATE, Nh_DOM_appendToNode(Parser_p->Document_p->Child_p, HTMLHtmlElement_p))
+                NH_HTML_CHECK(Nh_HTML_pushOpenElement(Parser_p, HTMLHtmlElement_p))
+                Parser_p->insertionMode = NH_HTML_INSERTION_MODE_BEFORE_HEAD;
+                break; 
+            }
+            goto BEFORE_HTML_DEFAULT;
+        }
+        case NH_HTML_TOKEN_END_TAG :
+        {
+            if (Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_HEAD
+            &&  Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_BODY
+            &&  Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_HTML
+            &&  Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_BR) 
+            {
+                NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                break;
+            }
+            // fallthrough
+        }
+        default : BEFORE_HTML_DEFAULT :
+        {
+            Nh_WebIDL_Object *HTMLHtmlElement_p = Nh_HTML_createElementForToken(Nh_HTML_getEmptyStartTagToken(NH_HTML_TAG_HTML), &NH_WEBIDL_HTML_NAMESPACE, Parser_p->Document_p);
+            NH_HTML_CHECK_MEM(HTMLHtmlElement_p)
+            NH_DOM_CHECK(NH_HTML_ERROR_BAD_STATE, Nh_DOM_appendToNode(Parser_p->Document_p->Child_p, HTMLHtmlElement_p))
+
+            NH_HTML_CHECK(Nh_HTML_pushOpenElement(Parser_p, HTMLHtmlElement_p))
+            NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_BEFORE_HEAD))
         }
     }
 
-    Nh_WebIDL_Object *HTMLHtmlElement_p = Nh_WebIDL_createObject("HTML", "HTMLHtmlElement");
-    NH_HTML_CHECK_MEM(HTMLHtmlElement_p)
-
-    NH_DOM_CHECK(NH_HTML_ERROR_BAD_STATE, Nh_DOM_setNodeDocument(HTMLHtmlElement_p->Child_p->Child_p->Child_p, Parser_p->Document_p))
-    NH_DOM_CHECK(NH_HTML_ERROR_BAD_STATE, Nh_DOM_appendToNode(Parser_p->Document_p->Child_p, HTMLHtmlElement_p))
-
-    Nh_pushStack(&Parser_p->OpenElements, HTMLHtmlElement_p);
-    NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_BEFORE_HEAD))
-
-NH_HTML_END(NH_HTML_SUCCESS)
+NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
 }
 
 // BEFORE HEAD =====================================================================================
@@ -302,258 +332,306 @@ static NH_HTML_RESULT Nh_HTML_processBeforeHead(
 {
 NH_HTML_BEGIN()
 
-    if (Parser_p->Token_p->type == NH_HTML_TOKEN_CHARACTER)
+    switch (Parser_p->Token_p->type)
     {
-        if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0A
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0C
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0D
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20)
-        { 
-            // ignore token
-            NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-        }
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_COMMENT)
-    {
-        NH_HTML_DIAGNOSTIC_END(Nh_HTML_insertComment(Parser_p, NULL))
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_DOCTYPE)
-    {
-        // parse error, ignore token
-        NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_START_TAG && Parser_p->Token_p->StartOrEndTag.tag == NH_HTML_TAG_HTML)
-    {
-        Parser_p->HeadElement_p = Nh_HTML_insertHTMLElement(Parser_p, *Parser_p->Token_p);
-        NH_HTML_CHECK_MEM(Parser_p->HeadElement_p)
-        Parser_p->insertionMode = NH_HTML_INSERTION_MODE_IN_HEAD;
-        NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_END_TAG)
-    {
-        if (Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_HEAD
-        &&  Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_BODY
-        &&  Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_HTML
-        &&  Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_BR) 
+        case NH_HTML_TOKEN_CHARACTER :
         {
-            // parse error, ignore token
-            NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+            if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0A
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0C
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0D
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20)
+            { 
+                break;
+            }
+            goto BEFORE_HEAD_DEFAULT;
+        }
+        case NH_HTML_TOKEN_COMMENT :
+        {
+            NH_HTML_CHECK(Nh_HTML_insertComment(Parser_p, NULL))
+            break;
+        }
+        case NH_HTML_TOKEN_DOCTYPE :
+        {
+            NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+            break;
+        }
+        case NH_HTML_TOKEN_START_TAG :
+        {
+            if (Parser_p->Token_p->StartOrEndTag.tag == NH_HTML_TAG_HTML)
+            {
+                Parser_p->HeadElement_p = Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p);
+                NH_HTML_CHECK_MEM(Parser_p->HeadElement_p)
+                Parser_p->insertionMode = NH_HTML_INSERTION_MODE_IN_HEAD;
+                break; 
+            }
+            goto BEFORE_HEAD_DEFAULT;
+        }
+        case NH_HTML_TOKEN_END_TAG :
+        {
+            if (Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_HEAD
+            &&  Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_BODY
+            &&  Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_HTML
+            &&  Parser_p->Token_p->StartOrEndTag.tag != NH_HTML_TAG_BR) 
+            {
+                NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                break;
+            }
+            // fallthrough
+        }
+        default : BEFORE_HEAD_DEFAULT :
+        {
+            Parser_p->HeadElement_p = Nh_HTML_insertHTMLElement(Parser_p, Nh_HTML_getEmptyStartTagToken(NH_HTML_TAG_HEAD));
+            NH_HTML_CHECK_MEM(Parser_p->HeadElement_p)
+            NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_IN_HEAD))
         }
     }
-
-    Parser_p->HeadElement_p = Nh_HTML_insertHTMLElement(Parser_p, Nh_HTML_createEmptyStartTagToken(NH_HTML_TAG_HEAD));
-    NH_HTML_CHECK_MEM(Parser_p->HeadElement_p)
-    NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_IN_HEAD))
 
 NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
 }
 
 // IN HEAD =========================================================================================
 
+static NH_HTML_RESULT Nh_HTML_processInBody(
+    Nh_HTML_Parser *Parser_p
+);
+
 static NH_HTML_RESULT Nh_HTML_processInHead(
     Nh_HTML_Parser *Parser_p)
 {
 NH_HTML_BEGIN()
 
-    if (Parser_p->Token_p->type == NH_HTML_TOKEN_CHARACTER)
+    switch (Parser_p->Token_p->type)
     {
-        if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0A
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0C
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0D
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20)
-        { 
-            NH_HTML_DIAGNOSTIC_END(Nh_HTML_insertCharacter(Parser_p, NULL, NULL))
-        }
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_COMMENT)
-    {
-        NH_HTML_DIAGNOSTIC_END(Nh_HTML_insertComment(Parser_p, NULL))
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_DOCTYPE)
-    {
-        // parse error, ignore token
-        NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_START_TAG)
-    {
-        switch (Parser_p->Token_p->StartOrEndTag.tag)
+        case NH_HTML_TOKEN_CHARACTER :
         {
-            case NH_HTML_TAG_HTML : 
-            {
-                // TODO
+            if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0A
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0C
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0D
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20)
+            { 
+                NH_HTML_CHECK(Nh_HTML_insertCharacter(Parser_p, NULL, NULL))
                 break;
             }
-            case NH_HTML_TAG_BASE     :
-            case NH_HTML_TAG_BASEFONT :
-            case NH_HTML_TAG_BGSOUND  :
-            case NH_HTML_TAG_LINK     :
+            goto IN_HEAD_DEFAULT;
+        }
+        case NH_HTML_TOKEN_COMMENT :
+        {
+            NH_HTML_CHECK(Nh_HTML_insertComment(Parser_p, NULL))
+            break;
+        }
+        case NH_HTML_TOKEN_DOCTYPE :
+        {
+            NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+            break;
+        }
+        case NH_HTML_TOKEN_START_TAG :
+        {
+            switch (Parser_p->Token_p->StartOrEndTag.tag)
             {
-                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, *Parser_p->Token_p))
-                Nh_popStack(&Parser_p->OpenElements);
-                // TODO Acknowledge the token's self-closing flag, if it is set.
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-            }
-            case NH_HTML_TAG_META :
-            {
-                Nh_WebIDL_Object *Node_p = Nh_HTML_insertHTMLElement(Parser_p, *Parser_p->Token_p);
-                Nh_popStack(&Parser_p->OpenElements);
-
-                // TODO
-            }
-            case NH_HTML_TAG_TITLE : 
-            {
-                NH_HTML_DIAGNOSTIC_END(Nh_HTML_parseRAWTEXTOrRCDATA(Parser_p, *Parser_p->Token_p, NH_FALSE))
-            }
-            case NH_HTML_TAG_SCRIPT :
-            {
-                // TODO
-            }
-            case NH_HTML_TAG_TEMPLATE :
-            {
-                // TODO
-            }
-            case NH_HTML_TAG_HEAD :
-            {
-                // parse error, ignore token
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-            }
-            case NH_HTML_TAG_NOFRAMES :
-            case NH_HTML_TAG_STYLE    :
-            {
-                NH_HTML_DIAGNOSTIC_END(Nh_HTML_parseRAWTEXTOrRCDATA(Parser_p, *Parser_p->Token_p, NH_TRUE))
-            }
-            case NH_HTML_TAG_NOSCRIPT :
-            {
-                if (Parser_p->scripting) {
-                    NH_HTML_DIAGNOSTIC_END(Nh_HTML_parseRAWTEXTOrRCDATA(Parser_p, *Parser_p->Token_p, NH_TRUE))
+                case NH_HTML_TAG_HTML : 
+                {
+                    NH_HTML_CHECK(Nh_HTML_processInBody(Parser_p))
+                    break;
                 }
+                case NH_HTML_TAG_BASE     :
+                case NH_HTML_TAG_BASEFONT :
+                case NH_HTML_TAG_BGSOUND  :
+                case NH_HTML_TAG_LINK     :
+                {
+                    NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                    NH_HTML_CHECK_NULL(Nh_HTML_popCurrentNode(Parser_p))
+                    // TODO Acknowledge the token's self-closing flag, if it is set.
+                    break; 
+                }
+                case NH_HTML_TAG_META :
+                {
+                    NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                    NH_HTML_CHECK_NULL(Nh_HTML_popCurrentNode(Parser_p))
+                    // TODO
+                    break;
+                }
+                case NH_HTML_TAG_TITLE : 
+                {
+                    NH_HTML_CHECK(Nh_HTML_parseRAWTEXTOrRCDATA(Parser_p, Parser_p->Token_p, NH_FALSE))
+                    break;
+                }
+                case NH_HTML_TAG_NOFRAMES :
+                case NH_HTML_TAG_STYLE    :
+                {
+                    NH_HTML_CHECK(Nh_HTML_parseRAWTEXTOrRCDATA(Parser_p, Parser_p->Token_p, NH_TRUE))
+                    break;
+                }
+                case NH_HTML_TAG_SCRIPT :
+                {
+                    // TODO
+                    break;
+                }
+                case NH_HTML_TAG_TEMPLATE :
+                {
+                    NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                    NH_HTML_CHECK(Nh_HTML_insertMarker(Parser_p))
+                    Parser_p->framesetOk = NH_FALSE;
+                    Parser_p->insertionMode = NH_HTML_INSERTION_MODE_IN_TEMPLATE;
+                    // TODO Push "in template" onto the stack of template insertion modes so that it is the new current template insertion mode.
+                    break;
+                }
+                case NH_HTML_TAG_HEAD :
+                {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                    break;
+                }
+                case NH_HTML_TAG_NOSCRIPT :
+                {
+                    if (Parser_p->scripting) {
+                        NH_HTML_CHECK(Nh_HTML_parseRAWTEXTOrRCDATA(Parser_p, Parser_p->Token_p, NH_TRUE))
+                        break;
+	    	    }
 
-                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, *Parser_p->Token_p))
-                Parser_p->insertionMode = NH_HTML_INSERTION_MODE_IN_HEAD_NOSCRIPT;
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                    NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                    Parser_p->insertionMode = NH_HTML_INSERTION_MODE_IN_HEAD_NOSCRIPT;
+                    break;
+                }
+                default :
+                {
+                    goto IN_HEAD_DEFAULT;
+                }
             }
+            break;
         }
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_END_TAG)
-    {
-        switch (Parser_p->Token_p->StartOrEndTag.tag)
+        case NH_HTML_TOKEN_END_TAG :
         {
-
-            case NH_HTML_TAG_HEAD :
+            switch (Parser_p->Token_p->StartOrEndTag.tag)
             {
-                Nh_popStack(&Parser_p->OpenElements);
-                Parser_p->insertionMode = NH_HTML_INSERTION_MODE_AFTER_HEAD;
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                case NH_HTML_TAG_HEAD :
+                {
+                    NH_HTML_CHECK_NULL(Nh_HTML_popCurrentNode(Parser_p))
+                    Parser_p->insertionMode = NH_HTML_INSERTION_MODE_AFTER_HEAD;
+                    break; 
+                }
+                case NH_HTML_TAG_BODY :
+                case NH_HTML_TAG_HTML :
+                case NH_HTML_TAG_BR   :
+                {
+                    goto IN_HEAD_DEFAULT;
+                }
+                case NH_HTML_TAG_TEMPLATE :
+                {
+                    // TODO
+                    break;
+                }
+                default :
+                {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                    break;
+                }
             }
-            case NH_HTML_TAG_BODY :
-            case NH_HTML_TAG_HTML :
-            case NH_HTML_TAG_BR   :
-            {
-                break;
-            }
-            case NH_HTML_TAG_TEMPLATE :
-            {
-                // TODO
-                break;
-            }
-            default :
-            {
-                // parse error, ignore token
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-            }
+            break;
+        }
+        default : IN_HEAD_DEFAULT :
+        {
+            NH_HTML_CHECK_NULL(Nh_HTML_popCurrentNode(Parser_p))
+            NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_AFTER_HEAD))
         }
     }
 
-    Nh_popStack(&Parser_p->OpenElements);
-    NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_AFTER_HEAD))
-
-NH_HTML_END(NH_HTML_SUCCESS)
+NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
 }
 
 // IN HEAD NOSCRIPT ================================================================================
-
-static NH_HTML_RESULT Nh_HTML_processInBody(
-    Nh_HTML_Parser *Parser_p
-);
 
 static NH_HTML_RESULT Nh_HTML_processInHeadNoscript(
     Nh_HTML_Parser *Parser_p)
 {
 NH_HTML_BEGIN()
 
-    if (Parser_p->Token_p->type == NH_HTML_TOKEN_DOCTYPE)
+    switch (Parser_p->Token_p->type)
     {
-        // parse error, ignore token
-        NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_CHARACTER)
-    {
-        if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0A
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0C
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0D
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20)
-        { 
-            NH_HTML_DIAGNOSTIC_END(Nh_HTML_processInHead(Parser_p))
-        }
-        // fallthrough
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_COMMENT)
-    {
-        NH_HTML_DIAGNOSTIC_END(Nh_HTML_processInHead(Parser_p)) 
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_START_TAG)
-    {
-        switch (Parser_p->Token_p->StartOrEndTag.tag)
+        case NH_HTML_TOKEN_DOCTYPE :
         {
-            case NH_HTML_TAG_HTML     :
-            {
-                NH_HTML_DIAGNOSTIC_END(Nh_HTML_processInBody(Parser_p)) 
-            }
-            case NH_HTML_TAG_BASEFONT :
-            case NH_HTML_TAG_BGSOUND  :
-            case NH_HTML_TAG_LINK     :
-            case NH_HTML_TAG_META     :
-            case NH_HTML_TAG_NOFRAMES :
-            case NH_HTML_TAG_STYLE    :
-            {
-                NH_HTML_DIAGNOSTIC_END(Nh_HTML_processInHead(Parser_p)) 
-            }
-            case NH_HTML_TAG_HEAD     :
-            case NH_HTML_TAG_NOSCRIPT :
-            {
-                // parse error, ignore token
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-            }
+            NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+            break;
         }
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_END_TAG)
-    {
-        switch (Parser_p->Token_p->StartOrEndTag.tag)
+        case NH_HTML_TOKEN_CHARACTER :
         {
-            case NH_HTML_TAG_NOSCRIPT :
-            {
-                Nh_popStack(&Parser_p->OpenElements);
-                Parser_p->insertionMode = NH_HTML_INSERTION_MODE_IN_HEAD;
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-            }
-            case NH_HTML_TAG_BR :
-            {
+            if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0A
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0C
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0D
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20)
+            { 
+                NH_HTML_CHECK(Nh_HTML_processInHead(Parser_p))
                 break;
             }
-            default :
+            goto IN_HEAD_NOSCRIPT_DEFAULT;
+        }
+        case NH_HTML_TOKEN_COMMENT :
+        {
+            NH_HTML_CHECK(Nh_HTML_processInHead(Parser_p))
+            break;
+        }
+        case NH_HTML_TOKEN_START_TAG :
+        {
+            switch (Parser_p->Token_p->StartOrEndTag.tag)
             {
-                // parse error, ignore token
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                case NH_HTML_TAG_HTML     :
+                {
+                    NH_HTML_CHECK(Nh_HTML_processInBody(Parser_p))
+                    break;
+                }
+                case NH_HTML_TAG_BASEFONT :
+                case NH_HTML_TAG_BGSOUND  :
+                case NH_HTML_TAG_LINK     :
+                case NH_HTML_TAG_META     :
+                case NH_HTML_TAG_NOFRAMES :
+                case NH_HTML_TAG_STYLE    :
+                {
+                    NH_HTML_CHECK(Nh_HTML_processInHead(Parser_p))
+                    break;
+                }
+                case NH_HTML_TAG_HEAD     :
+                case NH_HTML_TAG_NOSCRIPT :
+                {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                    break;
+                }
+                default :
+                {
+                    goto IN_HEAD_NOSCRIPT_DEFAULT;
+                }
             }
+            break;
+        }
+        case NH_HTML_TOKEN_END_TAG :
+        {
+            switch (Parser_p->Token_p->StartOrEndTag.tag)
+            {
+                case NH_HTML_TAG_NOSCRIPT :
+                {
+                    NH_HTML_CHECK_NULL(Nh_HTML_popCurrentNode(Parser_p))
+                    Parser_p->insertionMode = NH_HTML_INSERTION_MODE_IN_HEAD;
+                    break; 
+                }
+                case NH_HTML_TAG_BR :
+                {
+                    goto IN_HEAD_NOSCRIPT_DEFAULT;
+                }
+                default :
+                {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                    break;
+                }
+            }
+            break;
+        }
+        default : IN_HEAD_NOSCRIPT_DEFAULT :
+        {
+            NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+            NH_HTML_CHECK_NULL(Nh_HTML_popCurrentNode(Parser_p))
+            NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_IN_HEAD))
         }
     }
-
-    // parse error
-    Nh_popStack(&Parser_p->OpenElements);
-    NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_IN_HEAD))
 
 NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
 }
@@ -565,118 +643,197 @@ static NH_HTML_RESULT Nh_HTML_processAfterHead(
 {
 NH_HTML_BEGIN()
 
-    if (Parser_p->Token_p->type == NH_HTML_TOKEN_CHARACTER)
+    switch (Parser_p->Token_p->type)
     {
-        if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0A
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0C
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0D
-        ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20)
-        { 
-            NH_HTML_DIAGNOSTIC_END(Nh_HTML_insertCharacter(Parser_p, NULL, NULL))
-        }
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_COMMENT)
-    {
-        NH_HTML_DIAGNOSTIC_END(Nh_HTML_insertComment(Parser_p, NULL))
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_DOCTYPE)
-    {
-        // parse error, ignore token
-        NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_START_TAG)
-    {
-        switch (Parser_p->Token_p->StartOrEndTag.tag)
+        case NH_HTML_TOKEN_CHARACTER :
         {
-            case NH_HTML_TAG_HTML :
-            {
-                NH_HTML_DIAGNOSTIC_END(Nh_HTML_processInBody(Parser_p)) 
-            }
-            case NH_HTML_TAG_BODY :
-            {
-                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, *Parser_p->Token_p))
-                Parser_p->framesetOk = NH_FALSE;
-                Parser_p->insertionMode = NH_HTML_INSERTION_MODE_IN_BODY;
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-            }
-            case NH_HTML_TAG_FRAMESET :
-            {
-                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, *Parser_p->Token_p))
-                Parser_p->insertionMode = NH_HTML_INSERTION_MODE_IN_FRAMESET;
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-            }
-            case NH_HTML_TAG_BASE     :
-            case NH_HTML_TAG_BASEFONT :
-            case NH_HTML_TAG_BGSOUND  :
-            case NH_HTML_TAG_LINK     :
-            case NH_HTML_TAG_META     :
-            case NH_HTML_TAG_NOFRAMES :
-            case NH_HTML_TAG_SCRIPT   :
-            case NH_HTML_TAG_STYLE    :
-            case NH_HTML_TAG_TEMPLATE :
-            case NH_HTML_TAG_TITLE    :
-            {
-                // parse error
-                Nh_pushStack(&Parser_p->OpenElements, Parser_p->HeadElement_p);
-                NH_HTML_CHECK(Nh_HTML_processInHead(Parser_p)) 
-                Nh_removeFromList2(&Parser_p->OpenElements, NH_FALSE, Parser_p->HeadElement_p);
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-            }
-            case NH_HTML_TAG_HEAD :
-            {
-                // parse error, ignore token
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-            }
-        }
-    }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_END_TAG)
-    {
-        switch (Parser_p->Token_p->StartOrEndTag.tag)
-        {
-            case NH_HTML_TAG_TEMPLATE :
-            {
-                NH_HTML_DIAGNOSTIC_END(Nh_HTML_processInHead(Parser_p)) 
-            }
-            case NH_HTML_TAG_BODY :
-            case NH_HTML_TAG_HTML :
-            case NH_HTML_TAG_BR   :
-            {
+            if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0A
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0C
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0D
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20)
+            { 
+                NH_HTML_CHECK(Nh_HTML_insertCharacter(Parser_p, NULL, NULL))
                 break;
             }
-            default :
+            goto AFTER_HEAD_DEFAULT;
+        }
+        case NH_HTML_TOKEN_COMMENT :
+        {
+            NH_HTML_CHECK(Nh_HTML_insertComment(Parser_p, NULL))
+            break;
+        }
+        case NH_HTML_TOKEN_DOCTYPE :
+        {
+            NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+            break;
+        }
+        case NH_HTML_TOKEN_START_TAG :
+        {
+            switch (Parser_p->Token_p->StartOrEndTag.tag)
             {
-                // parse error, ignore token
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                case NH_HTML_TAG_HTML : 
+                {
+                    NH_HTML_CHECK(Nh_HTML_processInBody(Parser_p))
+                    break;
+                }
+                case NH_HTML_TAG_BODY :
+                {
+                    NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                    Parser_p->framesetOk = NH_FALSE;
+                    Parser_p->insertionMode = NH_HTML_INSERTION_MODE_IN_BODY;
+                    break; 
+                }
+                case NH_HTML_TAG_FRAMESET :
+                {
+                    NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                    Parser_p->insertionMode = NH_HTML_INSERTION_MODE_IN_FRAMESET;
+                    break; 
+                }
+                case NH_HTML_TAG_BASE     :
+                case NH_HTML_TAG_BASEFONT :
+                case NH_HTML_TAG_BGSOUND  :
+                case NH_HTML_TAG_LINK     :
+                case NH_HTML_TAG_META     :
+                case NH_HTML_TAG_NOFRAMES :
+                case NH_HTML_TAG_SCRIPT   :
+                case NH_HTML_TAG_STYLE    :
+                case NH_HTML_TAG_TEMPLATE :
+                case NH_HTML_TAG_TITLE    :
+                {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+                    NH_HTML_CHECK(Nh_HTML_pushOpenElement(Parser_p, Parser_p->HeadElement_p))
+                    NH_HTML_CHECK(Nh_HTML_processInHead(Parser_p)) 
+                    Nh_removeFromList2(&Parser_p->OpenElements, NH_FALSE, Parser_p->HeadElement_p);
+                    break;
+                }
+                case NH_HTML_TAG_HEAD :
+                {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                    break;
+                }
+                default :
+                {
+                    goto AFTER_HEAD_DEFAULT;
+                }
             }
+            break;
+        }
+        case NH_HTML_TOKEN_END_TAG :
+        {
+            switch (Parser_p->Token_p->StartOrEndTag.tag)
+            {
+                case NH_HTML_TAG_TEMPLATE :
+                {
+                    NH_HTML_CHECK(Nh_HTML_processInHead(Parser_p))
+                    break;
+                }
+                case NH_HTML_TAG_BODY :
+                case NH_HTML_TAG_HTML :
+                case NH_HTML_TAG_BR   :
+                {
+                    goto AFTER_HEAD_DEFAULT;
+                }
+                default :
+                {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                    break;
+                }
+            }
+            break;
+        }
+        default : AFTER_HEAD_DEFAULT :
+        {
+            NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Nh_HTML_getEmptyStartTagToken(NH_HTML_TAG_BODY)))
+            NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_IN_BODY))
         }
     }
-
-    NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Nh_HTML_createEmptyStartTagToken(NH_HTML_TAG_BODY)))
-    NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_IN_BODY))
 
 NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
 }
 
 // IN BODY =========================================================================================
 
-static NH_HTML_RESULT Nh_HTML_closePElement(
-    Nh_HTML_Parser *Parser_p)
+static NH_HTML_RESULT Nh_HTML_closeElement(
+    Nh_HTML_Parser *Parser_p, NH_BYTE *tagName_p)
 {
 NH_HTML_BEGIN()
 
-    NH_HTML_CHECK(Nh_HTML_generateImpliedEndTags(Parser_p, "p"))
+    NH_HTML_CHECK(Nh_HTML_generateImpliedEndTags(Parser_p, tagName_p))
 
-    if (!strcmp(Nh_HTML_getCurrentNode(Parser_p)->Interface_p->name_p, "HTMLParagraphElement")) {
-        // parser error
+    if (strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Nh_HTML_getCurrentNode(Parser_p)))->bytes_p, tagName_p)) {
+        // parse error
     }
 
     Nh_WebIDL_Object *Pop_p = Nh_HTML_popCurrentNode(Parser_p);
-    while (Pop_p != NULL && strcmp(Pop_p->Interface_p->name_p, "HTMLParagraphElement")) {
+    while (Pop_p != NULL && strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Pop_p))->bytes_p, tagName_p)) {
         Pop_p = Nh_HTML_popCurrentNode(Parser_p);
     }
 
 NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+}
+
+static NH_HTML_RESULT Nh_HTML_closePElement(
+    Nh_HTML_Parser *Parser_p)
+{
+NH_HTML_BEGIN()
+NH_HTML_DIAGNOSTIC_END(Nh_HTML_closeElement(Parser_p, "p"))
+}
+
+static NH_BOOL Nh_HTML_hasOtherOpenElements(
+    Nh_HTML_Parser *Parser_p)
+{
+NH_HTML_BEGIN()
+
+    static NH_BYTE *elements_pp[] = {
+        "dd",
+        "dt",
+        "li",
+        "optgroup",
+        "option",
+        "p",
+        "rb",
+        "rp",
+        "rt",
+        "rtc",
+        "tbody",
+        "td",
+        "tfoot",
+        "th",
+        "thead",
+        "tr",
+        "body",
+        "html",
+    };
+
+    for (int i = 0; i < Parser_p->OpenElements.size; ++i) 
+    {
+        Nh_WebIDL_DOMString *LocalName_p = Nh_DOM_getLocalName(Nh_DOM_getElement(Parser_p->OpenElements.pp[i]));
+
+        NH_BOOL match = NH_FALSE;
+        for (int j = 0; j < sizeof(elements_pp)/sizeof(elements_pp[0]); ++j) {
+            if (!strcmp(LocalName_p->bytes_p, elements_pp[j])) {match = NH_TRUE; break;}
+        }
+
+        if (!match) {NH_HTML_END(NH_TRUE)}
+    }
+
+NH_HTML_END(NH_FALSE)
+}
+
+static NH_BOOL Nh_HTML_hasOpenElement(
+    Nh_HTML_Parser *Parser_p, NH_BYTE *target_p)
+{
+NH_HTML_BEGIN()
+
+    for (int i = Parser_p->OpenElements.size - 1; i >= 0; --i)
+    {
+        Nh_WebIDL_Object *Node_p = Nh_getFromList(&Parser_p->OpenElements, i);
+        Nh_WebIDL_DOMString *LocalName_p = Nh_DOM_getLocalName(Nh_DOM_getElement(Node_p));
+        if (!strcmp(LocalName_p->bytes_p, target_p)) {NH_HTML_END(NH_TRUE)}
+    }
+
+NH_HTML_END(NH_FALSE)
 }
 
 static NH_HTML_RESULT Nh_HTML_processInBody(
@@ -688,8 +845,7 @@ NH_HTML_BEGIN()
     {
         if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0)
         {
-            // parse error, ignore token
-            NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+            NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
         }
         else
         if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
@@ -699,24 +855,20 @@ NH_HTML_BEGIN()
         ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20)
         { 
             NH_HTML_CHECK(Nh_HTML_reconstructActiveFormattingElements(Parser_p))
-            NH_HTML_DIAGNOSTIC_END(Nh_HTML_insertCharacter(Parser_p, NULL, NULL))
+            NH_HTML_CHECK(Nh_HTML_insertCharacter(Parser_p, NULL, NULL))
         }
         else 
         {
             NH_HTML_CHECK(Nh_HTML_reconstructActiveFormattingElements(Parser_p))
             NH_HTML_CHECK(Nh_HTML_insertCharacter(Parser_p, NULL, NULL))
             Parser_p->framesetOk = NH_FALSE;
-            NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
         }
     }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_COMMENT)
-    {
-        NH_HTML_DIAGNOSTIC_END(Nh_HTML_insertComment(Parser_p, NULL))
+    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_COMMENT) {
+        NH_HTML_CHECK(Nh_HTML_insertComment(Parser_p, NULL))
     }
-    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_DOCTYPE)
-    {
-        // parse error, ignore token
-        NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+    else if (Parser_p->Token_p->type == NH_HTML_TOKEN_DOCTYPE) {
+        NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
     }
     else if (Parser_p->Token_p->type == NH_HTML_TOKEN_START_TAG)
     {
@@ -724,7 +876,7 @@ NH_HTML_BEGIN()
         {
             case NH_HTML_TAG_HTML :
             {
-                // parse error
+                NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
 
                 for (int i = 0; i < Parser_p->OpenElements.size; ++i) {
                     Nh_WebIDL_Object *Element_p = Parser_p->OpenElements.pp[i];
@@ -735,7 +887,7 @@ NH_HTML_BEGIN()
 
                 // TODO
 
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                break;
             }
             case NH_HTML_TAG_BASE     :
             case NH_HTML_TAG_BASEFONT :
@@ -748,20 +900,25 @@ NH_HTML_BEGIN()
             case NH_HTML_TAG_TEMPLATE :
             case NH_HTML_TAG_TITLE    :
             {
-                NH_HTML_DIAGNOSTIC_END(Nh_HTML_processInHead(Parser_p)) 
+                NH_HTML_CHECK(Nh_HTML_processInHead(Parser_p)) 
+                break;
             }
             case NH_HTML_TAG_BODY :
             {
-                if (!Nh_HTML_hasElementInScope(Parser_p, "html")) {
-                    // parse error, ignore token 
-                    NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+                if (Parser_p->OpenElements.size > 1 && !strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Parser_p->OpenElements.pp[1]))->bytes_p, "body") && !Nh_HTML_hasOpenElement(Parser_p, "template")) {
+                    Parser_p->framesetOk = NH_FALSE;
+                    // TODO
                 }
+                break;
             }
             case NH_HTML_TAG_FRAMESET :
             {
-                // parse error
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+                if (Parser_p->OpenElements.size > 1 && !strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Parser_p->OpenElements.pp[1]))->bytes_p, "body") && Parser_p->framesetOk) {
+                    // TODO
+                }
+                break;
             }
             case NH_HTML_TAG_ADDRESS    :
             case NH_HTML_TAG_ARTICLE    :
@@ -791,8 +948,8 @@ NH_HTML_BEGIN()
                 if (Nh_HTML_hasElementInButtonScope(Parser_p, "p")) {
                     NH_HTML_CHECK(Nh_HTML_closePElement(Parser_p))
                 }
-                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, *Parser_p->Token_p))
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                break;
             }
             case NH_HTML_TAG_H1 :
             case NH_HTML_TAG_H2 :
@@ -806,7 +963,7 @@ NH_HTML_BEGIN()
                 }
 
                 Nh_WebIDL_Object *Current_p = Nh_HTML_getCurrentNode(Parser_p);
-                Nh_WebIDL_DOMString *LocalName_p = Nh_DOM_getLocalName(Nh_WebIDL_getObject(Current_p, "DOM", "Node"));
+                Nh_WebIDL_DOMString *LocalName_p = Nh_DOM_getLocalName(Nh_DOM_getElement(Current_p));
 
                 if (!strcmp(LocalName_p->bytes_p, "h1")
                 ||  !strcmp(LocalName_p->bytes_p, "h2")
@@ -816,11 +973,11 @@ NH_HTML_BEGIN()
                 ||  !strcmp(LocalName_p->bytes_p, "h6")) 
                 {
                     // parse error
-                    Nh_HTML_popCurrentNode(Parser_p);
+                    NH_HTML_CHECK_NULL(Nh_HTML_popCurrentNode(Parser_p))
                 }
 
-                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, *Parser_p->Token_p))
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                break;
             }
             case NH_HTML_TAG_PRE     :
             case NH_HTML_TAG_LISTING :
@@ -828,51 +985,112 @@ NH_HTML_BEGIN()
                 if (Nh_HTML_hasElementInButtonScope(Parser_p, "p")) {
                     NH_HTML_CHECK(Nh_HTML_closePElement(Parser_p))
                 }
-                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, *Parser_p->Token_p))
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
                 // TODO If the next token is a U+000A LINE FEED (LF) character token, then ignore that token and move on to the next one. (Newlines at the start of pre blocks are ignored as an authoring convenience.)
                 Parser_p->framesetOk = NH_FALSE;
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                break;
             }
             case NH_HTML_TAG_FORM :
             {
                 if (Parser_p->FormElement_p && !Nh_HTML_hasOpenElement(Parser_p, "template")) {
-                    // parse error, ignore token
-                    NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
                 }
-                if (Nh_HTML_hasElementInButtonScope(Parser_p, "p")) {
-                    NH_HTML_CHECK(Nh_HTML_closePElement(Parser_p))
+                else {
+                    if (Nh_HTML_hasElementInButtonScope(Parser_p, "p")) {
+                        NH_HTML_CHECK(Nh_HTML_closePElement(Parser_p))
+                    }
+                    Nh_WebIDL_Object *Form_p = Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p);
+                    if (!Nh_HTML_hasOpenElement(Parser_p, "template")) {
+                        Parser_p->FormElement_p = Form_p;
+                    }
                 }
-                Nh_WebIDL_Object *Form_p = Nh_HTML_insertHTMLElement(Parser_p, *Parser_p->Token_p);
-                if (!Nh_HTML_hasOpenElement(Parser_p, "template")) {
-                    Parser_p->FormElement_p = Form_p;
-                }
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                break;
             }
             case NH_HTML_TAG_LI :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                Parser_p->framesetOk = NH_FALSE;
+                Nh_WebIDL_Object *Node_p = Nh_HTML_getCurrentNode(Parser_p);
+
+                while (1)
+                {
+                    if (!strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Node_p))->bytes_p, "li")) {
+                        NH_HTML_CHECK(Nh_HTML_closeElement(Parser_p, "li"))
+                        break;
+                    }
+                    Nh_WebIDL_DOMString *LocalName_p = Nh_DOM_getLocalName(Nh_DOM_getElement(Node_p));
+                    if (Nh_HTML_inSpecialCategory(Node_p) && strcmp(LocalName_p->bytes_p, "address") && strcmp(LocalName_p->bytes_p, "div") && strcmp(LocalName_p->bytes_p, "p")) {
+                        break;
+                    }
+                    else {
+                        Node_p = Parser_p->OpenElements.pp[Parser_p->OpenElements.size - 2];
+                    }
+                }
+
+                if (Nh_HTML_hasElementInButtonScope(Parser_p, "p")) {
+                    NH_HTML_CHECK(Nh_HTML_closePElement(Parser_p))
+                }
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                break;
             }
             case NH_HTML_TAG_DD :
             case NH_HTML_TAG_DT :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                Parser_p->framesetOk = NH_FALSE;
+                Nh_WebIDL_Object *Node_p = Nh_HTML_getCurrentNode(Parser_p);
+
+                while (1)
+                {
+                    if (!strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Node_p))->bytes_p, "dd")) {
+                        NH_HTML_CHECK(Nh_HTML_closeElement(Parser_p, "dd"))
+                        break;
+                    }
+                    else if (!strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Node_p))->bytes_p, "dt")) {
+                        NH_HTML_CHECK(Nh_HTML_closeElement(Parser_p, "dt"))
+                        break;
+                    }
+                    Nh_WebIDL_DOMString *LocalName_p = Nh_DOM_getLocalName(Nh_DOM_getElement(Node_p));
+                    if (Nh_HTML_inSpecialCategory(Node_p) && strcmp(LocalName_p->bytes_p, "address") && strcmp(LocalName_p->bytes_p, "div") && strcmp(LocalName_p->bytes_p, "p")) {
+                        break;
+                    }
+                    else {
+                        Node_p = Parser_p->OpenElements.pp[Parser_p->OpenElements.size - 2];
+                    }
+                }
+
+                if (Nh_HTML_hasElementInButtonScope(Parser_p, "p")) {
+                    NH_HTML_CHECK(Nh_HTML_closePElement(Parser_p))
+                }
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                break;
             }
             case NH_HTML_TAG_PLAINTEXT :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                if (Nh_HTML_hasElementInButtonScope(Parser_p, "p")) {
+                    NH_HTML_CHECK(Nh_HTML_closePElement(Parser_p))
+                }
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                Parser_p->Tokenizer_p->state = NH_HTML_TOKENIZATION_STATE_PLAINTEXT;
+                break;
             }
             case NH_HTML_TAG_BUTTON :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                if (Nh_HTML_hasElementInScope(Parser_p, "button")) {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+                    NH_HTML_CHECK(Nh_HTML_generateImpliedEndTags(Parser_p, NULL))
+                    Nh_WebIDL_Object *Pop_p = Nh_HTML_popCurrentNode(Parser_p);
+                    while (Pop_p != NULL && strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Pop_p))->bytes_p, "button")) {
+                        Pop_p = Nh_HTML_popCurrentNode(Parser_p);
+                    }
+                }
+                NH_HTML_CHECK(Nh_HTML_reconstructActiveFormattingElements(Parser_p))
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                Parser_p->framesetOk = NH_FALSE;
+                break;
             }
             case NH_HTML_TAG_A :
             {
                 // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                break;
             }
             case NH_HTML_TAG_B      :
             case NH_HTML_TAG_BIG    :
@@ -887,25 +1105,38 @@ NH_HTML_BEGIN()
             case NH_HTML_TAG_TT     :
             case NH_HTML_TAG_U      :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                NH_HTML_CHECK(Nh_HTML_reconstructActiveFormattingElements(Parser_p))
+                Nh_WebIDL_Object *Element_p = Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p);
+                NH_HTML_CHECK_NULL(Element_p)
+                NH_HTML_CHECK(Nh_HTML_pushActiveFormattingElement(Parser_p, Element_p))
+                break;
             }
             case NH_HTML_TAG_NOBR :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                NH_HTML_CHECK(Nh_HTML_reconstructActiveFormattingElements(Parser_p))
+                if (Nh_HTML_hasElementInScope(Parser_p, "nobr")) {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+                    // TODO
+                }
+                Nh_WebIDL_Object *Element_p = Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p);
+                NH_HTML_CHECK_NULL(Element_p)
+                NH_HTML_CHECK(Nh_HTML_pushActiveFormattingElement(Parser_p, Element_p))
+                break;
             }
             case NH_HTML_TAG_APPLET  :
             case NH_HTML_TAG_MARQUEE :
             case NH_HTML_TAG_OBJECT  :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                NH_HTML_CHECK(Nh_HTML_reconstructActiveFormattingElements(Parser_p))
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                NH_HTML_CHECK(Nh_HTML_insertMarker(Parser_p))
+                Parser_p->framesetOk = NH_FALSE;
+                break;
             }
             case NH_HTML_TAG_TABLE : 
             {
                 // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                break;
             }
             case NH_HTML_TAG_AREA   :
             case NH_HTML_TAG_BR     :
@@ -914,45 +1145,68 @@ NH_HTML_BEGIN()
             case NH_HTML_TAG_KEYGEN :
             case NH_HTML_TAG_WBR    :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                NH_HTML_CHECK(Nh_HTML_reconstructActiveFormattingElements(Parser_p))
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                NH_HTML_CHECK_NULL(Nh_HTML_popCurrentNode(Parser_p))
+                // TODO Acknowledge the token's self-closing flag, if it is set.
+                Parser_p->framesetOk = NH_FALSE;
+                break;
             }
             case NH_HTML_TAG_INPUT :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                NH_HTML_CHECK(Nh_HTML_reconstructActiveFormattingElements(Parser_p))
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                NH_HTML_CHECK_NULL(Nh_HTML_popCurrentNode(Parser_p))
+                // TODO Acknowledge the token's self-closing flag, if it is set.
+                // TODO If the token does not have an attribute with the name "type", or if it does, but that attribute's value is not an ASCII case-insensitive match for the string "hidden", then: set the frameset-ok flag to "not ok".
+                Parser_p->framesetOk = NH_FALSE;
+                break;
             }
             case NH_HTML_TAG_PARAM  :
             case NH_HTML_TAG_SOURCE :
             case NH_HTML_TAG_TRACK  :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                NH_HTML_CHECK_NULL(Nh_HTML_popCurrentNode(Parser_p))
+                // TODO Acknowledge the token's self-closing flag, if it is set.
+                break;
             }
             case NH_HTML_TAG_HR :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                if (Nh_HTML_hasElementInButtonScope(Parser_p, "p")) {
+                    NH_HTML_CHECK(Nh_HTML_closePElement(Parser_p))
+                }
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                NH_HTML_CHECK_NULL(Nh_HTML_popCurrentNode(Parser_p))
+                // TODO Acknowledge the token's self-closing flag, if it is set.
+                Parser_p->framesetOk = NH_FALSE;
+                break;
             }
-//            case NH_HTML_TAG_IMAGE :
-//            {
-//                // TODO
-//                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
-//            }
             case NH_HTML_TAG_TEXTAREA :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                // TODO If the next token is a U+000A LINE FEED (LF) character token, then ignore that token and move on to the next one. (Newlines at the start of textarea elements are ignored as an authoring convenience.)
+                Parser_p->Tokenizer_p->state = NH_HTML_TOKENIZATION_STATE_RCDATA;
+                Parser_p->originalInsertionMode = Parser_p->insertionMode;
+                Parser_p->framesetOk = NH_FALSE;
+                Parser_p->insertionMode = NH_HTML_INSERTION_MODE_TEXT;
+                break;
             }
             case NH_HTML_TAG_XMP :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                if (Nh_HTML_hasElementInButtonScope(Parser_p, "p")) {
+                    NH_HTML_CHECK(Nh_HTML_closePElement(Parser_p))
+                }
+                NH_HTML_CHECK(Nh_HTML_reconstructActiveFormattingElements(Parser_p))
+                Parser_p->framesetOk = NH_FALSE;
+                NH_HTML_CHECK(Nh_HTML_parseRAWTEXTOrRCDATA(Parser_p, Parser_p->Token_p, NH_TRUE))
+                break;
             }
             case NH_HTML_TAG_IFRAME :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                Parser_p->framesetOk = NH_FALSE;
+                NH_HTML_CHECK(Nh_HTML_parseRAWTEXTOrRCDATA(Parser_p, Parser_p->Token_p, NH_TRUE))
+                break;
             }
 //        else 
 //        if (!strcmp(Parser_p->Token_p->StartOrEndTag.TagName.bytes_p, "noembed")
@@ -963,16 +1217,44 @@ NH_HTML_BEGIN()
 //        }
             case NH_HTML_TAG_SELECT :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                NH_HTML_CHECK(Nh_HTML_reconstructActiveFormattingElements(Parser_p))
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                Parser_p->framesetOk = NH_FALSE;
+
+                if (Parser_p->insertionMode == NH_HTML_INSERTION_MODE_IN_TABLE
+                ||  Parser_p->insertionMode == NH_HTML_INSERTION_MODE_IN_CAPTION
+                ||  Parser_p->insertionMode == NH_HTML_INSERTION_MODE_IN_TABLE_BODY
+                ||  Parser_p->insertionMode == NH_HTML_INSERTION_MODE_IN_ROW
+                ||  Parser_p->insertionMode == NH_HTML_INSERTION_MODE_IN_CELL) {
+                    Parser_p->insertionMode = NH_HTML_INSERTION_MODE_IN_SELECT_IN_TABLE;
+                }
+                else {Parser_p->insertionMode = NH_HTML_INSERTION_MODE_IN_SELECT;}
+
+                break;
             }
             case NH_HTML_TAG_OPTGROUP :
             case NH_HTML_TAG_OPTION   :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                if (!strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Nh_HTML_getCurrentNode(Parser_p)))->bytes_p, "option")) {
+                    NH_HTML_CHECK_NULL(Nh_HTML_popCurrentNode(Parser_p))
+                }
+                NH_HTML_CHECK(Nh_HTML_reconstructActiveFormattingElements(Parser_p))
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                break;
             }
-            case NH_HTML_TAG_RB :
+            case NH_HTML_TAG_RB  :
+            case NH_HTML_TAG_RTC :
+            {
+                if (Nh_HTML_hasElementInScope(Parser_p, "ruby")) {
+                    NH_HTML_CHECK(Nh_HTML_generateImpliedEndTags(Parser_p, NULL))
+                    if (strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Nh_HTML_getCurrentNode(Parser_p)))->bytes_p, "ruby")) {
+                        // parse error
+                    }
+                }
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
+                break;
+            }
+            case NH_HTML_TAG_RP :
             case NH_HTML_TAG_RT :
             {
                 // TODO
@@ -1000,46 +1282,59 @@ NH_HTML_BEGIN()
             case NH_HTML_TAG_THEAD    :
             case NH_HTML_TAG_TR       :
             {
-                // parse error, ignore token
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                break;
+            }
+            default :
+            {
+                // catch image
+                if (!strcmp(Parser_p->Token_p->StartOrEndTag.TagName.bytes_p, "image")) 
+                {
+                    // parse error
+                    Nh_WebIDL_freeDOMString(&Parser_p->Token_p->StartOrEndTag.TagName);
+                    Parser_p->Token_p->StartOrEndTag.TagName = Nh_WebIDL_initDOMString(3);
+                    Nh_WebIDL_appendToDOMString(&Parser_p->Token_p->StartOrEndTag.TagName, "img", 3);
+                    Parser_p->Token_p->StartOrEndTag.tag = NH_HTML_TAG_IMG;
+                    NH_HTML_DIAGNOSTIC_END(Nh_HTML_reprocessToken(Parser_p, Parser_p->insertionMode))
+                }
+        
+                NH_HTML_CHECK(Nh_HTML_reconstructActiveFormattingElements(Parser_p))
+                NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Parser_p->Token_p))
             }
         }
-
-        NH_HTML_CHECK(Nh_HTML_reconstructActiveFormattingElements(Parser_p))
-        NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, *Parser_p->Token_p))
-        NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
     }
     else if (Parser_p->Token_p->type == NH_HTML_TOKEN_END_TAG)
     {
         switch (Parser_p->Token_p->StartOrEndTag.tag)
         {
-
             case NH_HTML_TAG_TEMPLATE :
             {
-                NH_HTML_DIAGNOSTIC_END(Nh_HTML_processInHead(Parser_p)) 
+                NH_HTML_CHECK(Nh_HTML_processInHead(Parser_p))
+                break;
             }
             case NH_HTML_TAG_BODY :
             {
                 if (!Nh_HTML_hasElementInScope(Parser_p, "body")) {
-                    // parse error, ignore token 
-                    NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                    break;
                 }
-                if (Nh_HTML_hasOtherOpenElements1(Parser_p)) {
-                    // parse error
+                if (Nh_HTML_hasOtherOpenElements(Parser_p)) {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
                 }
                 Parser_p->insertionMode = NH_HTML_INSERTION_MODE_AFTER_BODY;
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                break;
             }
             case NH_HTML_TAG_HTML :
             {
                 if (!Nh_HTML_hasElementInScope(Parser_p, "body")) {
-                    // parse error, ignore token 
-                    NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                    break;
                 }
-                if (Nh_HTML_hasOtherOpenElements1(Parser_p)) {
-                    // parse error
+                if (Nh_HTML_hasOtherOpenElements(Parser_p)) {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
                 }
-                NH_HTML_DIAGNOSTIC_END(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_AFTER_BODY)) 
+                NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_AFTER_BODY))
+                break;
             }
             case NH_HTML_TAG_ADDRESS    :
             case NH_HTML_TAG_ARTICLE    :
@@ -1068,29 +1363,56 @@ NH_HTML_BEGIN()
             case NH_HTML_TAG_SUMMARY    :
             case NH_HTML_TAG_UL         :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                if (!Nh_HTML_hasElementInScope(Parser_p, Parser_p->Token_p->StartOrEndTag.TagName.bytes_p)) {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                    break;
+                }
+
+                NH_HTML_CHECK(Nh_HTML_generateImpliedEndTags(Parser_p, NULL))
+
+                if (strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Nh_HTML_getCurrentNode(Parser_p)))->bytes_p, Parser_p->Token_p->StartOrEndTag.TagName.bytes_p)) {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+                }
+
+                Nh_WebIDL_Object *Pop_p = Nh_HTML_popCurrentNode(Parser_p);
+                while (Pop_p != NULL && strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Pop_p))->bytes_p, Parser_p->Token_p->StartOrEndTag.TagName.bytes_p)) {
+                    Pop_p = Nh_HTML_popCurrentNode(Parser_p);
+                }
+
+                break; 
             }
             case NH_HTML_TAG_FORM :
             {
                 // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                break; 
             }
             case NH_HTML_TAG_P :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                if (!Nh_HTML_hasElementInButtonScope(Parser_p, "p")) {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+                    NH_HTML_CHECK_NULL(Nh_HTML_insertHTMLElement(Parser_p, Nh_HTML_getEmptyStartTagToken(NH_HTML_TAG_P)))
+                }
+                NH_HTML_CHECK(Nh_HTML_closePElement(Parser_p))
+                break;
             }
             case NH_HTML_TAG_LI :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                if (!Nh_HTML_hasElementInListItemScope(Parser_p, "li")) {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                    break;
+                }
+                NH_HTML_CHECK(Nh_HTML_closeElement(Parser_p, "li"))
+                break;
             }
             case NH_HTML_TAG_DD : 
             case NH_HTML_TAG_DT : 
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                if (!Nh_HTML_hasElementInScope(Parser_p, Parser_p->Token_p->StartOrEndTag.TagName.bytes_p)) {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                    break;
+                }
+                NH_HTML_CHECK(Nh_HTML_closeElement(Parser_p, Parser_p->Token_p->StartOrEndTag.TagName.bytes_p))
+                break;
             }
             case NH_HTML_TAG_H1 :
             case NH_HTML_TAG_H2 :
@@ -1099,14 +1421,20 @@ NH_HTML_BEGIN()
             case NH_HTML_TAG_H5 :
             case NH_HTML_TAG_H6 :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                if (!Nh_HTML_hasElementInScope(Parser_p, Parser_p->Token_p->StartOrEndTag.TagName.bytes_p)) {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+                    break;
+                }
+                NH_HTML_CHECK(Nh_HTML_generateImpliedEndTags(Parser_p, NULL))
+                if (strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Nh_HTML_getCurrentNode(Parser_p)))->bytes_p, Parser_p->Token_p->StartOrEndTag.TagName.bytes_p)) {
+                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+                }
+                Nh_WebIDL_Object *Pop_p = Nh_HTML_popCurrentNode(Parser_p);
+                while (Pop_p != NULL && strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Pop_p))->bytes_p, Parser_p->Token_p->StartOrEndTag.TagName.bytes_p)) {
+                    Pop_p = Nh_HTML_popCurrentNode(Parser_p);
+                }
+                break;
             }
-//            case NH_HTML_TAG_SARCASM : 
-//            {
-//                // TODO
-//                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
-//            }
             case NH_HTML_TAG_A      :
             case NH_HTML_TAG_B      :
             case NH_HTML_TAG_BIG    :
@@ -1123,35 +1451,218 @@ NH_HTML_BEGIN()
             case NH_HTML_TAG_U      :
             {
                 // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                break;
             }
             case NH_HTML_TAG_APPLET  :
             case NH_HTML_TAG_MARQUEE :
             case NH_HTML_TAG_OBJECT  :
             {
                 // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS) 
+                break;
             }
             case NH_HTML_TAG_BR :
             {
-                // TODO
-                NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+                NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+                Parser_p->Token_p->type = NH_HTML_TOKEN_START_TAG;
+                NH_HTML_CHECK(Nh_HTML_processInBody(Parser_p))
+                break;
+            }
+            default :
+            {
+//                Nh_WebIDL_Object *Node_p = Nh_HTML_getCurrentNode(Parser_p); 
+//
+//                if (!strcmp(Nh_DOM_getLocalName(Nh_DOM_getElement(Node_p))->bytes_p, Parser_p->Token_p->StartOrEndTag.TagName.bytes_p)) i
+//                {
+//                    NH_HTML_CHECK(Nh_HTML_generateImpliedEndTags(Parser_p, Parser_p->Token_p->StartOrEndTag.TagName.bytes_p))
+//
+//                    if (Node_p != Nh_HTML_getCurrentNode(Parser_p)) {
+//                        NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+//                    }
+//
+//                    while (Nh_HTML_popCurrentNode(Parser_p) != Node_p) {}
+//                }
+//
+//                if (Nh_HTML_inSpecialCategory(Node_p)) {
+//                    NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+//                    break;
+//                }
+//                else {
+//                    Node_p = Parser_p->OpenElements.pp[Parser_p->OpenElements.size - 2];
+//                }
             }
         }
-
-        // TODO
     }
     else if (Parser_p->Token_p->type == NH_HTML_TOKEN_END_OF_FILE)
     {
-        // TODO
-        if (Nh_HTML_hasOtherOpenElements1(Parser_p)) {
-            // parse error
+        if (Parser_p->TemplateInsertionModes.size > 0) {
+            NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_IN_TEMPLATE))
         }
-        Parser_p->stop = NH_TRUE;
-        NH_HTML_END(NH_HTML_SUCCESS)
+        else {
+            if (Nh_HTML_hasOtherOpenElements(Parser_p)) {
+                NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+            }
+            Parser_p->stop = NH_TRUE;
+        }
     }
 
-NH_HTML_END(NH_HTML_SUCCESS)
+NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+}
+
+// TEXT ============================================================================================
+
+static NH_HTML_RESULT Nh_HTML_processText(
+    Nh_HTML_Parser *Parser_p)
+{
+NH_HTML_BEGIN()
+
+    switch (Parser_p->Token_p->type)
+    {
+        case NH_HTML_TOKEN_CHARACTER :
+        {
+            NH_HTML_CHECK(Nh_HTML_insertCharacter(Parser_p, NULL, NULL))
+            break;
+        }
+        case NH_HTML_TOKEN_END_OF_FILE :
+        {
+            NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+            NH_HTML_CHECK_NULL(Nh_HTML_popCurrentNode(Parser_p))
+            NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, Parser_p->originalInsertionMode))
+            break;
+        }
+        case NH_HTML_TOKEN_END_TAG :
+        {
+            if (Parser_p->Token_p->StartOrEndTag.tag == NH_HTML_TAG_SCRIPT)
+            {
+                // TODO
+            }
+            else {
+                NH_HTML_CHECK_NULL(Nh_HTML_popCurrentNode(Parser_p))
+                Parser_p->insertionMode = Parser_p->originalInsertionMode;
+            }
+            break;
+        }
+    }
+
+NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+}
+
+// AFTER BODY =======================================================================================
+
+static NH_HTML_RESULT Nh_HTML_processAfterBody(
+    Nh_HTML_Parser *Parser_p)
+{
+NH_HTML_BEGIN()
+
+    switch (Parser_p->Token_p->type)
+    {
+        case NH_HTML_TOKEN_CHARACTER :
+        {
+            if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0A
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0C
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0D
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20)
+            { 
+                NH_HTML_CHECK(Nh_HTML_processInBody(Parser_p))
+                break;
+            }
+            goto AFTER_BODY_DEFAULT;
+        }
+        case NH_HTML_TOKEN_COMMENT :
+        {
+            NH_HTML_CHECK(Nh_HTML_insertComment(Parser_p, Parser_p->OpenElements.pp[0]))
+            break;
+        }
+        case NH_HTML_TOKEN_DOCTYPE :
+        {
+            NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_IGNORED_TOKEN))
+            break;
+        }
+        case NH_HTML_TOKEN_START_TAG :
+        {
+            if (Parser_p->Token_p->StartOrEndTag.tag == NH_HTML_TAG_HTML) {
+                NH_HTML_CHECK(Nh_HTML_processInBody(Parser_p))
+                break;
+            }
+            goto AFTER_BODY_DEFAULT;
+        }
+        case NH_HTML_TOKEN_END_TAG :
+        {
+            if (Parser_p->Token_p->StartOrEndTag.tag == NH_HTML_TAG_HTML) {
+                // TODO If the parser was created as part of the HTML fragment parsing algorithm, this is a parse error; ignore the token. (fragment case)
+                Parser_p->insertionMode = NH_HTML_INSERTION_MODE_AFTER_AFTER_BODY;
+                break;
+            }
+            goto AFTER_BODY_DEFAULT;
+        }
+        case NH_HTML_TOKEN_END_OF_FILE :
+        {
+            Parser_p->stop = NH_TRUE;
+            break;
+        }
+        default : AFTER_BODY_DEFAULT :
+        {
+            NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+            NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_IN_BODY))
+        }
+    }
+
+NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
+}
+
+// AFTER AFTER BODY ================================================================================
+
+static NH_HTML_RESULT Nh_HTML_processAfterAfterBody(
+    Nh_HTML_Parser *Parser_p)
+{
+NH_HTML_BEGIN()
+
+    switch (Parser_p->Token_p->type)
+    {
+        case NH_HTML_TOKEN_COMMENT :
+        {
+            NH_HTML_CHECK(Nh_HTML_insertComment(Parser_p, Parser_p->Document_p))
+            break;
+        }
+        case NH_HTML_TOKEN_DOCTYPE :
+        {
+            NH_HTML_CHECK(Nh_HTML_processInBody(Parser_p))
+            break;
+        }
+        case NH_HTML_TOKEN_CHARACTER :
+        {
+            if (Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x09
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0A
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0C
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x0D
+            ||  Parser_p->Token_p->CommentOrCharacter.Data.bytes_p[0] == 0x20)
+            { 
+                NH_HTML_CHECK(Nh_HTML_processInBody(Parser_p))
+                break;
+            }
+            goto AFTER_AFTER_BODY_DEFAULT;
+        }
+        case NH_HTML_TOKEN_START_TAG :
+        {
+            if (Parser_p->Token_p->StartOrEndTag.tag == NH_HTML_TAG_HTML) {
+                NH_HTML_CHECK(Nh_HTML_processInBody(Parser_p))
+                break;
+            }
+            goto AFTER_AFTER_BODY_DEFAULT;
+        }
+        case NH_HTML_TOKEN_END_OF_FILE :
+        {
+            Parser_p->stop = NH_TRUE;
+            break;
+        }
+        default : AFTER_AFTER_BODY_DEFAULT :
+        {
+            NH_HTML_CHECK(Nh_HTML_newTreeConstructionError(Parser_p, NH_HTML_PARSE_ERROR_PLACEHOLDER))
+            NH_HTML_CHECK(Nh_HTML_reprocessToken(Parser_p, NH_HTML_INSERTION_MODE_IN_BODY))
+        }
+    }
+
+NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
 }
 
 // DISPATCH ========================================================================================
@@ -1163,16 +1674,19 @@ NH_HTML_BEGIN()
 
     switch (Parser_p->insertionMode)
     {
-        case NH_HTML_INSERTION_MODE_INITIAL          : NH_HTML_END(Nh_HTML_processInitial(Parser_p))
-        case NH_HTML_INSERTION_MODE_BEFORE_HTML      : NH_HTML_END(Nh_HTML_processBeforeHTML(Parser_p))
-        case NH_HTML_INSERTION_MODE_BEFORE_HEAD      : NH_HTML_END(Nh_HTML_processBeforeHead(Parser_p))
-        case NH_HTML_INSERTION_MODE_IN_HEAD          : NH_HTML_END(Nh_HTML_processInHead(Parser_p))
-        case NH_HTML_INSERTION_MODE_IN_HEAD_NOSCRIPT : NH_HTML_END(Nh_HTML_processInHeadNoscript(Parser_p)) 
-        case NH_HTML_INSERTION_MODE_AFTER_HEAD       : NH_HTML_END(Nh_HTML_processAfterHead(Parser_p))
-        case NH_HTML_INSERTION_MODE_IN_BODY          : NH_HTML_END(Nh_HTML_processInBody(Parser_p))
+        case NH_HTML_INSERTION_MODE_INITIAL          : NH_HTML_DIAGNOSTIC_END(Nh_HTML_processInitial(Parser_p))
+        case NH_HTML_INSERTION_MODE_BEFORE_HTML      : NH_HTML_DIAGNOSTIC_END(Nh_HTML_processBeforeHTML(Parser_p))
+        case NH_HTML_INSERTION_MODE_BEFORE_HEAD      : NH_HTML_DIAGNOSTIC_END(Nh_HTML_processBeforeHead(Parser_p))
+        case NH_HTML_INSERTION_MODE_IN_HEAD          : NH_HTML_DIAGNOSTIC_END(Nh_HTML_processInHead(Parser_p))
+        case NH_HTML_INSERTION_MODE_IN_HEAD_NOSCRIPT : NH_HTML_DIAGNOSTIC_END(Nh_HTML_processInHeadNoscript(Parser_p)) 
+        case NH_HTML_INSERTION_MODE_AFTER_HEAD       : NH_HTML_DIAGNOSTIC_END(Nh_HTML_processAfterHead(Parser_p))
+        case NH_HTML_INSERTION_MODE_IN_BODY          : NH_HTML_DIAGNOSTIC_END(Nh_HTML_processInBody(Parser_p))
+        case NH_HTML_INSERTION_MODE_TEXT             : NH_HTML_DIAGNOSTIC_END(Nh_HTML_processText(Parser_p))
+        case NH_HTML_INSERTION_MODE_AFTER_BODY       : NH_HTML_DIAGNOSTIC_END(Nh_HTML_processAfterBody(Parser_p))
+        case NH_HTML_INSERTION_MODE_AFTER_AFTER_BODY : NH_HTML_DIAGNOSTIC_END(Nh_HTML_processAfterAfterBody(Parser_p))
     }
 
-NH_HTML_END(NH_HTML_ERROR_BAD_STATE)
+NH_HTML_DIAGNOSTIC_END(NH_HTML_ERROR_BAD_STATE)
 }
 
 static NH_HTML_RESULT Nh_HTML_reprocessToken(
@@ -1183,7 +1697,7 @@ NH_HTML_BEGIN()
     Parser_p->insertionMode = insertionMode;
     NH_HTML_CHECK(Nh_HTML_processToken(Parser_p))
 
-NH_HTML_END(NH_HTML_ERROR_BAD_STATE)
+NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
 }
 
 // https://html.spec.whatwg.org/multipage/parsing.html#tree-construction-dispatcher
@@ -1207,6 +1721,6 @@ NH_HTML_BEGIN()
         exit(0);
     }
 
-NH_HTML_END(NH_HTML_SUCCESS)
+NH_HTML_DIAGNOSTIC_END(NH_HTML_SUCCESS)
 }
 

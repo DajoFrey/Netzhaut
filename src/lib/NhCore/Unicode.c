@@ -232,7 +232,7 @@ NH_BOOL Nh_isASCIIAlpha(
     NH_UNICODE_CODEPOINT codepoint)
 {
 NH_BEGIN()
-NH_END(Nh_isASCIIUpperAlpha(codepoint) && Nh_isASCIILowerAlpha(codepoint))
+NH_END(Nh_isASCIIUpperAlpha(codepoint) || Nh_isASCIILowerAlpha(codepoint))
 }
 
 NH_BOOL Nh_isASCIIDigit(
