@@ -234,7 +234,7 @@ size_t NH_WEBIDL_FRAGMENT_NAMES_PP_COUNT = sizeof(NH_WEBIDL_FRAGMENT_NAMES_PP) /
 
 // FRAGMENTS =======================================================================================
 
-unsigned NH_BYTE *NH_WEBIDL_FRAGMENTS_PP[] = {
+NH_UNSIGNED_BYTE *NH_WEBIDL_FRAGMENTS_PP[] = {
     Nh_WebIDL_DOM_TreeWalker_p,
     Nh_WebIDL_DOM_Text_p,
     Nh_WebIDL_DOM_StaticRange_p,

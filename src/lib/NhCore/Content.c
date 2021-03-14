@@ -63,7 +63,7 @@ NH_BEGIN()
 //
 //    Content_p->Settings.scale = 1.0f;
 //
-//    NH_CHECK(Nh_IO_initInput(&Content_p->Input))
+//    NH_CHECK(Nh_WSI_initInput(&Content_p->Input))
 
 NH_DIAGNOSTIC_END(NH_SUCCESS)
 }
@@ -137,7 +137,7 @@ NH_RESULT Nh_destroyContent(
 {
 NH_BEGIN()
 
-//    Nh_IO_freeInput(&Content_p->Input);
+//    Nh_WSI_freeInput(&Content_p->Input);
 //    Nh_deleteCallbacks(&Content_p->Callbacks);
 //
 //    if (Content_p->Tab_p != NULL) 

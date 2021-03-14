@@ -16,6 +16,7 @@
 #include "GUI.h"
 #include "Libraries.h"
 #include "Message.h"
+#include "Parser.h"
 
 #include "Common/Macro.h"
 
@@ -25,40 +26,20 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 // DATA ============================================================================================
 
 static NH_BOOL RUN = NH_FALSE;
-
-// libs
 static NH_BOOL BUILD_A_LIBRARY     = NH_FALSE;
 static NH_BOOL BUILD_ALL_LIBRARIES = NH_FALSE;
-
-static NH_BOOL LIBRARY_NETZHAUT   = NH_FALSE;
-static NH_BOOL LIBRARY_LOADER     = NH_FALSE;
-static NH_BOOL LIBRARY_CORE       = NH_FALSE;
-static NH_BOOL LIBRARY_EXTERNAL   = NH_FALSE;
-static NH_BOOL LIBRARY_IO         = NH_FALSE;
-static NH_BOOL LIBRARY_TTY        = NH_FALSE;
-static NH_BOOL LIBRARY_NETWORK    = NH_FALSE;
-static NH_BOOL LIBRARY_HTML       = NH_FALSE;
-static NH_BOOL LIBRARY_DOM        = NH_FALSE;
-static NH_BOOL LIBRARY_ECMASCRIPT = NH_FALSE;
-static NH_BOOL LIBRARY_WEBIDL     = NH_FALSE;
-
-// bins
 static NH_BOOL BUILD_A_BINARY     = NH_FALSE;
 static NH_BOOL BUILD_ALL_BINARIES = NH_FALSE;
-
 static NH_BOOL BINARY_WEB_BROWSER   = NH_FALSE;
 static NH_BOOL BINARY_TERMINAL      = NH_FALSE;
 static NH_BOOL BINARY_WINDOW_SYSTEM = NH_FALSE;
-
-// install
 static NH_BOOL INSTALL_ALL_LIBRARIES = NH_FALSE;
 static NH_BOOL INSTALL_ALL_BINARIES  = NH_FALSE;
-
-// other
 static NH_BOOL GENERATE_DOCS  = NH_FALSE;
 static NH_BOOL VULKAN_SHADERS = NH_FALSE;
 static NH_BOOL OFFLINE        = NH_FALSE;
@@ -66,6 +47,37 @@ static NH_BOOL OFFLINE        = NH_FALSE;
 NH_BOOL NH_INSTALLER_QUIET        = NH_FALSE;
 NH_BOOL NH_INSTALLER_FLOW_LOGGING = NH_FALSE;
 NH_BOOL NH_INSTALLER_GUI          = NH_FALSE;
+
+NH_BYTE *NH_INSTALLER_FILE_DATA_P = NULL;
+Nh_Installer_Library NH_INSTALLER_LIBRARIES_P[NH_INSTALLER_MAX_LIBRARIES];
+Nh_Installer_Source NH_INSTALLER_SOURCES_P[NH_INSTALLER_MAX_SOURCES];
+
+// GET LIBRARY NAME ================================================================================ 
+
+NH_BYTE *Nh_Installer_getLibraryName(
+    int i)
+{
+NH_INSTALLER_BEGIN()
+
+    static NH_BYTE libraryName_p[255];
+
+    memset(libraryName_p, 0, 255);
+    Nh_Installer_Library *Library_p = &NH_INSTALLER_LIBRARIES_P[i];
+
+    if (!Library_p->name_p) {NH_INSTALLER_END(libraryName_p)}
+
+    else if (!strcmp(Library_p->name_p, "Netzhaut")) {
+        strcpy(libraryName_p, "netzhaut");
+    }
+    else {
+        strcpy(libraryName_p, Library_p->name_p + 2);
+        for (int j = 0; j < strlen(libraryName_p); ++j) {
+            libraryName_p[j] = tolower(libraryName_p[j]);
+        }
+    }
+
+NH_INSTALLER_END(libraryName_p)
+}
 
 // PARSE INPUT =====================================================================================
 
@@ -90,15 +102,11 @@ NH_INSTALLER_BEGIN()
                 RUN = libs = NH_TRUE;
                 BUILD_ALL_LIBRARIES = NH_TRUE;
                 if (negate) {
-                    LIBRARY_NETZHAUT   = NH_TRUE;
-                    LIBRARY_LOADER     = NH_TRUE;
-                    LIBRARY_CORE       = NH_TRUE;
-                    LIBRARY_IO         = NH_TRUE;
-                    LIBRARY_TTY        = NH_TRUE;
-                    LIBRARY_NETWORK    = NH_TRUE;
-                    LIBRARY_ECMASCRIPT = NH_TRUE;
-                    LIBRARY_HTML       = NH_TRUE;
-                    LIBRARY_WEBIDL     = NH_TRUE;
+                    for (int j = 0; j < NH_INSTALLER_MAX_LIBRARIES; ++j) {
+                        if (NH_INSTALLER_LIBRARIES_P[j].name_p) {
+                            NH_INSTALLER_LIBRARIES_P[j].build = NH_TRUE;
+                        }
+                    }
                 }
             }
             if (strstr(argv_pp[i], "b")) {
@@ -154,44 +162,28 @@ NH_INSTALLER_BEGIN()
 
         if (libs)
         {
-            if (strcmp(argv_pp[i], "netzhaut")
-            &&  strcmp(argv_pp[i], "loader")
-            &&  strcmp(argv_pp[i], "core")
-            &&  strcmp(argv_pp[i], "io")
-            &&  strcmp(argv_pp[i], "tty")
-            &&  strcmp(argv_pp[i], "network")
-            &&  strcmp(argv_pp[i], "html")
-            &&  strcmp(argv_pp[i], "dom")
-            &&  strcmp(argv_pp[i], "webidl")
-            &&  strcmp(argv_pp[i], "ecmascript")) {
+            NH_BOOL valid = NH_FALSE;
+            for (int j = 0; j < NH_INSTALLER_MAX_LIBRARIES; ++j) {
+                if (!strcmp(argv_pp[i], Nh_Installer_getLibraryName(j))) {
+                    valid = NH_TRUE;
+                    break;
+                }
+            }
+            if (!valid) {
                 Nh_Installer_noticef("Invalid option \"%s\"", argv_pp[i]);
                 NH_INSTALLER_END(NH_INSTALLER_ERROR_INVALID_OPTION)
             }
         }
-        if (libs && !negate) 
-        {
-            LIBRARY_NETZHAUT   = !strcmp(argv_pp[i], "netzhaut") || LIBRARY_NETZHAUT;
-            LIBRARY_LOADER     = !strcmp(argv_pp[i], "loader") || LIBRARY_LOADER;
-            LIBRARY_CORE       = !strcmp(argv_pp[i], "core") || LIBRARY_CORE;
-            LIBRARY_IO         = !strcmp(argv_pp[i], "io") || LIBRARY_IO;
-            LIBRARY_TTY        = !strcmp(argv_pp[i], "tty") || LIBRARY_TTY;
-            LIBRARY_ECMASCRIPT = !strcmp(argv_pp[i], "ecmascript") || LIBRARY_ECMASCRIPT;
-            LIBRARY_HTML       = !strcmp(argv_pp[i], "html") || LIBRARY_HTML;
-            LIBRARY_DOM        = !strcmp(argv_pp[i], "dom") || LIBRARY_DOM;
-            LIBRARY_NETWORK    = !strcmp(argv_pp[i], "network") || LIBRARY_NETWORK;
-            LIBRARY_WEBIDL     = !strcmp(argv_pp[i], "webidl") || LIBRARY_WEBIDL;
+
+        if (libs && !negate) {
+            for (int j = 0; j < NH_INSTALLER_MAX_LIBRARIES; ++j) {
+                NH_INSTALLER_LIBRARIES_P[j].build = !strcmp(argv_pp[i], Nh_Installer_getLibraryName(j)) || NH_INSTALLER_LIBRARIES_P[j].build;
+            }
         }
         if (libs && negate) {
-            LIBRARY_NETZHAUT   = strcmp(argv_pp[i], "netzhaut") && LIBRARY_NETZHAUT;
-            LIBRARY_LOADER     = strcmp(argv_pp[i], "loader") && LIBRARY_LOADER;
-            LIBRARY_CORE       = strcmp(argv_pp[i], "core") && LIBRARY_CORE;
-            LIBRARY_IO         = strcmp(argv_pp[i], "io") && LIBRARY_IO;
-            LIBRARY_TTY        = strcmp(argv_pp[i], "tty") && LIBRARY_TTY;
-            LIBRARY_ECMASCRIPT = strcmp(argv_pp[i], "ecmascript") && LIBRARY_ECMASCRIPT;
-            LIBRARY_HTML       = strcmp(argv_pp[i], "html") && LIBRARY_HTML;
-            LIBRARY_DOM        = strcmp(argv_pp[i], "dom") && LIBRARY_DOM;
-            LIBRARY_NETWORK    = strcmp(argv_pp[i], "network") && LIBRARY_NETWORK;
-            LIBRARY_WEBIDL     = strcmp(argv_pp[i], "webidl") && LIBRARY_WEBIDL;
+            for (int j = 0; j < NH_INSTALLER_MAX_LIBRARIES; ++j) {
+                NH_INSTALLER_LIBRARIES_P[j].build = strcmp(argv_pp[i], Nh_Installer_getLibraryName(j)) && NH_INSTALLER_LIBRARIES_P[j].build;
+            }
         }
 
         if (bins)
@@ -219,20 +211,19 @@ NH_INSTALLER_BEGIN()
 
     if (!RUN) {NH_INSTALLER_QUIET = NH_TRUE;}
 
-    BUILD_A_LIBRARY = 
-        LIBRARY_NETZHAUT || LIBRARY_LOADER || LIBRARY_CORE || LIBRARY_IO || LIBRARY_TTY || LIBRARY_NETWORK || LIBRARY_ECMASCRIPT || LIBRARY_HTML || LIBRARY_DOM || LIBRARY_WEBIDL;
+    for (int j = 0; j < NH_INSTALLER_MAX_LIBRARIES; ++j) {
+        if (NH_INSTALLER_LIBRARIES_P[j].build && NH_INSTALLER_LIBRARIES_P[j].name_p) {
+            BUILD_A_LIBRARY = NH_TRUE;
+            break;
+        }
+    }
 
     if (!BUILD_A_LIBRARY && BUILD_ALL_LIBRARIES) {
-        LIBRARY_NETZHAUT   = NH_TRUE;
-        LIBRARY_LOADER     = NH_TRUE;
-        LIBRARY_CORE       = NH_TRUE;
-        LIBRARY_IO         = NH_TRUE;
-        LIBRARY_TTY        = NH_TRUE;
-        LIBRARY_NETWORK    = NH_TRUE;
-        LIBRARY_HTML       = NH_TRUE;
-        LIBRARY_DOM        = NH_TRUE;
-        LIBRARY_ECMASCRIPT = NH_TRUE;
-        LIBRARY_WEBIDL     = NH_TRUE;
+        for (int j = 0; j < NH_INSTALLER_MAX_LIBRARIES; ++j) {
+            if (NH_INSTALLER_LIBRARIES_P[j].name_p) {
+                NH_INSTALLER_LIBRARIES_P[j].build = NH_TRUE;
+            }
+        }
         BUILD_A_LIBRARY = NH_TRUE;
     }
 
@@ -269,38 +260,13 @@ NH_INSTALLER_BEGIN()
 
     if (BUILD_A_LIBRARY) {
         NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_prepareLibraryBuild())
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhExternal", INSTALL_ALL_LIBRARIES))
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhExternal(INSTALL_ALL_LIBRARIES))
     }
 
-    if (LIBRARY_NETZHAUT) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("Netzhaut", INSTALL_ALL_LIBRARIES))
-    }
-    if (LIBRARY_LOADER) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhLoader", INSTALL_ALL_LIBRARIES))
-    }
-    if (LIBRARY_CORE) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhCore", INSTALL_ALL_LIBRARIES))
-    }
-    if (LIBRARY_IO) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhIO", INSTALL_ALL_LIBRARIES))
-    }
-    if (LIBRARY_TTY) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhTTY", INSTALL_ALL_LIBRARIES))
-    }
-    if (LIBRARY_NETWORK) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhNetwork", INSTALL_ALL_LIBRARIES))
-    }
-    if (LIBRARY_ECMASCRIPT) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhECMAScript", INSTALL_ALL_LIBRARIES))
-    }
-    if (LIBRARY_HTML) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhHTML", INSTALL_ALL_LIBRARIES))
-    }
-    if (LIBRARY_DOM) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhDOM", INSTALL_ALL_LIBRARIES))
-    }
-    if (LIBRARY_WEBIDL) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary("NhWebIDL", INSTALL_ALL_LIBRARIES))
+    for (int i = 0; i < NH_INSTALLER_MAX_LIBRARIES; ++i) {
+        if (NH_INSTALLER_LIBRARIES_P[i].build && NH_INSTALLER_LIBRARIES_P[i].name_p) {
+            NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildLibrary(&NH_INSTALLER_LIBRARIES_P[i], INSTALL_ALL_LIBRARIES))
+        }
     }
 
     if (INSTALL_ALL_LIBRARIES) {
@@ -365,6 +331,23 @@ NH_INSTALLER_END(NH_TRUE)
 
 // MAIN ============================================================================================
 
+void Nh_Installer_showParseResult()
+{
+NH_INSTALLER_BEGIN()
+
+    for (int i = 0; i < 255; ++i) {
+        Nh_Installer_Library *Library_p = &NH_INSTALLER_LIBRARIES_P[i];
+        if (Library_p->name_p) {Nh_Installer_noticef("Library: %s (CompileArgs:%s, LinkArgs:%s)", Library_p->name_p, Library_p->compileArgs_p, Library_p->linkArgs_p);}
+    }
+
+    for (int i = 0; i < 1024; ++i) {
+        Nh_Installer_Source *Source_p = &NH_INSTALLER_SOURCES_P[i];
+        if (Source_p->path_p) {Nh_Installer_noticef("%s %s", Source_p->Library_p->name_p, Source_p->path_p + strlen(Source_p->Library_p->name_p) + 1);}
+    }
+
+NH_INSTALLER_SILENT_END()
+}
+
 NH_INSTALLER_RESULT Nh_Installer_main(
     int argc, char **argv_pp)
 {
@@ -374,6 +357,12 @@ NH_INSTALLER_BEGIN()
 
     if (Nh_Installer_validLocation()) 
     {
+        char projDir_p[2048] = {'\0'};
+        if (Nh_Installer_getProjectDir(projDir_p, 2048) != NH_INSTALLER_SUCCESS) {NH_INSTALLER_END(NH_FALSE)}
+
+        Nh_Installer_parseInstallerFile(projDir_p);
+        Nh_Installer_showParseResult();
+
         if (argc == 1) {
             NH_INSTALLER_GUI = NH_TRUE;
             result = Nh_Installer_runGUI();
@@ -396,6 +385,25 @@ int main(
     int argc, char **argv_pp)
 {
 NH_INSTALLER_BEGIN()
-NH_INSTALLER_DIAGNOSTIC_END(Nh_Installer_main(argc, argv_pp))
+
+    for (int i = 0; i < 255; ++i) {
+        NH_INSTALLER_LIBRARIES_P[i].name_p = NULL;
+        NH_INSTALLER_LIBRARIES_P[i].compileArgs_p = NULL;
+        NH_INSTALLER_LIBRARIES_P[i].linkArgs_p = NULL;
+        NH_INSTALLER_LIBRARIES_P[i].build = NH_FALSE;
+    } 
+
+    for (int i = 0; i < 1024; ++i) {
+        NH_INSTALLER_SOURCES_P[i].Library_p = NULL;
+        NH_INSTALLER_SOURCES_P[i].path_p = NULL;
+    } 
+
+    NH_INSTALLER_FILE_DATA_P = NULL;
+
+    NH_INSTALLER_RESULT result = Nh_Installer_main(argc, argv_pp);
+
+    free(NH_INSTALLER_FILE_DATA_P);
+
+NH_INSTALLER_DIAGNOSTIC_END(result)
 } 
 

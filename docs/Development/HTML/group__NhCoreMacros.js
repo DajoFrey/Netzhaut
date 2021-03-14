@@ -15,7 +15,6 @@ var group__NhCoreMacros =
     [ "NH_PIXEL_TO_CLIP", "group__NhCoreMacros.html#ga3605f81069c5025554d8b0d2c8264f53", null ],
     [ "Nh_String", "group__NhCoreMacros.html#gafa4a11576c2acc3e496dc0d1ec206927", null ],
     [ "NH_UNICODE_CODEPOINT", "group__NhCoreMacros.html#ga614d2377523419015284b33983fdf363", null ],
-    [ "Nh_UnicodeString", "group__NhCoreMacros.html#ga3295b7bb21089eb320227370024a08bf", null ],
     [ "NH_UNSIGNED_BYTE", "group__NhCoreMacros.html#gaa0ca4b8950ceec7e70d4581c516bdabc", null ],
     [ "NH_UTF8_INVALID", "group__NhCoreMacros.html#gaa155e22071a255fa7182c7c94f8ee307", null ],
     [ "NH_UTF8_SIZE", "group__NhCoreMacros.html#ga1d0ae7d4cccd76f0fd642c55cd0180a5", null ],

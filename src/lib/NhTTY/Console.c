@@ -525,7 +525,7 @@ NH_TTY_BEGIN()
     }
     else {
         Nh_UnicodeString *Line_p = &((Nh_UnicodeString*)Console_p->History.bytes_p)[Console_p->History.length + row];
-        Nh_UTF8String UTF8 = Nh_encodeTextToUTF8(Line_p->p, Line_p->length);
+        Nh_Encoding_UTF8String UTF8 = Nh_encodeTextToUTF8(Line_p->p, Line_p->length);
         Nh_appendToString(Row_p, UTF8.bytes_p, UTF8.length);
         for (int i = 0; i < cols - Line_p->length; ++i) {
             Nh_appendToString(Row_p, " ", 1); 

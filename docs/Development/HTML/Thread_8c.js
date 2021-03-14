@@ -11,6 +11,7 @@ var Thread_8c =
     [ "Nh_getThreadPool", "group__NhCoreFunctions.html#gaaeb99dd23888220467481fb71d56ec20", null ],
     [ "Nh_getWorkloadFromArgs", "group__NhCoreFunctions.html#ga59668d371a9de1ad9644d2b5814d7ab0", null ],
     [ "Nh_initThreadPool", "group__NhCoreFunctions.html#ga1d35decb240a373b40f98ec5c331a242", null ],
+    [ "Nh_keepRunning", "group__NhCoreFunctions.html#ga6cc810b3358853eead875e54763dff8f", null ],
     [ "Nh_runWorkload", "group__NhCoreFunctions.html#gaaeaa48ec709b396198a5c85345ea1e3b", null ],
     [ "Nh_runWorkloads", "group__NhCoreFunctions.html#ga81a6e5ffa46e061ba53016262def5bc8", null ],
     [ "Nh_sleepMs", "group__NhCoreFunctions.html#gacb79f4563288a734a8e7bfb1443bcadf", null ]

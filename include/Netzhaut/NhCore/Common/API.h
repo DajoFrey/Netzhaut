@@ -13,26 +13,21 @@
 
 #endif
 
-/** @addtogroup NhCoreMacros
+/** @addtogroup NhCoreTypedefs
  *  @{
  */
 
-    #define NH_BYTE char 
-    #define NH_UNSIGNED_BYTE unsigned char
-    #define NH_UNICODE_CODEPOINT uint_least32_t 
+    typedef char           NH_BYTE;
+    typedef unsigned char  NH_UNSIGNED_BYTE;
+    typedef uint_least32_t NH_UNICODE_CODEPOINT;
+    typedef int            NH_PIXEL;
+    typedef float          NH_CLIP;
 
-    #define Nh_String Nh_Array
-    #define Nh_UTF8String Nh_String
+/** @} */
 
-    /**
-     * Value inside the pixel coordinate system. Pixel (0, 0) is the top left pixel of the screen.
-     */
-    #define NH_PIXEL int
-    
-    /**
-     * Value inside the clip coordinate system. Values from -1.0f to 1.0f are inside the viewport, everything else is outside.
-     */
-    #define NH_CLIP float
+/** @addtogroup NhCoreMacros
+ *  @{
+ */
 
     #define NH_CLIP_LENGTH(clipValue) \
     (                                 \
@@ -149,6 +144,14 @@
     typedef struct Nh_Color {
         float r, g, b, a;
     } Nh_Color;
+
+/** @} */
+
+/** @addtogroup NhCoreTypedefs
+ *  @{
+ */
+
+    typedef Nh_Array  Nh_String;
 
 /** @} */
 

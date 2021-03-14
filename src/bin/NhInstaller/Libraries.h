@@ -9,6 +9,7 @@
  * Published under LGPLv3
  */
 
+#include "Main.h"
 #include "Common/Result.h"
 #include "Common/API.h"
 
@@ -26,8 +27,12 @@
     );
     
     NH_INSTALLER_RESULT Nh_Installer_buildLibrary(
-        char *name_p, NH_BOOL installLibraries
+        Nh_Installer_Library *Library_p, NH_BOOL installLibraries
     ); 
+
+    NH_INSTALLER_RESULT Nh_Installer_buildNhExternal(
+        NH_BOOL install
+    );
 
 /** @} */
 

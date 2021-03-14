@@ -31,6 +31,8 @@
 #include "../NhWebIDL/Runtime/Parser.h"
 #include "../NhLoader/Loader.h"
 
+#include "../NhEncoding/Encodings/UTF8.h"
+
 #include <stddef.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -125,7 +127,7 @@ NH_TTY_BEGIN()
         NH_BYTE *bytes_p = Nh_TTY_readFile(path_p);
         NH_TTY_CHECK_MEM(NULL, bytes_p)
 
-        Nh_UnicodeString Codepoints = Nh_decodeUTF8Text(bytes_p);
+        Nh_UnicodeString Codepoints = Nh_Encoding_decodeUTF8(bytes_p, strlen(bytes_p));
 
         for (unsigned long i = 0, lineStart = 0; i < Codepoints.length; ++i) 
         {
@@ -180,7 +182,7 @@ NH_TTY_RESULT Nh_TTY_parseWebTextFile(
 {
 NH_TTY_BEGIN()
 
-    Nh_UTF8String Bytes = Nh_initString(255);
+    Nh_Encoding_UTF8String Bytes = Nh_initString(255);
 
     for (int i = 0; i < TextFile_p->Lines.size; ++i) 
     {

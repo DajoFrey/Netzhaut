@@ -13,7 +13,7 @@
 
 #endif
 
-/** @addtogroup NhWebIDLFunctions
+/** @addtogroup NhHTMLFunctions
  *  @{
  */
 

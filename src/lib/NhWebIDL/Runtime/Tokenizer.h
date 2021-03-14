@@ -39,7 +39,7 @@
 
     typedef struct Nh_WebIDL_Token {
         NH_WEBIDL_TOKEN type;
-        Nh_UTF8String String;
+        Nh_Encoding_UTF8String String;
     } Nh_WebIDL_Token;
 
 /** @} */

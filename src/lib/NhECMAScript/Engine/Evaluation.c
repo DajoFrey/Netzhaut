@@ -375,7 +375,7 @@ NH_ECMASCRIPT_BEGIN()
 
     if (Node_p->Children.size == 2 && ((Nh_ECMAScript_ParseNode*)Node_p->Children.pp[0])->type == NH_ECMASCRIPT_PARSE_NODE_BINDING_IDENTIFIER) 
     {
-        Nh_UTF8String *BindingId_p = Nh_ECMAScript_getStringValue(Node_p->Children.pp[0]); 
+        Nh_Encoding_UTF8String *BindingId_p = Nh_ECMAScript_getStringValue(Node_p->Children.pp[0]); 
         Nh_ECMAScript_Reference Reference = Nh_ECMAScript_resolveBinding(BindingId_p, NULL);
 
         Nh_ECMAScript_Completion InitializerGetValue = Nh_ECMAScript_normalEmptyCompletion();

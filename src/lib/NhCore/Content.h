@@ -32,7 +32,7 @@
 
         Nh_Tab *Tab_p;       /**<A pointer to the tab which holds the container.*/
 
-        Nh_IO_Input Input;
+        Nh_WSI_Input Input;
         Nh_URI URI;
 
         Nh_LinkedList Callbacks;

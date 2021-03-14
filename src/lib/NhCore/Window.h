@@ -16,7 +16,7 @@
 #include "Common/API.h"
 
 #include "../NhGraphics/Vulkan/Header/Vulkan.h"
-#include "../NhIO/Window.h"
+#include "../NhWSI/Window.h"
 
 #endif
 
@@ -28,7 +28,7 @@
 
         NH_API API;        
         NH_SIGNAL signal;
-        Nh_IO_Window IO;
+        Nh_WSI_Window IO;
         Nh_LinkedList Tabs;
 
         Nh_PixelSize Size;

@@ -21,7 +21,7 @@
         Nh_ECMAScript_ParseNode *Node_p
     );
 
-    Nh_UTF8String *Nh_ECMAScript_getStringValue(
+    Nh_Encoding_UTF8String *Nh_ECMAScript_getStringValue(
         Nh_ECMAScript_ParseNode *Node_p
     );
 

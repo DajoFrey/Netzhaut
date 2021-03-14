@@ -94,7 +94,7 @@ NH_ECMASCRIPT_END(NH_TRUE)
 
 // GET STRING VALUE ================================================================================
 
-Nh_UTF8String *Nh_ECMAScript_getStringValue(
+Nh_Encoding_UTF8String *Nh_ECMAScript_getStringValue(
     Nh_ECMAScript_ParseNode *Node_p)
 {
 NH_ECMASCRIPT_BEGIN()

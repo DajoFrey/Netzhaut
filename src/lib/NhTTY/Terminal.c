@@ -27,6 +27,8 @@
 #include "../NhCore/Process.h"
 #include "../NhCore/Logger.h"
 
+#include "../NhEncoding/Encodings/UTF8.h"
+
 #include "Common/Macro.h"
 #include NH_TTY_FLOW
 #include NH_TTY_DEFAULT_CHECK
@@ -285,15 +287,11 @@ NH_TTY_BEGIN()
     if (rv == -1 || rv == 0) {NH_TTY_DIAGNOSTIC_END(NH_TTY_SUCCESS)}
 
     int nread;
-    NH_UNICODE_CODEPOINT codepoint;
-    NH_BYTE bytes_p[4] = {'\0'};
+    NH_BYTE bytes_p[4];
+    memset(bytes_p, 0, 4);
     nread = read(STDIN_FILENO, bytes_p, 4);
 
-    if (nread) {
-        if (Nh_decodeUTF8(bytes_p, codepoint_p, nread) == 0) {
-            NH_TTY_DIAGNOSTIC_END(NH_TTY_ERROR_BAD_STATE)
-        }
-    } 
+    if (nread) {*codepoint_p = Nh_Encoding_decodeUTF8Single(bytes_p);}
 
 #endif
 

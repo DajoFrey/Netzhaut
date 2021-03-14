@@ -50,7 +50,7 @@
     );
 
     Nh_ECMAScript_Reference Nh_ECMAScript_getIdentifierReference(
-        Nh_ECMAScript_Environment *Environment_p, Nh_UTF8String *Name_p, NH_ECMASCRIPT_BOOLEAN strict
+        Nh_ECMAScript_Environment *Environment_p, Nh_Encoding_UTF8String *Name_p, NH_ECMASCRIPT_BOOLEAN strict
     );
 
     NH_ECMASCRIPT_BOOLEAN Nh_ECMAScript_isPropertyReference(

@@ -19,7 +19,7 @@ var Lexer_8h =
       [ "NH_ECMASCRIPT_INPUT_ELEMENT_TOKEN_TEMPLATE_SUBSTITUTION_TAIL", "group__NhECMAScriptEnums.html#gga88c811f514621e01217dab1ca68152caaf7c7afe47bd76757ec4f8a59e309d838", null ]
     ] ],
     [ "Nh_ECMAScript_discardRedundantInputElements", "group__NhECMAScriptFunctions.html#ga8c6f35fd9c66c2fa6ceb58183ca2b7e9", null ],
-    [ "Nh_ECMAScript_getInputElements", "group__NhECMAScriptFunctions.html#gae1dabb2f8ed2291592db813dfd21ea4a", null ],
+    [ "Nh_ECMAScript_getInputElements", "group__NhECMAScriptFunctions.html#ga4101099735e9bcf8ac268c91911f1cdb", null ],
     [ "Nh_ECMAScript_isNumericToken", "group__NhECMAScriptFunctions.html#gae97744bf943e53dd38b0ff56d691195b", null ],
     [ "NH_ECMASCRIPT_INPUT_ELEMENTS_PP", "group__NhECMAScriptVars.html#gaa97549fcf8f14c50df9772f6c2b005fc", null ]
 ];

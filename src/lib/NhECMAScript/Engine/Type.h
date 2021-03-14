@@ -41,7 +41,7 @@ typedef struct Nh_ECMAScript_Object Nh_ECMAScript_Object;
     #define NH_ECMASCRIPT_NULL NULL
     #define NH_ECMASCRIPT_BOOLEAN NH_BOOL
     #define NH_ECMASCRIPT_NUMBER double
-    #define Nh_ECMAScript_String Nh_UTF8String
+    #define Nh_ECMAScript_String Nh_Encoding_UTF8String
 
 /** @} */
 

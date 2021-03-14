@@ -281,7 +281,7 @@ NH_INSTALLER_BEGIN()
     fread(data_p, 1, size, fh);
     fclose(fh);
 
-    data_p[size] = '\0';
+    data_p[size] = 0;
     if (size_p != NULL) {*size_p = size;}
 
 NH_INSTALLER_END(data_p)

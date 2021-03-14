@@ -40,6 +40,7 @@ Here is a list of specifications which are currently used in development:
 - [ECMAScript](https://www.ecma-international.org/ecma-262/)  
 - [DOM](https://dom.spec.whatwg.org/)  
 - [WebIDL](https://heycam.github.io/webidl/)  
+- [Encoding](https://encoding.spec.whatwg.org/)
 - [VT100](https://vt100.net/docs/vt100-ug/chapter3.html)  
 
 \section About About

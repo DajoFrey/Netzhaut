@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('Thread_8h.html',''); initResizable(); 
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Thread.h File Reference</div>  </div>
@@ -123,6 +124,13 @@ Macros</h2></td></tr>
 <tr class="memitem:ga60f7970cfa73fcf82677935181679ad5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NhCoreMacros.html#ga60f7970cfa73fcf82677935181679ad5">NH_MAX_WORKLOADS</a>&#160;&#160;&#160;128</td></tr>
 <tr class="separator:ga60f7970cfa73fcf82677935181679ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga59d9fce0448356ace75c3a5bc2576def"><td class="memItemLeft" align="right" valign="top">typedef unsigned int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NhCoreTypedefs.html#ga59d9fce0448356ace75c3a5bc2576def">Nh_runWorkloads_f</a>) ()</td></tr>
+<tr class="separator:ga59d9fce0448356ace75c3a5bc2576def"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae229003b665f6add3aa7d293b5cf6484"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="group__NhCoreEnums.html#gaa5bc4d468ba7fc657a127fa6ffca469c">NH_BOOL</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NhCoreTypedefs.html#gae229003b665f6add3aa7d293b5cf6484">Nh_keepRunning_f</a>) ()</td></tr>
+<tr class="separator:gae229003b665f6add3aa7d293b5cf6484"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga1d35decb240a373b40f98ec5c331a242"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structNh__ThreadPool.html">Nh_ThreadPool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NhCoreFunctions.html#ga1d35decb240a373b40f98ec5c331a242">Nh_initThreadPool</a> ()</td></tr>
@@ -131,6 +139,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaaeaa48ec709b396198a5c85345ea1e3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga81a6e5ffa46e061ba53016262def5bc8"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NhCoreFunctions.html#ga81a6e5ffa46e061ba53016262def5bc8">Nh_runWorkloads</a> ()</td></tr>
 <tr class="separator:ga81a6e5ffa46e061ba53016262def5bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6cc810b3358853eead875e54763dff8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__NhCoreEnums.html#gaa5bc4d468ba7fc657a127fa6ffca469c">NH_BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NhCoreFunctions.html#ga6cc810b3358853eead875e54763dff8f">Nh_keepRunning</a> ()</td></tr>
+<tr class="separator:ga6cc810b3358853eead875e54763dff8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad9912f3c762453f41c2f403d4b97ce6f"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NhCoreFunctions.html#gad9912f3c762453f41c2f403d4b97ce6f">Nh_activateWorkload</a> (void *(*InitFunction_p)(void *), <a class="el" href="group__NhCoreEnums.html#ga28e42e4741d8cc397fa6540cd142da9b">NH_SIGNAL</a>(*Function_p)(void *), void *args_p, <a class="el" href="group__NhCoreEnums.html#gaa5bc4d468ba7fc657a127fa6ffca469c">NH_BOOL</a> crucial)</td></tr>
 <tr class="separator:gad9912f3c762453f41c2f403d4b97ce6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga83bb8b4b795c5899f364f0cf87f4e780"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NhCoreFunctions.html#ga83bb8b4b795c5899f364f0cf87f4e780">Nh_activeWorkloads</a> (<a class="el" href="group__NhCoreEnums.html#gaa5bc4d468ba7fc657a127fa6ffca469c">NH_BOOL</a> onlyCrucial)</td></tr>

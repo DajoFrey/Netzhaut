@@ -35,13 +35,13 @@
 // CREATE ==========================================================================================
 
 static NH_RESULT Nh_Vk_getSurfaceKHR(
-    Nh_Vk_Host *Host_p, Nh_IO_Window *Window_p, VkSurfaceKHR *SurfaceKHR_p)
+    Nh_Vk_Host *Host_p, Nh_WSI_Window *Window_p, VkSurfaceKHR *SurfaceKHR_p)
 {
 NH_BEGIN()
 
 #ifdef __unix__
 
-    if (Window_p->type == NH_IO_TYPE_X11)
+    if (Window_p->type == NH_WSI_TYPE_X11)
     {
         VkXlibSurfaceCreateInfoKHR surfaceInfo = 
         { 
@@ -58,7 +58,7 @@ NH_BEGIN()
 
 #elif defined(_WIN32) || defined (WIN32)
 
-    if (Window_p->type == NH_IO_TYPE_WIN32)
+    if (Window_p->type == NH_WSI_TYPE_WIN32)
     {
         VkWin32SurfaceCreateInfoKHR surfaceInfo =
         {

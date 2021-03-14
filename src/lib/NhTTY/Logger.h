@@ -62,7 +62,7 @@
     );
 
     NH_TTY_RESULT Nh_TTY_drawLoggerRow(
-        Nh_TTY_Program *Program_p, Nh_UTF8String *Row_p, int width, int height, int row
+        Nh_TTY_Program *Program_p, Nh_Encoding_UTF8String *Row_p, int width, int height, int row
     );
 
     NH_TTY_RESULT Nh_TTY_handleLoggerInput(

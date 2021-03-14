@@ -20,51 +20,9 @@
 
 #endif
 
-/** @addtogroup NhCoreMacros
- *  @{
- */
-
-    #define NH_UTF8_INVALID 0xFFFD
-    #define NH_UTF8_SIZE    4
-
-/** @} */
-
-/** @addtogroup NhCoreEnums
- *  @{
- */
-
-    typedef enum NH_UNICODE_ENCODING {
-        NH_UNICODE_ENCODING_UTF8,
-        NH_UNICODE_ENCODING_UTF16,
-    } NH_UNICODE_ENCODING;
-
-/** @} */
-
 /** @addtogroup NhCoreFunctions
  *  @{
  */
-
-// UTF8
-
-    size_t Nh_validateUTF8(
-        NH_UNICODE_CODEPOINT *u, size_t i
-    );
-    
-    size_t Nh_decodeUTF8(
-        const NH_BYTE *c, NH_UNICODE_CODEPOINT *u, size_t clen
-    );
-    
-    size_t Nh_encodeToUTF8(
-        NH_UNICODE_CODEPOINT u, NH_BYTE *c
-    );
-
-    Nh_UnicodeString Nh_decodeUTF8Text(
-        NH_BYTE *bytes_p
-    );
-
-    Nh_UTF8String Nh_encodeTextToUTF8(
-        NH_UNICODE_CODEPOINT *codepoints_p, size_t length
-    );
 
 // UNICODE STRING
 

@@ -16,8 +16,8 @@
 #include "String.h"
 #include "Content.h"
 
-#include "../NhIO/Mouse.h"
-#include "../NhIO/Keyboard.h"
+#include "../NhWSI/Mouse.h"
+#include "../NhWSI/Keyboard.h"
 
 #include "../NhGraphics/Main/Header/Record.h"
 #include "../NhGraphics/Vulkan/Header/Vulkan.h"
@@ -31,7 +31,7 @@
 // UPDATE ==========================================================================================
 
 static NH_RESULT Nh_processMouseEvent(
-    Nh_Tab *Tab_p, Nh_IO_MouseEvent *Event_p)
+    Nh_Tab *Tab_p, Nh_WSI_MouseEvent *Event_p)
 {
 NH_BEGIN()
 
@@ -40,7 +40,7 @@ NH_BEGIN()
         Nh_Content *Content_p = Nh_getFromLinkedList(&Tab_p->Contents, i);
         if (!Content_p->Flags.visible) {continue;}
 
-        Nh_IO_MouseEvent *New_p = Nh_advanceRingIterator(&Content_p->Input.Mouse.Events);
+        Nh_WSI_MouseEvent *New_p = Nh_advanceRingIterator(&Content_p->Input.Mouse.Events);
         New_p->type = Event_p->type;
         New_p->trigger = Event_p->trigger;
         New_p->Position.x = Event_p->Position.x;
@@ -56,7 +56,7 @@ static NH_RESULT Nh_updateTab(
 NH_BEGIN()
 
 //    while (1) {
-//        Nh_IO_MouseEvent *Event_p = Nh_incrementRingIteratorMark(
+//        Nh_WSI_MouseEvent *Event_p = Nh_incrementRingIteratorMark(
 //            &Tab_p->Input.Mouse.Events, &Tab_p->Input.Mouse.Mark
 //        );
 //        if (Event_p == NULL) {break;}
@@ -156,7 +156,7 @@ NH_BEGIN()
 //    }
 //
 //    NH_CHECK(NULL, Nh_Gfx_createRecordResources(Tab_p))
-//    NH_CHECK(NULL, ((Nh_IO_initInput_f)Nh_loadFunction("NhIO", "Nh_IO_initInput"))(&Tab_p->Input))
+//    NH_CHECK(NULL, ((Nh_WSI_initInput_f)Nh_loadFunction("NhWSI", "Nh_WSI_initInput"))(&Tab_p->Input))
     NH_CHECK(NULL, Nh_addTabToWindow(Tab_p))
 
 #include NH_DEFAULT_CHECK
@@ -216,7 +216,7 @@ NH_BEGIN()
 //            NH_CHECK(NH_SIGNAL_ERROR, Nh_destroyContents(Tab_p))
 //        
 //            Nh_Gfx_destroyRecordResources(Tab_p);
-//            Nh_IO_freeInput(&Tab_p->Input);
+//            Nh_WSI_freeInput(&Tab_p->Input);
 //            Nh_removeTabFromWindow(Tab_p);
 //
 //            Nh_free(Tab_p);

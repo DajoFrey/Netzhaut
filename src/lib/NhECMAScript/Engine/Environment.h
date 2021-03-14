@@ -41,7 +41,7 @@
         NH_BOOL deletable;
         NH_BOOL strict;
         NH_BOOL initialized;
-        Nh_UTF8String *Name_p;
+        Nh_Encoding_UTF8String *Name_p;
         Nh_ECMAScript_Any Value;
     } Nh_ECMAScript_Binding;
 
@@ -84,53 +84,53 @@
 // MISC
 
     NH_BOOL Nh_ECMAScript_canDeclareGlobalVar(
-        Nh_ECMAScript_GlobalEnvironment *GlobalEnvironment_p, Nh_UTF8String *String_p
+        Nh_ECMAScript_GlobalEnvironment *GlobalEnvironment_p, Nh_Encoding_UTF8String *String_p
     );
 
     Nh_ECMAScript_Completion Nh_ECMAScript_createGlobalVarBinding(
-        Nh_ECMAScript_GlobalEnvironment *GlobalEnvironment_p, Nh_UTF8String *Name_p, NH_ECMASCRIPT_BOOLEAN deletable
+        Nh_ECMAScript_GlobalEnvironment *GlobalEnvironment_p, Nh_Encoding_UTF8String *Name_p, NH_ECMASCRIPT_BOOLEAN deletable
     );
 
     NH_BOOL Nh_ECMAScript_canDeclareGlobalFunction(
-        Nh_ECMAScript_GlobalEnvironment *GlobalEnvironment_p, Nh_UTF8String *String_p
+        Nh_ECMAScript_GlobalEnvironment *GlobalEnvironment_p, Nh_Encoding_UTF8String *String_p
     );
 
     Nh_ECMAScript_Completion Nh_ECMAScript_createGlobalFunctionBinding(
-        Nh_UTF8String *Name_p, Nh_ECMAScript_Any V, NH_ECMASCRIPT_BOOLEAN configurable
+        Nh_Encoding_UTF8String *Name_p, Nh_ECMAScript_Any V, NH_ECMASCRIPT_BOOLEAN configurable
     );
 
     NH_BOOL Nh_ECMAScript_hasVarDeclaration(
-        Nh_ECMAScript_GlobalEnvironment *GlobalEnvironment_p, Nh_UTF8String *Name_p
+        Nh_ECMAScript_GlobalEnvironment *GlobalEnvironment_p, Nh_Encoding_UTF8String *Name_p
     );
     
     NH_BOOL Nh_ECMAScript_hasLexicalDeclaration(
-        Nh_ECMAScript_GlobalEnvironment *GlobalEnvironment_p, Nh_UTF8String *Name_p
+        Nh_ECMAScript_GlobalEnvironment *GlobalEnvironment_p, Nh_Encoding_UTF8String *Name_p
     );
     
     NH_BOOL Nh_ECMAScript_hasRestrictedGlobalProperty(
-        Nh_ECMAScript_GlobalEnvironment *GlobalEnvironment_p, Nh_UTF8String *Name_p
+        Nh_ECMAScript_GlobalEnvironment *GlobalEnvironment_p, Nh_Encoding_UTF8String *Name_p
     );
 
 // ABSTRACT
 
     NH_BOOL Nh_ECMAScript_hasBinding(
-        Nh_ECMAScript_Environment *Environment_p, Nh_UTF8String *Name_p
+        Nh_ECMAScript_Environment *Environment_p, Nh_Encoding_UTF8String *Name_p
     );
 
     Nh_ECMAScript_Completion Nh_ECMAScript_createMutableBinding(
-        Nh_ECMAScript_Environment *Environment_p, Nh_UTF8String *Name_p, NH_BOOL deletable
+        Nh_ECMAScript_Environment *Environment_p, Nh_Encoding_UTF8String *Name_p, NH_BOOL deletable
     );
     
     Nh_ECMAScript_Completion Nh_ECMAScript_createImmutableBinding(
-        Nh_ECMAScript_Environment *Environment_p, Nh_UTF8String *Name_p, NH_BOOL strict
+        Nh_ECMAScript_Environment *Environment_p, Nh_Encoding_UTF8String *Name_p, NH_BOOL strict
     );
     
     Nh_ECMAScript_Completion Nh_ECMAScript_initializeBinding(
-        Nh_ECMAScript_Environment *Environment_p, Nh_UTF8String *Name_p, Nh_ECMAScript_Any Value
+        Nh_ECMAScript_Environment *Environment_p, Nh_Encoding_UTF8String *Name_p, Nh_ECMAScript_Any Value
     );
 
     Nh_ECMAScript_Completion Nh_ECMAScript_setMutableBinding(
-        Nh_ECMAScript_Environment *Environment_p, Nh_UTF8String *Name_p, Nh_ECMAScript_Any Value, NH_BOOL _throw
+        Nh_ECMAScript_Environment *Environment_p, Nh_Encoding_UTF8String *Name_p, Nh_ECMAScript_Any Value, NH_BOOL _throw
     );
 
 /** @} */

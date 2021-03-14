@@ -106,61 +106,70 @@ $(document).ready(function(){initNavTree('Array_8h_source.html',''); initResizab
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#ifndef DOXYGEN_SHOULD_SKIP_THIS</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;Common/API.h&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;Common/API.h&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;Common/Result.h&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <a class="code" href="structNh__Array.html">Nh_Array</a> <a class="code" href="group__NhCoreFunctions.html#ga79cac110fddabed2fdb4789532111aa2">Nh_initArray</a>(</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">int</span> elementSize, <span class="keywordtype">int</span> allocatedLengthPerChunk</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    );</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="group__NhCoreEnums.html#ga69553903dccbc47bc4a7b65724517c61">NH_RESULT</a> <a class="code" href="group__NhCoreFunctions.html#ga4a8979d1d04e07fd816c6bacbcf7d7d5">Nh_appendToArray</a>(</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p, <span class="keywordtype">void</span> *bytes_p, <span class="keywordtype">int</span> count</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    );</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="group__NhCoreEnums.html#ga69553903dccbc47bc4a7b65724517c61">NH_RESULT</a> <a class="code" href="group__NhCoreFunctions.html#gaca6a7229e1ea79670e02213f7d09f048">Nh_insertIntoArray</a>(</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p, <span class="keywordtype">int</span> index, <span class="keywordtype">void</span> *elements_p, <span class="keywordtype">int</span> length</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    );</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">void</span> *<a class="code" href="group__NhCoreFunctions.html#ga8e53879a7cab660aeefeb23ccaa6efa6">_Nh_getFromArray</a>(</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p, <span class="keywordtype">int</span> index</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    );</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> *<a class="code" href="group__NhCoreFunctions.html#ga9b88ef9be1ff655c08020367c8ee77f1">Nh_getFromArray</a>(</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p, <span class="keywordtype">int</span> index</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    );</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;   </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="group__NhCoreEnums.html#ga69553903dccbc47bc4a7b65724517c61">NH_RESULT</a> <a class="code" href="group__NhCoreFunctions.html#ga1a3cb56bba1589d1bc79d581349a1c02">Nh_removeTailFromArray</a>(</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> count</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    );</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="group__NhCoreEnums.html#ga69553903dccbc47bc4a7b65724517c61">NH_RESULT</a> <a class="code" href="group__NhCoreFunctions.html#ga460e086ecc746a73942c9909d4f10f9d">Nh_removeFromArray</a>(</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p, <span class="keywordtype">int</span> index, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> count</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    );</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="group__NhCoreFunctions.html#ga9151dab515f643fb03b32c0e230c09f0">_Nh_freeArray</a>(</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    );</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="group__NhCoreFunctions.html#ga2426a017d1c670eb338020eaefe352ff">Nh_freeArray</a>(</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    );</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif </span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;Common/Result.h&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="structNh__Array.html">Nh_Array</a> <a class="code" href="group__NhCoreFunctions.html#ga79cac110fddabed2fdb4789532111aa2">Nh_initArray</a>(</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keywordtype">int</span> elementSize, <span class="keywordtype">int</span> allocatedLengthPerChunk</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    );</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="group__NhCoreEnums.html#ga69553903dccbc47bc4a7b65724517c61">NH_RESULT</a> <a class="code" href="group__NhCoreFunctions.html#gad8c4d839bbb8240db4d4f2cbea69ba38">Nh_appendToArray</a>(</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p, <span class="keywordtype">void</span> *bytes_p, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> count</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    );</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="group__NhCoreEnums.html#ga69553903dccbc47bc4a7b65724517c61">NH_RESULT</a> <a class="code" href="group__NhCoreFunctions.html#gaca6a7229e1ea79670e02213f7d09f048">Nh_insertIntoArray</a>(</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p, <span class="keywordtype">int</span> index, <span class="keywordtype">void</span> *elements_p, <span class="keywordtype">int</span> length</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    );</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">void</span> *<a class="code" href="group__NhCoreFunctions.html#ga2b46c9086e2ddb1015ef730139241626">_Nh_getFromArray</a>(</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> index</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    );</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">void</span> *<a class="code" href="group__NhCoreFunctions.html#ga2d8e14520fd303409698da48f32adfcd">Nh_getFromArray</a>(</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> index</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    );</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;   </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">void</span> *<a class="code" href="group__NhCoreFunctions.html#ga1715d1ffecb1c67fa67a79fd919cd9f7">_Nh_incrementArray</a>(</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    );</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> *<a class="code" href="group__NhCoreFunctions.html#ga18495da858def988a7dfbe2a644a6d97">Nh_incrementArray</a>(</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    );</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="group__NhCoreEnums.html#ga69553903dccbc47bc4a7b65724517c61">NH_RESULT</a> <a class="code" href="group__NhCoreFunctions.html#ga1a3cb56bba1589d1bc79d581349a1c02">Nh_removeTailFromArray</a>(</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> count</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    );</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="group__NhCoreEnums.html#ga69553903dccbc47bc4a7b65724517c61">NH_RESULT</a> <a class="code" href="group__NhCoreFunctions.html#ga460e086ecc746a73942c9909d4f10f9d">Nh_removeFromArray</a>(</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p, <span class="keywordtype">int</span> index, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> count</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    );</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="group__NhCoreFunctions.html#ga9151dab515f643fb03b32c0e230c09f0">_Nh_freeArray</a>(</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    );</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="group__NhCoreFunctions.html#ga2426a017d1c670eb338020eaefe352ff">Nh_freeArray</a>(</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="structNh__Array.html">Nh_Array</a> *Array_p</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    );</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif </span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="agroup__NhCoreFunctions_html_ga9b88ef9be1ff655c08020367c8ee77f1"><div class="ttname"><a href="group__NhCoreFunctions.html#ga9b88ef9be1ff655c08020367c8ee77f1">Nh_getFromArray</a></div><div class="ttdeci">void * Nh_getFromArray(Nh_Array *Array_p, int index)</div><div class="ttdef"><b>Definition:</b> Array.c:183</div></div>
-<div class="ttc" id="agroup__NhCoreFunctions_html_ga2426a017d1c670eb338020eaefe352ff"><div class="ttname"><a href="group__NhCoreFunctions.html#ga2426a017d1c670eb338020eaefe352ff">Nh_freeArray</a></div><div class="ttdeci">void Nh_freeArray(Nh_Array *Array_p)</div><div class="ttdef"><b>Definition:</b> Array.c:204</div></div>
-<div class="ttc" id="astructNh__Array_html"><div class="ttname"><a href="structNh__Array.html">Nh_Array</a></div><div class="ttdoc">Generic linked-list which holds data pointers.</div><div class="ttdef"><b>Definition:</b> API.h:102</div></div>
-<div class="ttc" id="agroup__NhCoreFunctions_html_ga8e53879a7cab660aeefeb23ccaa6efa6"><div class="ttname"><a href="group__NhCoreFunctions.html#ga8e53879a7cab660aeefeb23ccaa6efa6">_Nh_getFromArray</a></div><div class="ttdeci">void * _Nh_getFromArray(Nh_Array *Array_p, int index)</div><div class="ttdef"><b>Definition:</b> Array.c:72</div></div>
-<div class="ttc" id="agroup__NhCoreFunctions_html_ga460e086ecc746a73942c9909d4f10f9d"><div class="ttname"><a href="group__NhCoreFunctions.html#ga460e086ecc746a73942c9909d4f10f9d">Nh_removeFromArray</a></div><div class="ttdeci">NH_RESULT Nh_removeFromArray(Nh_Array *Array_p, int index, unsigned int count)</div><div class="ttdef"><b>Definition:</b> Array.c:127</div></div>
-<div class="ttc" id="agroup__NhCoreFunctions_html_ga4a8979d1d04e07fd816c6bacbcf7d7d5"><div class="ttname"><a href="group__NhCoreFunctions.html#ga4a8979d1d04e07fd816c6bacbcf7d7d5">Nh_appendToArray</a></div><div class="ttdeci">NH_RESULT Nh_appendToArray(Nh_Array *Array_p, void *bytes_p, int count)</div><div class="ttdef"><b>Definition:</b> Array.c:42</div></div>
-<div class="ttc" id="agroup__NhCoreFunctions_html_gaca6a7229e1ea79670e02213f7d09f048"><div class="ttname"><a href="group__NhCoreFunctions.html#gaca6a7229e1ea79670e02213f7d09f048">Nh_insertIntoArray</a></div><div class="ttdeci">NH_RESULT Nh_insertIntoArray(Nh_Array *Array_p, int index, void *elements_p, int length)</div><div class="ttdef"><b>Definition:</b> Array.c:152</div></div>
-<div class="ttc" id="agroup__NhCoreFunctions_html_ga1a3cb56bba1589d1bc79d581349a1c02"><div class="ttname"><a href="group__NhCoreFunctions.html#ga1a3cb56bba1589d1bc79d581349a1c02">Nh_removeTailFromArray</a></div><div class="ttdeci">NH_RESULT Nh_removeTailFromArray(Nh_Array *Array_p, unsigned int count)</div><div class="ttdef"><b>Definition:</b> Array.c:103</div></div>
+<div class="ttc" id="agroup__NhCoreFunctions_html_ga2426a017d1c670eb338020eaefe352ff"><div class="ttname"><a href="group__NhCoreFunctions.html#ga2426a017d1c670eb338020eaefe352ff">Nh_freeArray</a></div><div class="ttdeci">void Nh_freeArray(Nh_Array *Array_p)</div><div class="ttdef"><b>Definition:</b> Array.c:214</div></div>
+<div class="ttc" id="agroup__NhCoreFunctions_html_ga18495da858def988a7dfbe2a644a6d97"><div class="ttname"><a href="group__NhCoreFunctions.html#ga18495da858def988a7dfbe2a644a6d97">Nh_incrementArray</a></div><div class="ttdeci">void * Nh_incrementArray(Nh_Array *Array_p)</div><div class="ttdef"><b>Definition:</b> Array.c:113</div></div>
+<div class="ttc" id="agroup__NhCoreFunctions_html_gad8c4d839bbb8240db4d4f2cbea69ba38"><div class="ttname"><a href="group__NhCoreFunctions.html#gad8c4d839bbb8240db4d4f2cbea69ba38">Nh_appendToArray</a></div><div class="ttdeci">NH_RESULT Nh_appendToArray(Nh_Array *Array_p, void *bytes_p, unsigned long count)</div><div class="ttdef"><b>Definition:</b> Array.c:41</div></div>
+<div class="ttc" id="astructNh__Array_html"><div class="ttname"><a href="structNh__Array.html">Nh_Array</a></div><div class="ttdoc">Generic linked-list which holds data pointers.</div><div class="ttdef"><b>Definition:</b> API.h:101</div></div>
+<div class="ttc" id="agroup__NhCoreFunctions_html_ga460e086ecc746a73942c9909d4f10f9d"><div class="ttname"><a href="group__NhCoreFunctions.html#ga460e086ecc746a73942c9909d4f10f9d">Nh_removeFromArray</a></div><div class="ttdeci">NH_RESULT Nh_removeFromArray(Nh_Array *Array_p, int index, unsigned int count)</div><div class="ttdef"><b>Definition:</b> Array.c:144</div></div>
+<div class="ttc" id="agroup__NhCoreFunctions_html_ga2d8e14520fd303409698da48f32adfcd"><div class="ttname"><a href="group__NhCoreFunctions.html#ga2d8e14520fd303409698da48f32adfcd">Nh_getFromArray</a></div><div class="ttdeci">void * Nh_getFromArray(Nh_Array *Array_p, unsigned long index)</div><div class="ttdef"><b>Definition:</b> Array.c:100</div></div>
+<div class="ttc" id="agroup__NhCoreFunctions_html_ga1715d1ffecb1c67fa67a79fd919cd9f7"><div class="ttname"><a href="group__NhCoreFunctions.html#ga1715d1ffecb1c67fa67a79fd919cd9f7">_Nh_incrementArray</a></div><div class="ttdeci">void * _Nh_incrementArray(Nh_Array *Array_p)</div><div class="ttdef"><b>Definition:</b> Array.c:107</div></div>
+<div class="ttc" id="agroup__NhCoreFunctions_html_gaca6a7229e1ea79670e02213f7d09f048"><div class="ttname"><a href="group__NhCoreFunctions.html#gaca6a7229e1ea79670e02213f7d09f048">Nh_insertIntoArray</a></div><div class="ttdeci">NH_RESULT Nh_insertIntoArray(Nh_Array *Array_p, int index, void *elements_p, int length)</div><div class="ttdef"><b>Definition:</b> Array.c:169</div></div>
+<div class="ttc" id="agroup__NhCoreFunctions_html_ga1a3cb56bba1589d1bc79d581349a1c02"><div class="ttname"><a href="group__NhCoreFunctions.html#ga1a3cb56bba1589d1bc79d581349a1c02">Nh_removeTailFromArray</a></div><div class="ttdeci">NH_RESULT Nh_removeTailFromArray(Nh_Array *Array_p, unsigned int count)</div><div class="ttdef"><b>Definition:</b> Array.c:120</div></div>
 <div class="ttc" id="agroup__NhCoreFunctions_html_ga79cac110fddabed2fdb4789532111aa2"><div class="ttname"><a href="group__NhCoreFunctions.html#ga79cac110fddabed2fdb4789532111aa2">Nh_initArray</a></div><div class="ttdeci">Nh_Array Nh_initArray(int elementSize, int allocatedLengthPerChunk)</div><div class="ttdoc">Netzhaut - Web Browser Engine Copyright (C) 2020 Dajo Frey Published under LGPLv3.</div><div class="ttdef"><b>Definition:</b> Array.c:25</div></div>
 <div class="ttc" id="agroup__NhCoreEnums_html_ga69553903dccbc47bc4a7b65724517c61"><div class="ttname"><a href="group__NhCoreEnums.html#ga69553903dccbc47bc4a7b65724517c61">NH_RESULT</a></div><div class="ttdeci">NH_RESULT</div><div class="ttdoc">Return values for functions.</div><div class="ttdef"><b>Definition:</b> Result.h:22</div></div>
-<div class="ttc" id="agroup__NhCoreFunctions_html_ga9151dab515f643fb03b32c0e230c09f0"><div class="ttname"><a href="group__NhCoreFunctions.html#ga9151dab515f643fb03b32c0e230c09f0">_Nh_freeArray</a></div><div class="ttdeci">void _Nh_freeArray(Nh_Array *Array_p)</div><div class="ttdef"><b>Definition:</b> Array.c:190</div></div>
+<div class="ttc" id="agroup__NhCoreFunctions_html_ga9151dab515f643fb03b32c0e230c09f0"><div class="ttname"><a href="group__NhCoreFunctions.html#ga9151dab515f643fb03b32c0e230c09f0">_Nh_freeArray</a></div><div class="ttdeci">void _Nh_freeArray(Nh_Array *Array_p)</div><div class="ttdef"><b>Definition:</b> Array.c:200</div></div>
+<div class="ttc" id="agroup__NhCoreFunctions_html_ga2b46c9086e2ddb1015ef730139241626"><div class="ttname"><a href="group__NhCoreFunctions.html#ga2b46c9086e2ddb1015ef730139241626">_Nh_getFromArray</a></div><div class="ttdeci">void * _Nh_getFromArray(Nh_Array *Array_p, unsigned long index)</div><div class="ttdef"><b>Definition:</b> Array.c:71</div></div>
     <!-- HTML footer for doxygen 1.8.15-->
     <!-- start footer part -->
       <div id="nav-path" class="navpath">

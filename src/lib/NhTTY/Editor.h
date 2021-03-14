@@ -12,7 +12,6 @@
 #include "Program.h"
 #include "TreeListing.h"
 #include "FileEditor.h"
-#include "Output.h"
 #include "Common/Result.h"
 
 #include "../NhCore/String.h"
@@ -30,7 +29,6 @@
         NH_BOOL treeListing;
         Nh_TTY_TreeListing TreeListing;
         Nh_TTY_FileEditor FileEditor;
-        Nh_TTY_Output Output;
     } Nh_TTY_Editor;
 
 /** @} */
@@ -51,7 +49,7 @@
     );
 
     NH_TTY_RESULT Nh_TTY_drawEditorRow(
-        Nh_TTY_Program *Program_p, Nh_UTF8String *Row_p, int width, int height, int row 
+        Nh_TTY_Program *Program_p, Nh_Encoding_UTF8String *Row_p, int width, int height, int row 
     );
 
     NH_TTY_RESULT Nh_TTY_getEditorCursor(

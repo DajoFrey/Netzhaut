@@ -74,6 +74,8 @@ var group__NhTTYStructs =
       [ "LastUpdate", "structNh__TTY__Logger.html#a5c2d33a2890d312a9d908c1d83c62ea4", null ],
       [ "listingWidth", "structNh__TTY__Logger.html#a6353add89e4624d59f2af329ffe30cce", null ],
       [ "Root", "structNh__TTY__Logger.html#a4909b9a387977758f6c830143868b8c8", null ],
+      [ "rowOffset", "structNh__TTY__Logger.html#aa971f5b707c859912fe2e0c40f9a96f9", null ],
+      [ "screenCurrent", "structNh__TTY__Logger.html#a436066694fe802b9ed1d1858c0e58671", null ],
       [ "showCategories", "structNh__TTY__Logger.html#a7be13f7289526e923a3764fbe97aec1c", null ],
       [ "updateIntervalInSeconds", "structNh__TTY__Logger.html#aa28f70ab83e8cc15142f1f0a69029092", null ]
     ] ],
@@ -117,13 +119,8 @@ var group__NhTTYStructs =
       [ "Tab_p", "structNh__TTY__Terminal.html#a9c9f2166a6f0c4c2ecb9f2377f982916", null ],
       [ "Tabs", "structNh__TTY__Terminal.html#adaca0787f075f0ca8e5e8176a123bd44", null ]
     ] ],
-    [ "Nh_TTY_TextFileExecutionMenu", "structNh__TTY__TextFileExecutionMenu.html", [
-      [ "active", "structNh__TTY__TextFileExecutionMenu.html#ada2324b1ec8a6b8e97c8a2af8db9fa4a", null ],
-      [ "index", "structNh__TTY__TextFileExecutionMenu.html#ade958e685a15a2aa55f286bd2452040b", null ]
-    ] ],
     [ "Nh_TTY_TextFile", "structNh__TTY__TextFile.html", [
       [ "colOffset", "structNh__TTY__TextFile.html#a6aaa4e49e15a226f97357619a1d1da5a", null ],
-      [ "ExecutionMenu", "structNh__TTY__TextFile.html#ae241300afe547ab03fe6afb3516452f3", null ],
       [ "fileCursorX", "structNh__TTY__TextFile.html#aed28a03ea3bc6e584f49c2795dfa4f88", null ],
       [ "fileCursorXTarget", "structNh__TTY__TextFile.html#a8ae31e7a679acebef6a9194a4914d1b5", null ],
       [ "fileCursorY", "structNh__TTY__TextFile.html#ae2b8dd350d03e14d88a5df3627e71b33", null ],

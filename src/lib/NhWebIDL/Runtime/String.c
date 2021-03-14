@@ -75,7 +75,7 @@ NH_WEBIDL_RESULT Nh_WebIDL_appendUnicodeToDOMString(
 {
 NH_WEBIDL_BEGIN()
 
-    Nh_UTF8String String = Nh_encodeTextToUTF8(codepoints_p, length);
+    Nh_Encoding_UTF8String String = Nh_encodeTextToUTF8(codepoints_p, length);
     NH_CHECK(NH_WEBIDL_ERROR_BAD_STATE, Nh_appendToString(String_p, String.bytes_p, String.length))
     Nh_freeString(&String);
 

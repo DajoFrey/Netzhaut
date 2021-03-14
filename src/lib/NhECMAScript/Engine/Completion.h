@@ -38,7 +38,7 @@
 
     typedef struct Nh_ECMAScript_CompletionTarget {
         NH_BOOL empty;
-        Nh_UTF8String String;
+        Nh_Encoding_UTF8String String;
     } Nh_ECMAScript_CompletionTarget;
 
     // https://tc39.es/ecma262/#sec-completion-record-specification-type

@@ -259,7 +259,7 @@ NH_INSTALLER_BEGIN()
     }
     else if (mode == 1) {
         fprintf(f, "\n// FRAGMENTS =======================================================================================\n\n");
-        fprintf(f, "unsigned NH_BYTE *NH_WEBIDL_FRAGMENTS_PP[] = {\n");
+        fprintf(f, "NH_UNSIGNED_BYTE *NH_WEBIDL_FRAGMENTS_PP[] = {\n");
     }
     else if (mode == 2) {
         fprintf(f, "\n// FRAGMENT LENGTHS =================================================================================\n\n");

@@ -13,7 +13,7 @@
 #include "URI.h"
 
 #include "Common/API.h"
-#include "../NhIO/Input.h"
+#include "../NhWSI/Input.h"
 
 #endif
 
@@ -41,7 +41,7 @@
         void *args_p;
 
         Nh_Window *Window_p;       /**<A pointer to the window which contains the tab.*/
-        Nh_IO_Input Input;
+        Nh_WSI_Input Input;
        
         Nh_LinkedList Contents;
         Nh_LinkedList Textures;  

@@ -61,7 +61,7 @@ NH_ECMASCRIPT_BEGIN()
 
     if (((Nh_ECMAScript_ParseNode*)Node_p->Children.pp[0])->type == NH_ECMASCRIPT_PARSE_NODE_BINDING_IDENTIFIER) 
     {
-        Nh_UTF8String *Name_p = &Node_p->Value_p->String;
+        Nh_Encoding_UTF8String *Name_p = &Node_p->Value_p->String;
 
         // TODO Let sourceText be the source text matched by FunctionDeclaration.
 
@@ -100,13 +100,13 @@ NH_ECMASCRIPT_END(NULL)
 // GLOBAL DECLARATION INSTANTIATION ================================================================
 
 static NH_BOOL Nh_ECMAScript_nameInList(
-    Nh_List *Names_p, Nh_UTF8String *Name_p)
+    Nh_List *Names_p, Nh_Encoding_UTF8String *Name_p)
 {
 NH_ECMASCRIPT_BEGIN()
 
     NH_BOOL inList = NH_FALSE;
     for (int j = 0; j < Names_p->size; ++j) {
-        Nh_UTF8String *Compare_p = Names_p->pp[j];
+        Nh_Encoding_UTF8String *Compare_p = Names_p->pp[j];
         if (!strcmp(Name_p->bytes_p, Compare_p->bytes_p)) {
             inList = NH_TRUE;
             break;
@@ -159,7 +159,7 @@ NH_ECMASCRIPT_BEGIN()
         &&  Declaration_p->type != NH_ECMASCRIPT_PARSE_NODE_BINDING_IDENTIFIER) {
 
             Nh_List BoundNames = Nh_ECMAScript_getBoundNames(Declaration_p);
-            Nh_UTF8String *Name_p = BoundNames.pp[BoundNames.size - 1];
+            Nh_Encoding_UTF8String *Name_p = BoundNames.pp[BoundNames.size - 1];
 
             if (!Nh_ECMAScript_nameInList(&DeclaredFunctionNames, Name_p)) {
                 NH_BOOL fnDefinable = Nh_ECMAScript_canDeclareGlobalFunction(GlobalEnvironment_p->Handle_p, Name_p);
@@ -185,7 +185,7 @@ NH_ECMASCRIPT_BEGIN()
 
             for (int j = 0; j < BoundNames.size; ++j) 
             {
-                Nh_UTF8String *Name_p = BoundNames.pp[j];
+                Nh_Encoding_UTF8String *Name_p = BoundNames.pp[j];
 
                 if (!Nh_ECMAScript_nameInList(&DeclaredFunctionNames, Name_p)) {
                     NH_BOOL vnDefinable = Nh_ECMAScript_canDeclareGlobalVar(GlobalEnvironment_p->Handle_p, Name_p);
@@ -210,7 +210,7 @@ NH_ECMASCRIPT_BEGIN()
         Nh_List BoundNames = Nh_ECMAScript_getBoundNames(Declaration_p);
 
         for (int j = 0; j < BoundNames.size; ++j) {
-            Nh_UTF8String *Name_p = BoundNames.pp[j];
+            Nh_Encoding_UTF8String *Name_p = BoundNames.pp[j];
             if (Nh_ECMAScript_isConstantDeclaration(Declaration_p)) {
                 Nh_ECMAScript_createImmutableBinding(GlobalEnvironment_p, Name_p, NH_TRUE);
             } else {
@@ -225,7 +225,7 @@ NH_ECMASCRIPT_BEGIN()
     {
         Nh_ECMAScript_ParseNode *Function_p = FunctionsToInitialize.pp[i];
         Nh_List BoundNames = Nh_ECMAScript_getBoundNames(Function_p);
-        Nh_UTF8String *Name_p = BoundNames.pp[BoundNames.size - 1];
+        Nh_Encoding_UTF8String *Name_p = BoundNames.pp[BoundNames.size - 1];
         Nh_ECMAScript_Object *FunctionObject_p = Nh_ECMAScript_instantiateFunctionObject(GlobalEnvironment_p, Function_p);
         Nh_ECMAScript_createGlobalFunctionBinding(Name_p, Nh_ECMAScript_wrapObject(FunctionObject_p), NH_FALSE);
         Nh_freeList(&BoundNames, NH_FALSE);

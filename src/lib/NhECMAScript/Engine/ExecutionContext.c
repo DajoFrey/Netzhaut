@@ -71,7 +71,7 @@ NH_ECMASCRIPT_END(Nh_ECMAScript_getCurrentRealm()->GlobalObject_p)
 }
 
 Nh_ECMAScript_Reference Nh_ECMAScript_resolveBinding(
-    Nh_UTF8String *Name_p, Nh_ECMAScript_Environment *Environment_p)
+    Nh_Encoding_UTF8String *Name_p, Nh_ECMAScript_Environment *Environment_p)
 {
 NH_ECMASCRIPT_BEGIN()
 

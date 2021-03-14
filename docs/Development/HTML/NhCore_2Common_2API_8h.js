@@ -8,7 +8,6 @@ var NhCore_2Common_2API_8h =
     [ "NH_PIXEL_TO_CLIP", "group__NhCoreMacros.html#ga3605f81069c5025554d8b0d2c8264f53", null ],
     [ "Nh_String", "group__NhCoreMacros.html#gafa4a11576c2acc3e496dc0d1ec206927", null ],
     [ "NH_UNICODE_CODEPOINT", "group__NhCoreMacros.html#ga614d2377523419015284b33983fdf363", null ],
-    [ "Nh_UnicodeString", "group__NhCoreMacros.html#ga3295b7bb21089eb320227370024a08bf", null ],
     [ "NH_UNSIGNED_BYTE", "group__NhCoreMacros.html#gaa0ca4b8950ceec7e70d4581c516bdabc", null ],
     [ "Nh_UTF8String", "group__NhCoreMacros.html#ga357565f6587b7b9d0fa20566cfc106c7", null ],
     [ "NH_BOOL", "group__NhCoreEnums.html#gaa5bc4d468ba7fc657a127fa6ffca469c", [

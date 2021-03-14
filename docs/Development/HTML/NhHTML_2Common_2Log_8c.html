@@ -97,18 +97,28 @@ $(document).ready(function(){initNavTree('NhHTML_2Common_2Log_8c.html',''); init
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Log.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="NhHTML_2Common_2Log_8h_source.html">Log.h</a>&quot;</code><br />
+<code>#include &quot;MACRO/DEFAULT_CHECK.h&quot;</code><br />
 <code>#include &quot;MACRO/FLOW.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="Unicode_8h_source.html">../../NhCore/Unicode.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Config_8h_source.html">../../NhCore/Config.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="NhCore_2Logger_8h_source.html">../../NhCore/Logger.h</a>&quot;</code><br />
+<code>#include &quot;../../NhDOM/NodeList.h&quot;</code><br />
+<code>#include &quot;../../NhWebIDL/Runtime/Object.h&quot;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a5db49eeef5c9bb774f02996f684df238"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="NhHTML_2Common_2Log_8c.html#a5db49eeef5c9bb774f02996f684df238">MAX_DEPTH</a>&#160;&#160;&#160;1024</td></tr>
+<tr class="separator:a5db49eeef5c9bb774f02996f684df238"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ab199e4deb4c4629f802347d5eeea0b9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__NhHTMLEnums.html#ga84e1b4de60e74bff00ea42e21a22addb">NH_HTML_RESULT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="NhHTML_2Common_2Log_8c.html#ab199e4deb4c4629f802347d5eeea0b9c">_Nh_HTML_logBegin</a> (const char *file_p, const char *function_p)</td></tr>
@@ -118,7 +128,24 @@ Functions</h2></td></tr>
 <tr class="separator:acdf74cd7337a9e9d0e9d69d9f746bda4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48d73cf73e9d12600fdbcb4202b1110b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__NhHTMLEnums.html#ga84e1b4de60e74bff00ea42e21a22addb">NH_HTML_RESULT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="NhHTML_2Common_2Log_8c.html#a48d73cf73e9d12600fdbcb4202b1110b">_Nh_HTML_logDiagnosticEnd</a> (const char *file_p, const char *function_p, <a class="el" href="group__NhHTMLEnums.html#ga84e1b4de60e74bff00ea42e21a22addb">NH_HTML_RESULT</a> result, int line)</td></tr>
 <tr class="separator:a48d73cf73e9d12600fdbcb4202b1110b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5365f1b30344135dd31a9fff7722199a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__NhHTMLEnums.html#ga84e1b4de60e74bff00ea42e21a22addb">NH_HTML_RESULT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NhHTMLFunctions.html#ga5365f1b30344135dd31a9fff7722199a">Nh_HTML_logDocument</a> (<a class="el" href="group__NhCoreMacros.html#gac9a87de73841d1b0d6d5e1cff73ca30b">NH_BYTE</a> *logName_p, Nh_WebIDL_Object *Document_p)</td></tr>
+<tr class="separator:ga5365f1b30344135dd31a9fff7722199a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a5db49eeef5c9bb774f02996f684df238"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5db49eeef5c9bb774f02996f684df238">&#9670;&nbsp;</a></span>MAX_DEPTH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_DEPTH&#160;&#160;&#160;1024</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ab199e4deb4c4629f802347d5eeea0b9c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab199e4deb4c4629f802347d5eeea0b9c">&#9670;&nbsp;</a></span>_Nh_HTML_logBegin()</h2>

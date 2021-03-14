@@ -44,7 +44,7 @@
 
     typedef struct Nh_ECMAScript_InputElement {
         NH_ECMASCRIPT_INPUT_ELEMENT type;
-        Nh_UTF8String String;
+        Nh_Encoding_UTF8String String;
     } Nh_ECMAScript_InputElement;
 
 /** @} */

@@ -66,7 +66,7 @@
     typedef long long NH_WEBIDL_LONG_LONG;
     typedef unsigned long long NH_WEBIDL_UNSIGNED_LONG_LONG;
 
-    typedef Nh_UTF8String Nh_WebIDL_DOMString;
+    typedef Nh_Encoding_UTF8String Nh_WebIDL_DOMString;
     typedef Nh_String Nh_WebIDL_ByteString;
     typedef Nh_UnicodeString Nh_WebIDL_USVString;
     typedef Nh_BigInt Nh_WebIDL_BigInt;

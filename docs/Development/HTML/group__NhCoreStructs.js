@@ -5,8 +5,21 @@ var group__NhCoreStructs =
       [ "allocatedLengthPerChunk", "structNh__Array.html#a0b20cabd4d205f30774bffd5ab7afe37", null ],
       [ "bytes_p", "structNh__Array.html#ae6ad1ff3d9b91364ad0de3b0b8ae4654", null ],
       [ "elementSize", "structNh__Array.html#a269712e290ff5757b429e017c7b10270", null ],
-      [ "length", "structNh__Array.html#a0804460f4135fea70d9a9d6bff59e77d", null ],
-      [ "nullbyte", "structNh__Array.html#a663b12b57feb858d297baa72535d756d", null ]
+      [ "length", "structNh__Array.html#a9f9013bcacac37a906dc5e4a297a7297", null ]
+    ] ],
+    [ "Nh_UnicodeString", "structNh__UnicodeString.html", [
+      [ "Array", "structNh__UnicodeString.html#a72181a3aaf0d1d71764e3f51139aac3f", null ],
+      [ "length", "structNh__UnicodeString.html#a210356ed23722d32b691164e1698aec4", null ],
+      [ "p", "structNh__UnicodeString.html#a440e6e1bdfe54589e7974b7418a1af09", null ]
+    ] ],
+    [ "Nh_List", "structNh__List.html", [
+      [ "chunkCount", "structNh__List.html#a94b140a2dfa236cdf26083e7b93d5770", null ],
+      [ "chunkSize", "structNh__List.html#a5dbf93d5158f3568e1b313e3281fe4f1", null ],
+      [ "pp", "structNh__List.html#aa1a89af88b138844c6046f8f0fbc32c5", null ],
+      [ "size", "structNh__List.html#af331dcbf0497f8da44bed8a95cfa0e48", null ]
+    ] ],
+    [ "Nh_BigInt", "structNh__BigInt.html", [
+      [ "TODO", "structNh__BigInt.html#a5368af3c9c4771eaecb52e5097285264", null ]
     ] ],
     [ "Nh_PixelPosition", "structNh__PixelPosition.html", [
       [ "x", "structNh__PixelPosition.html#aeb6240b3f2636ff96093edc5b975d26d", null ],
@@ -90,7 +103,7 @@ var group__NhCoreStructs =
       [ "Callbacks", "structNh__Content.html#a523513e17d57db425aa372ac2772c830", null ],
       [ "data_p", "structNh__Content.html#a736e0b70f8240ec68e4307b6b7591151", null ],
       [ "Flags", "structNh__Content.html#a511662b2c1124905a03660dc5339101f", null ],
-      [ "Input", "structNh__Content.html#a97f214c21fa84883385aa0efea9d1614", null ],
+      [ "Input", "structNh__Content.html#a940a15e831628328faea0ba4772ccc58", null ],
       [ "Position", "structNh__Content.html#a8bdcdd4387da3d5bc1343c633708f11e", null ],
       [ "scale", "structNh__Content.html#a5586ad0a808b080c3dec7605c306fe12", null ],
       [ "Settings", "structNh__Content.html#a96655c438ff67407edcaed1fc4df762e", null ],
@@ -100,6 +113,15 @@ var group__NhCoreStructs =
       [ "type", "structNh__Content.html#ac7cc8d69c2827a2375dac6740ed3cd34", null ],
       [ "URI", "structNh__Content.html#a7734b5eb8cc682facbaf5d022bcdda97", null ],
       [ "visible", "structNh__Content.html#a96d7b0b12798583ee6fbf35ffc589aee", null ]
+    ] ],
+    [ "Nh_WindowContext", "structNh__WindowContext.html", [
+      [ "RenderEngine_p", "structNh__WindowContext.html#a93037d928fe5b3d0ad1bb7af10d98c1c", null ],
+      [ "Viewport", "structNh__WindowContext.html#a0372a71b6080b276ee588f7bf51d234f", null ]
+    ] ],
+    [ "Nh_Document", "structNh__Document.html", [
+      [ "LayoutEngine_p", "structNh__Document.html#ae38d3c3ee8e33a16c14518cc4cf487d5", null ],
+      [ "Parser_p", "structNh__Document.html#ad2fa5658d6f97ecd37ec696f33a3d8db", null ],
+      [ "WindowContexts", "structNh__Document.html#ab8d464632836266a6b49c12906b22183", null ]
     ] ],
     [ "Nh_Glyph", "structNh__Glyph.html", [
       [ "codepoint", "structNh__Glyph.html#a68b2d369b9a255164b5c7738ed885cb6", null ],
@@ -133,12 +155,6 @@ var group__NhCoreStructs =
     [ "Nh_LinkedList", "structNh__LinkedList.html", [
       [ "count", "structNh__LinkedList.html#a5256200cf4074a8332c5854076667bfc", null ],
       [ "Head_p", "structNh__LinkedList.html#a6c0f8aa8d515b7d997ebc66afa206087", null ]
-    ] ],
-    [ "Nh_List", "structNh__List.html", [
-      [ "chunkCount", "structNh__List.html#a22576f35680938124962cbe51d48cfc8", null ],
-      [ "chunkSize", "structNh__List.html#a0293a405da2b78d87e52c14935e82d05", null ],
-      [ "handles_pp", "structNh__List.html#a26a5a9ac3a0fcf0ee4c2dc8a8fab5ca6", null ],
-      [ "size", "structNh__List.html#a8392157445273b90d39ef3fbaa66184d", null ]
     ] ],
     [ "Nh_LoggerNode", "structNh__LoggerNode.html", [
       [ "category_p", "structNh__LoggerNode.html#aab488544583632e5f755c1639afae4d2", null ],
@@ -256,7 +272,7 @@ var group__NhCoreStructs =
       [ "fixedSize", "structNh__Tab.html#ace174833706ce58c294b821ff3b2738e", null ],
       [ "Flags", "structNh__Tab.html#aa5d3248a50a34549ab3b6e4c9ab03ebd", null ],
       [ "GPU", "structNh__Tab.html#af3ff1228150474e6188f708c0b7beaf5", null ],
-      [ "Input", "structNh__Tab.html#ad97263f67601dc7f32f0ab3e0fd39596", null ],
+      [ "Input", "structNh__Tab.html#a1b8e7a9e0bce6b67d16677cd41a6b5d6", null ],
       [ "newestBuffers_p", "structNh__Tab.html#aaca80978c06e776f22d039f2cdd30b82", null ],
       [ "Position", "structNh__Tab.html#a27f0a7d4363e83df0613996a7bcae24c", null ],
       [ "priority", "structNh__Tab.html#a0513a721a7f7070c3a885c8d97ef7569", null ],
@@ -347,7 +363,7 @@ var group__NhCoreStructs =
       [ "getNextImage", "structNh__Window.html#a8e3045501e3bcb1f18118e1790806c35", null ],
       [ "halt", "structNh__Window.html#a0efda9d4a1f6ff342b6a0fc08964e1ea", null ],
       [ "Internal", "structNh__Window.html#a703c65ff31d2cb6733c96b54f2ef8d7d", null ],
-      [ "IO", "structNh__Window.html#a2eb4871481c3d598c945c47f7a3b7ffc", null ],
+      [ "IO", "structNh__Window.html#a68f5a2155cc0e9a02631f1462d17edfd", null ],
       [ "Position", "structNh__Window.html#a0ee3d6e3a1903fb901b3213b07ebdf6d", null ],
       [ "ready", "structNh__Window.html#a6feb4ce4dbf14c7e4dd4b6a04e63826f", null ],
       [ "rendering", "structNh__Window.html#a7ee3302cb2ac17973550253a1a5a1ad0", null ],

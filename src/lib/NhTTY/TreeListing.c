@@ -24,6 +24,8 @@
 #include NH_FLOW
 #include NH_CUSTOM_CHECK
 
+#include "../NhEncoding/Encodings/UTF8.h"
+
 #include <stddef.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -499,7 +501,7 @@ NH_TTY_BEGIN()
                 Nh_UnicodeString Question = Nh_initUnicodeString(128);
                 int deleteLength;
                 NH_UNICODE_CODEPOINT *delete_p = Nh_TTY_getMessage(NH_TTY_MESSAGE_BINARY_QUERY_DELETE, &deleteLength);
-                Nh_UnicodeString File = Nh_decodeUTF8Text(Current_p->path_p);
+                Nh_UnicodeString File = Nh_Encoding_decodeUTF8(Current_p->path_p, strlen(Current_p->path_p));
                 NH_CHECK(NH_TTY_ERROR_BAD_STATE, Nh_appendToUnicodeString(&Question, delete_p, deleteLength))
                 NH_CHECK(NH_TTY_ERROR_BAD_STATE, Nh_appendToUnicodeString(&Question, File.p, File.length))
                 NH_TTY_CHECK(Nh_TTY_setBinaryQueryMessage2(Question.p, Question.length, NULL, Nh_TTY_delete))

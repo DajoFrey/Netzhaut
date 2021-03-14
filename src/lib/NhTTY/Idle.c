@@ -85,7 +85,7 @@ NH_TTY_END(NH_TTY_SUCCESS)
 // DRAW ============================================================================================
 
 static NH_TTY_RESULT Nh_TTY_drawNoise(
-    Nh_TTY_Idle *Idle_p, Nh_UTF8String *Row_p, int width, int height, int row)
+    Nh_TTY_Idle *Idle_p, Nh_Encoding_UTF8String *Row_p, int width, int height, int row)
 {
 NH_TTY_BEGIN()
 
@@ -107,7 +107,7 @@ NH_TTY_END(NH_TTY_SUCCESS)
 }
 
 NH_TTY_RESULT Nh_TTY_drawIdleRow(
-    Nh_TTY_Program *Program_p, Nh_UTF8String *Row_p, int width, int height, int row)
+    Nh_TTY_Program *Program_p, Nh_Encoding_UTF8String *Row_p, int width, int height, int row)
 {
 NH_TTY_BEGIN()
 

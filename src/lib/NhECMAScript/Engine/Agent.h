@@ -10,7 +10,6 @@
  */
 
 #include "../../NhCore/Stack.h"
-#include "../../NhCore/Unicode.h"
 #include "../../NhCore/Array.h"
 
 #endif
@@ -19,10 +18,10 @@
  *  @{
  */
 
-    typedef struct Nh_ECMAScript_AgentArgs {
-        NH_UNICODE_ENCODING encoding;
-        NH_BYTE *bytes_p;
-    } Nh_ECMAScript_AgentArgs;
+//    typedef struct Nh_ECMAScript_AgentArgs {
+//        NH_UNICODE_ENCODING encoding;
+//        NH_BYTE *bytes_p;
+//    } Nh_ECMAScript_AgentArgs;
 
     // https://tc39.es/ecma262/#sec-agents
     typedef struct Nh_ECMAScript_Agent {

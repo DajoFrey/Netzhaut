@@ -10,7 +10,6 @@
 
 #include "Libraries.h"
 #include "Util.h"
-#include "Objects.h"
 #include "Message.h"
 #include "Unicode.h"
 #include "Main.h"
@@ -132,277 +131,6 @@ NH_INSTALLER_BEGIN()
 NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
 }
 
-// BUILD NETZHAUT ==================================================================================
-
-static NH_INSTALLER_RESULT Nh_Installer_buildNetzhaut(
-    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p, NH_BOOL install)
-{
-NH_INSTALLER_BEGIN()
-
-    NH_BYTE extra_p[1024] = {'\0'};
-    sprintf(extra_p, "-ldl", projDir_p);
-
-    NH_BYTE objPath_p[2048] = {'\0'};
-    sprintf(objPath_p, "%s%s", projDir_p, "/lib/OBJECTS/NETZHAUT");
-
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_createObjectsDir(wrkDir_p, projDir_p, "Netzhaut"))
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_LIBRARY, Nh_Installer_createLibrary(
-        wrkDir_p, objPath_p, extra_p, "Netzhaut", NETZHAUT_MAJOR_VERSION, NETZHAUT_MINOR_VERSION, NETZHAUT_PATCH_VERSION
-    ))
-
-    if (install) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_installLibrary(
-            "Netzhaut", NETZHAUT_MAJOR_VERSION, NETZHAUT_MINOR_VERSION, NETZHAUT_PATCH_VERSION
-        ))
-    }
-
-NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
-}
-
-// BUILD NH_LOADER =================================================================================
-
-static NH_INSTALLER_RESULT Nh_Installer_buildNhLoader(
-    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p, NH_BOOL install)
-{
-NH_INSTALLER_BEGIN()
-
-    NH_BYTE extra_p[1024] = {'\0'};
-    sprintf(extra_p, "-ldl");
-
-    NH_BYTE objPath_p[2048] = {'\0'};
-    sprintf(objPath_p, "%s%s", projDir_p, "/lib/OBJECTS/LOADER");
-
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_createObjectsDir(wrkDir_p, projDir_p, "NhLoader"))
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_LIBRARY, Nh_Installer_createLibrary(
-        wrkDir_p, objPath_p, extra_p, "NhLoader", NH_LOADER_MAJOR_VERSION, NH_LOADER_MINOR_VERSION, NH_LOADER_PATCH_VERSION
-    ))
-
-    if (install) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_installLibrary(
-            "NhLoader", NH_LOADER_MAJOR_VERSION, NH_LOADER_MINOR_VERSION, NH_LOADER_PATCH_VERSION
-        ))
-    }
-
-NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
-}
-
-// BUILD NH_CORE ===================================================================================
-
-static NH_INSTALLER_RESULT Nh_Installer_buildNhCore(
-    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p, NH_BOOL install)
-{
-NH_INSTALLER_BEGIN()
-
-    NH_BYTE extra_p[1024] = {'\0'};
-    sprintf(extra_p, "-lm -ldl -lfreetype -lNhExternal");
-
-    NH_BYTE objPath_p[2048] = {'\0'};
-    sprintf(objPath_p, "%s%s", projDir_p, "/lib/OBJECTS/CORE");
-
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_createUnicodeLookup(projDir_p))
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_createObjectsDir(wrkDir_p, projDir_p, "NhCore"))
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_LIBRARY, Nh_Installer_createLibrary(
-        wrkDir_p, objPath_p, extra_p, "NhCore", NH_MAJOR_VERSION, NH_MINOR_VERSION, NH_PATCH_VERSION
-    ))
-
-    if (install) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_installLibrary(
-            "NhCore", NH_MAJOR_VERSION, NH_MINOR_VERSION, NH_PATCH_VERSION
-        ))
-    }
-
-NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
-}
-
-// BUILD NH_IO =====================================================================================
-
-static NH_INSTALLER_RESULT Nh_Installer_buildNhIO(
-    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p, NH_BOOL install)
-{
-NH_INSTALLER_BEGIN()
-
-    NH_BYTE extra_p[1024] = {'\0'};
-    sprintf(extra_p, "-lX11 -lX11-xcb -lXcursor -lxkbcommon -lxkbcommon-x11");
-
-    NH_BYTE objPath_p[2048] = {'\0'};
-    sprintf(objPath_p, "%s%s", projDir_p, "/lib/OBJECTS/IO");
-
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_createObjectsDir(wrkDir_p, projDir_p, "NhIO"))
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_LIBRARY, Nh_Installer_createLibrary(
-        wrkDir_p, objPath_p, extra_p, "NhIO", 0, 0, 0
-    ))
-
-    if (install) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_installLibrary(
-            "NhIO", 0, 0, 0 
-        ))
-    }
-
-NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
-}
-
-// BUILD NH_TTY ====================================================================================
-
-static NH_INSTALLER_RESULT Nh_Installer_buildNhTTY(
-    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p, NH_BOOL install)
-{
-NH_INSTALLER_BEGIN()
-
-    NH_BYTE extra_p[1024] = {'\0'};
-    sprintf(extra_p, "-lutil");
-
-    NH_BYTE objPath_p[2048] = {'\0'};
-    sprintf(objPath_p, "%s%s", projDir_p, "/lib/OBJECTS/TTY");
-
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_createObjectsDir(wrkDir_p, projDir_p, "NhTTY"))
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_LIBRARY, Nh_Installer_createLibrary(
-        wrkDir_p, objPath_p, extra_p, "NhTTY", NH_TTY_MAJOR_VERSION, NH_TTY_MINOR_VERSION, NH_TTY_PATCH_VERSION
-    ))
-
-    if (install) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_installLibrary(
-            "NhTTY", NH_TTY_MAJOR_VERSION, NH_TTY_MINOR_VERSION, NH_TTY_PATCH_VERSION
-        ))
-    }
-
-NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
-}
-
-// BUILD NH_NETWORK ================================================================================
-
-static NH_INSTALLER_RESULT Nh_Installer_buildNhNetwork(
-    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p, NH_BOOL install)
-{
-NH_INSTALLER_BEGIN()
-
-    NH_BYTE extra_p[1024] = {'\0'};
-    sprintf(extra_p, "-lssl");
-
-    NH_BYTE objPath_p[2048] = {'\0'};
-    sprintf(objPath_p, "%s%s", projDir_p, "/lib/OBJECTS/NETWORK");
-
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_createObjectsDir(wrkDir_p, projDir_p, "NhNetwork"))
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_LIBRARY, Nh_Installer_createLibrary(
-        wrkDir_p, objPath_p, extra_p, "NhNetwork", 0, 0, 0
-    ))
-
-    if (install) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_installLibrary(
-            "NhNetwork", 0, 0, 0 
-        ))
-    }
-
-NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
-}
-
-// BUILD NH_ECMASCRIPT =============================================================================
-
-static NH_INSTALLER_RESULT Nh_Installer_buildNhECMAScript(
-    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p, NH_BOOL install)
-{
-NH_INSTALLER_BEGIN()
-
-    NH_BYTE extra_p[1024] = {'\0'};
-
-    NH_BYTE objPath_p[2048] = {'\0'};
-    sprintf(objPath_p, "%s%s", projDir_p, "/lib/OBJECTS/ECMASCRIPT");
-
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_createObjectsDir(wrkDir_p, projDir_p, "NhECMAScript"))
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_LIBRARY, Nh_Installer_createLibrary(
-        wrkDir_p, objPath_p, extra_p, "NhECMAScript", 0, 0, 0
-    ))
-
-    if (install) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_installLibrary(
-            "NhECMAScript", 0, 0, 0 
-        ))
-    }
-
-NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
-}
-
-// BUILD NH_HTML ===================================================================================
-
-static NH_INSTALLER_RESULT Nh_Installer_buildNhHTML(
-    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p, NH_BOOL install)
-{
-NH_INSTALLER_BEGIN()
-
-    NH_BYTE extra_p[1024] = {'\0'};
-
-    NH_BYTE objPath_p[2048] = {'\0'};
-    sprintf(objPath_p, "%s%s", projDir_p, "/lib/OBJECTS/HTML");
-
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_createObjectsDir(wrkDir_p, projDir_p, "NhHTML"))
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_LIBRARY, Nh_Installer_createLibrary(
-        wrkDir_p, objPath_p, extra_p, "NhHTML", NH_HTML_MAJOR_VERSION, NH_HTML_MINOR_VERSION, NH_HTML_PATCH_VERSION
-    ))
-
-    if (install) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_installLibrary(
-            "NhHTML", NH_HTML_MAJOR_VERSION, NH_HTML_MINOR_VERSION, NH_HTML_PATCH_VERSION
-        ))
-    }
-
-NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
-}
-
-// BUILD NH_HTML ===================================================================================
-
-static NH_INSTALLER_RESULT Nh_Installer_buildNhDOM(
-    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p, NH_BOOL install)
-{
-NH_INSTALLER_BEGIN()
-
-    NH_BYTE extra_p[1024] = {'\0'};
-
-    NH_BYTE objPath_p[2048] = {'\0'};
-    sprintf(objPath_p, "%s%s", projDir_p, "/lib/OBJECTS/DOM");
-
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_createObjectsDir(wrkDir_p, projDir_p, "NhDOM"))
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_LIBRARY, Nh_Installer_createLibrary(
-        wrkDir_p, objPath_p, extra_p, "NhDOM", NH_DOM_MAJOR_VERSION, NH_DOM_MINOR_VERSION, NH_DOM_PATCH_VERSION
-    ))
-
-    if (install) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_installLibrary(
-            "NhDOM", NH_DOM_MAJOR_VERSION, NH_DOM_MINOR_VERSION, NH_DOM_PATCH_VERSION
-        ))
-    }
-
-NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
-}
-
-// BUILD NH_WEBIDL =================================================================================
-
-static NH_INSTALLER_RESULT Nh_Installer_buildNhWebIDL(
-    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p, NH_BOOL install)
-{
-NH_INSTALLER_BEGIN()
-
-    NH_BYTE extra_p[1024] = {'\0'};
-
-    NH_BYTE objPath_p[2048] = {'\0'};
-    sprintf(objPath_p, "%s%s", projDir_p, "/lib/OBJECTS/WEBIDL");
-
-    chdir(projDir_p);
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_processWebIDL())
-    chdir(wrkDir_p);
-
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_createObjectsDir(wrkDir_p, projDir_p, "NhWebIDL"))
-    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_LIBRARY, Nh_Installer_createLibrary(
-        wrkDir_p, objPath_p, extra_p, "NhWebIDL", NH_WEBIDL_MAJOR_VERSION, NH_WEBIDL_MINOR_VERSION, NH_WEBIDL_PATCH_VERSION
-    ))
-
-    if (install) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_installLibrary(
-            "NhWebIDL", NH_WEBIDL_MAJOR_VERSION, NH_WEBIDL_MINOR_VERSION, NH_WEBIDL_PATCH_VERSION
-        ))
-    }
-
-NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
-}
-
 // BUILD NH_EXTERNAL ===============================================================================
 
 static NH_INSTALLER_RESULT Nh_Installer_createStaticLibraryUsingAr(
@@ -436,10 +164,16 @@ NH_INSTALLER_BEGIN()
 NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
 }
 
-static NH_INSTALLER_RESULT Nh_Installer_buildNhExternal(
-    NH_BYTE *wrkDir_p, NH_BYTE *projDir_p, NH_BOOL install)
+NH_INSTALLER_RESULT Nh_Installer_buildNhExternal(
+    NH_BOOL install)
 {
 NH_INSTALLER_BEGIN()
+
+    NH_BYTE wrkDir_p[2048] = {'\0'};
+    NH_INSTALLER_CHECK_NULL(NH_INSTALLER_ERROR_GET_WORK_DIRECTORY, getcwd(wrkDir_p, 2048))
+
+    NH_BYTE projDir_p[2048] = {'\0'};
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_GET_PROJECT_DIRECTORY, Nh_Installer_getProjectDir(projDir_p, 2048))
 
     if (!Nh_Installer_canRunCommand("gcc")) {NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_ERROR_GCC_NOT_FOUND)}
     if (!Nh_Installer_canRunCommand("ar")) {NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_ERROR_AR_NOT_FOUND)}
@@ -511,12 +245,15 @@ NH_INSTALLER_BEGIN()
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("src/lib/NhTTY/Common/Result.h", "src/lib/Netzhaut/NhTTY/Common", NH_FALSE, NH_FALSE, NH_FALSE))
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("src/lib/NhLoader/Common/API.h", "src/lib/Netzhaut/NhLoader/Common", NH_FALSE, NH_FALSE, NH_FALSE))
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("src/lib/NhLoader/Common/Result.h", "src/lib/Netzhaut/NhLoader/Common", NH_FALSE, NH_FALSE, NH_FALSE))
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("src/lib/NhEncoding/Common/API.h", "src/lib/Netzhaut/NhEncoding/Common", NH_FALSE, NH_FALSE, NH_FALSE))
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("src/lib/NhEncoding/Common/Result.h", "src/lib/Netzhaut/NhEncoding/Common", NH_FALSE, NH_FALSE, NH_FALSE))
 
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("src/lib/Netzhaut/Netzhaut.h", "include/Netzhaut", NH_FALSE, NH_FALSE, NH_FALSE))
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("src/lib/Netzhaut/NetzhautTTY.h", "include/Netzhaut", NH_FALSE, NH_FALSE, NH_FALSE))
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("src/lib/Netzhaut/NhCore", "include/Netzhaut", NH_TRUE, NH_FALSE, NH_FALSE))
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("src/lib/Netzhaut/NhTTY", "include/Netzhaut", NH_TRUE, NH_FALSE, NH_FALSE))
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("src/lib/Netzhaut/NhLoader", "include/Netzhaut", NH_TRUE, NH_FALSE, NH_FALSE))
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_COPY_FAILED, Nh_Installer_copy("src/lib/Netzhaut/NhEncoding", "include/Netzhaut", NH_TRUE, NH_FALSE, NH_FALSE))
 
     chdir(wrkDir_p);
 
@@ -589,12 +326,49 @@ NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
 
 // BUILD ===========================================================================================
 
-NH_INSTALLER_RESULT Nh_Installer_buildLibrary(
-    NH_BYTE *name_p, NH_BOOL install) 
+static NH_INSTALLER_RESULT Nh_Installer_compileLibraryFiles(
+    char *wrkDir_p, char *projDir_p, Nh_Installer_Library *Library_p)
 {
 NH_INSTALLER_BEGIN()
 
-    Nh_Installer_operationf("BUILD %s LIBRARY", name_p);
+    NH_BYTE objPath_p[255] = {0};
+    sprintf(objPath_p, "../lib/objects/%s", Library_p->name_p);
+
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_BIN_OBJECT_DIRECTORY, Nh_Installer_createDir("../lib/objects/"))
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_BIN_OBJECT_DIRECTORY, Nh_Installer_createDir(objPath_p))
+
+    char path_p[2048] = {'\0'};
+    sprintf(path_p, "%s%s", projDir_p, "/src/lib");
+    chdir(path_p);
+
+    for (int i = 0; i < NH_INSTALLER_MAX_SOURCES; ++i) 
+    {
+        Nh_Installer_Source *Source_p = &NH_INSTALLER_SOURCES_P[i];
+
+        if (Source_p->Library_p == Library_p) 
+        {
+            NH_BYTE outPath_p[255] = {0};
+            int index = strlen(Source_p->path_p) - 1;
+            while (Source_p->path_p[index] != '/') {index--;}
+            sprintf(outPath_p, "../../lib/objects/%s/%s.o", Library_p->name_p, Source_p->path_p + index);
+            NH_BYTE empty = 0;
+
+            NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECT_FILE, 
+                Nh_Installer_createPICObjectFileUsingGCC(Source_p->path_p, outPath_p, Library_p->compileArgs_p ? Library_p->compileArgs_p : &empty))
+        }
+    }
+
+    chdir(wrkDir_p);
+
+NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)
+}
+
+NH_INSTALLER_RESULT Nh_Installer_buildLibrary(
+    Nh_Installer_Library *Library_p, NH_BOOL install) 
+{
+NH_INSTALLER_BEGIN()
+
+    Nh_Installer_operationf("BUILD %s LIBRARY", Library_p->name_p);
 
     NH_BYTE wrkDir_p[2048] = {'\0'};
     NH_INSTALLER_CHECK_NULL(NH_INSTALLER_ERROR_GET_WORK_DIRECTORY, getcwd(wrkDir_p, 2048))
@@ -602,38 +376,30 @@ NH_INSTALLER_BEGIN()
     NH_BYTE projDir_p[2048] = {'\0'};
     NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_GET_PROJECT_DIRECTORY, Nh_Installer_getProjectDir(projDir_p, 2048))
 
-    if (!strcmp(name_p, "Netzhaut")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNetzhaut(wrkDir_p, projDir_p, install))
+    if (!strcmp(Library_p->name_p, "NhWebIDL")) {
+        chdir(projDir_p);
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_processWebIDL())
+        chdir(wrkDir_p);
     }
-    else if (!strcmp(name_p, "NhLoader")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhLoader(wrkDir_p, projDir_p, install))
+    if (!strcmp(Library_p->name_p, "NhCore")) {
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_createUnicodeLookup(projDir_p))
     }
-    else if (!strcmp(name_p, "NhCore")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhCore(wrkDir_p, projDir_p, install))
-    }
-    else if (!strcmp(name_p, "NhExternal")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhExternal(wrkDir_p, projDir_p, install))
-    }
-    else if (!strcmp(name_p, "NhIO")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhIO(wrkDir_p, projDir_p, install))
-    }
-    else if (!strcmp(name_p, "NhTTY")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhTTY(wrkDir_p, projDir_p, install))
-    }
-    else if (!strcmp(name_p, "NhHTML")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhHTML(wrkDir_p, projDir_p, install))
-    }
-    else if (!strcmp(name_p, "NhDOM")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhDOM(wrkDir_p, projDir_p, install))
-    }
-    else if (!strcmp(name_p, "NhNetwork")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhNetwork(wrkDir_p, projDir_p, install))
-    }
-    else if (!strcmp(name_p, "NhECMAScript")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhECMAScript(wrkDir_p, projDir_p, install))
-    }
-    else if (!strcmp(name_p, "NhWebIDL")) {
-        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BUILD_LIBRARY_FAILED, Nh_Installer_buildNhWebIDL(wrkDir_p, projDir_p, install))
+
+    NH_BYTE empty = 0;
+    NH_BYTE objPath_p[2048] = {'\0'};
+    sprintf(objPath_p, "%s%s%s", projDir_p, "/lib/objects/", Library_p->name_p);
+
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_OBJECTS, Nh_Installer_compileLibraryFiles(
+        wrkDir_p, projDir_p, Library_p
+    ))
+    NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_CANT_CREATE_LIBRARY, Nh_Installer_createLibrary(
+        wrkDir_p, objPath_p, Library_p->linkArgs_p ? Library_p->linkArgs_p : &empty, Library_p->name_p, 0, 0, 0 
+    ))
+
+    if (install) {
+        NH_INSTALLER_CHECK(NH_INSTALLER_ERROR_BAD_STATE, Nh_Installer_installLibrary(
+            Library_p->name_p, 0, 0, 0 
+        ))
     }
 
 NH_INSTALLER_DIAGNOSTIC_END(NH_INSTALLER_SUCCESS)

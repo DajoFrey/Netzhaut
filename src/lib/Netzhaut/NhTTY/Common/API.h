@@ -10,7 +10,9 @@
  */
 
 #include "Result.h"
+
 #include "../../NhCore/Common/API.h"
+#include "../../NhEncoding/Common/API.h"
 
 #endif
 
@@ -22,7 +24,7 @@
     typedef struct Nh_TTY_Program Nh_TTY_Program;
 
     typedef void *(*Nh_TTY_init_f)();
-    typedef NH_TTY_RESULT (*Nh_TTY_draw_f)(Nh_TTY_Program *Program_p, Nh_UTF8String *Row_p, int width, int height, int row);
+    typedef NH_TTY_RESULT (*Nh_TTY_draw_f)(Nh_TTY_Program *Program_p, Nh_Encoding_UTF8String *Row_p, int width, int height, int row);
     typedef NH_TTY_RESULT (*Nh_TTY_handleInput_f)(Nh_TTY_Program *Program_p, NH_UNICODE_CODEPOINT c);
     typedef NH_TTY_RESULT (*Nh_TTY_getCursorPosition_f)(Nh_TTY_Program *Program_p, int *x_p, int *y_p);
     typedef NH_TTY_RESULT (*Nh_TTY_update_f)(Nh_TTY_Program *Program_p);

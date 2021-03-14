@@ -64,6 +64,8 @@ var group__NhTTYFunctions =
     [ "Nh_TTY_openFile", "group__NhTTYFunctions.html#gae1aed3f3589a09167018059c7c2de477", null ],
     [ "Nh_TTY_openTerminal", "group__NhTTYFunctions.html#ga932b0fa31a7a83b6dfe90094e67e1ffe", null ],
     [ "Nh_TTY_openTextFile", "group__NhTTYFunctions.html#ga88bdaf0377825894ee389891bb13972e", null ],
+    [ "Nh_TTY_parseHTML", "group__NhTTYFunctions.html#ga0c3c2afee813db92bbbe55615506a6c6", null ],
+    [ "Nh_TTY_parseWebTextFile", "group__NhTTYFunctions.html#gaad6cc8a57d366abeccf22ef45228f9a7", null ],
     [ "Nh_TTY_refreshCursor", "group__NhTTYFunctions.html#ga764ab695ff8dd09179d9eee1d60ecc7d", null ],
     [ "Nh_TTY_refreshScreen", "group__NhTTYFunctions.html#gacedd6f846ec59719253785a84b67f594", null ],
     [ "Nh_TTY_removeFromRow", "group__NhTTYFunctions.html#ga9478d98b8b3fb301199b88fcb8e3c560", null ],
